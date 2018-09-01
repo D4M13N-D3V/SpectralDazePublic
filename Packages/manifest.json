@@ -2,6 +2,7 @@
   "dependencies": {
     "com.unity.mathematics": "0.0.12-preview.13",
     "com.unity.postprocessing": "0.1.8",
-    "com.unity.progrids": "3.0.3-preview.0"
+    "com.unity.progrids": "3.0.3-preview.0",
+    "com.unity.probuilder": "3.0.9"
   }
 }

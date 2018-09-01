@@ -29,7 +29,7 @@ namespace gmtk.Player
             pos += new Vector3(computedInput.x, 0, computedInput.y);
             transform.position = pos;
 
-            // We dont want the player Rotating if we hav no motion as it defaults to 0,0,0
+            // We dont want the player Rotating if we have no motion as it defaults to 0,0,0
             if (computedInput != Vector2.zero)
             {
                 Quaternion goalRotation = Quaternion.LookRotation(new Vector3(input.x, 0, input.y), Vector3.up);
