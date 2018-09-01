@@ -12,6 +12,14 @@ ModelImporter:
     100012: Wall
     100014: WallCornerClosed
     100016: wallCornerOpen
+    100018: Wall_001
+    100020: Cone
+    100022: Cube
+    100024: Plants
+    100026: Woodbeam1
+    100028: Woodbeam2
+    100030: WoodBeam3
+    100032: Cylinder
     400000: //RootNode
     400002: floor
     400004: floorSmall
@@ -21,11 +29,25 @@ ModelImporter:
     400012: Wall
     400014: WallCornerClosed
     400016: wallCornerOpen
+    400018: Wall_001
+    400020: Cone
+    400022: Cube
+    400024: Plants
+    400026: Woodbeam1
+    400028: Woodbeam2
+    400030: WoodBeam3
+    400032: Cylinder
     2100000: Material
     2100002: Material_001
     2100004: Material_003
     2100006: Material_004
     2100008: Material_002
+    2100010: Material_011
+    2100012: Material_010
+    2100014: Material_006
+    2100016: Material_007
+    2100018: Material_005
+    2100020: Material_013
     2300000: floor
     2300002: floorSmall
     2300004: Stone01
@@ -34,6 +56,14 @@ ModelImporter:
     2300010: Wall
     2300012: WallCornerClosed
     2300014: wallCornerOpen
+    2300016: Wall_001
+    2300018: Cone
+    2300020: Cube
+    2300022: Plants
+    2300024: Woodbeam1
+    2300026: Woodbeam2
+    2300028: WoodBeam3
+    2300030: Cylinder
     3300000: floor
     3300002: floorSmall
     3300004: Stone01
@@ -42,6 +72,14 @@ ModelImporter:
     3300010: Wall
     3300012: WallCornerClosed
     3300014: wallCornerOpen
+    3300016: Wall_001
+    3300018: Cone
+    3300020: Cube
+    3300022: Plants
+    3300024: Woodbeam1
+    3300026: Woodbeam2
+    3300028: WoodBeam3
+    3300030: Cylinder
     4300000: floorSmall
     4300002: wallCornerOpen
     4300004: WallCornerClosed
@@ -50,6 +88,14 @@ ModelImporter:
     4300010: Stone02
     4300012: Stone01
     4300014: floor
+    4300016: Wall_001
+    4300018: Cube
+    4300020: Cone
+    4300022: Plants
+    4300024: Woodbeam1
+    4300026: Woodbeam2
+    4300028: WoodBeam3
+    4300030: Cylinder
     7400000: Default Take
     9500000: //RootNode
   externalObjects:
