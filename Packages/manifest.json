@@ -1,4 +1,6 @@
 {
-	"dependencies": {
-	}
+  "dependencies": {
+    "com.unity.mathematics": "0.0.12-preview.13",
+    "com.unity.postprocessing": "0.1.8"
+  }
 }
