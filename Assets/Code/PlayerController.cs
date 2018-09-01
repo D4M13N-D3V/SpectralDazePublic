@@ -9,12 +9,16 @@ namespace gmtk.Player
     public class PlayerController : MonoBehaviour
     {
         public float MoveSpeed = 2f;
+        public Conversation TestConversation;
 
         private Animator animator;
+        private DialogueManager dialogueMan;
+
 
         private void Start()
         {
             animator = GetComponentInChildren<Animator>();
+            dialogueMan = FindObjectOfType<DialogueManager>();
         }
 
         private void Update()
@@ -34,6 +38,20 @@ namespace gmtk.Player
             {
                 Quaternion goalRotation = Quaternion.LookRotation(new Vector3(input.x, 0, input.y), Vector3.up);
                 transform.rotation = Quaternion.Lerp(transform.rotation, goalRotation, Time.deltaTime * 9f);
+            }
+
+
+            // this is debug / example on how to use the dialogue manager
+            // replace the TestConversation with some external conversation for conversations started by npcs
+            // or signs.
+            if (Input.GetButtonDown("Jump"))
+            {
+                // this checks if we are in a dialogue if we aren't we start a new dialogue
+                // else we cycle though the current conversations queue untill its over
+                if (dialogueMan.IsQueueEmpty && dialogueMan.DialogueParentObj.activeSelf == false)
+                    dialogueMan.StartDialogue(TestConversation);
+                else
+                    dialogueMan.CycleDialogue();
             }
         }
     }
