@@ -3248,7 +3248,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.225
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4690,7 +4690,7 @@ Prefab:
     - target: {fileID: 114687940843592084, guid: e0be86498c402364e90152fecbed2213,
         type: 2}
       propertyPath: StichesGibberish.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224016197817889434, guid: e0be86498c402364e90152fecbed2213,
         type: 2}
@@ -4796,7 +4796,7 @@ Prefab:
         type: 2}
       propertyPath: StichesGibberish.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: ef9eb8fa90dfeab44bd2a6a5101577c9, type: 3}
     - target: {fileID: 114687940843592084, guid: e0be86498c402364e90152fecbed2213,
         type: 2}
       propertyPath: BeeGibberish.Array.data[1]
@@ -4806,7 +4806,17 @@ Prefab:
         type: 2}
       propertyPath: BeeGibberish.Array.data[2]
       value: 
-      objectReference: {fileID: 8300000, guid: 2937aad0499e83e4da8751d57eea1f80, type: 3}
+      objectReference: {fileID: 8300000, guid: 2619046aad3584146b5f7c2e6a66f031, type: 3}
+    - target: {fileID: 114687940843592084, guid: e0be86498c402364e90152fecbed2213,
+        type: 2}
+      propertyPath: StichesGibberish.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: ad9177d9a7b78a245b637712d14d7e7b, type: 3}
+    - target: {fileID: 114687940843592084, guid: e0be86498c402364e90152fecbed2213,
+        type: 2}
+      propertyPath: StichesGibberish.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ad9177d9a7b78a245b637712d14d7e7b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0be86498c402364e90152fecbed2213, type: 2}
   m_IsPrefabAsset: 0

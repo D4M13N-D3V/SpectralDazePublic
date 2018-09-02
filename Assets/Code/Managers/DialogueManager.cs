@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     public Text DialogueText { get; set; }
 
     DateTime OnEnterTime;
+    AudioClip tmpAudioClip;
 
     public Conversation TestConversation { get; set; }
 
@@ -98,22 +99,31 @@ public class DialogueManager : MonoBehaviour
 
     private void PlayVoice(Character lineCharacter)
     {
-        AudioClip tmpAudioClip;
         var rnd = new System.Random();
+        var lastVoice = tmpAudioClip;
 
-        switch (lineCharacter)
+        var i = 0;
+        while (lastVoice == tmpAudioClip && i < 10)
         {
-            case  Character.Be:
-                tmpAudioClip = BeeGibberish[rnd.Next(BeeGibberish.Count - 1)];
-                break;
-            default:
-                tmpAudioClip = StichesGibberish[rnd.Next(StichesGibberish.Count - 1)];
-                break;
+            GetVoice(lineCharacter, rnd);
+            i++;
         }
-
         myAudioSource.Stop();
         myAudioSource.clip = tmpAudioClip;
         myAudioSource.Play();
+    }
+
+    private void GetVoice(Character lineCharacter, System.Random rnd)
+    {
+        switch (lineCharacter)
+        {
+            case Character.Be:
+                tmpAudioClip = BeeGibberish[rnd.Next(0,BeeGibberish.Count)];
+                break;
+            default:
+                tmpAudioClip = StichesGibberish[rnd.Next(0, StichesGibberish.Count)];
+                break;
+        }
     }
 
     public void ShowDialogueBox()
