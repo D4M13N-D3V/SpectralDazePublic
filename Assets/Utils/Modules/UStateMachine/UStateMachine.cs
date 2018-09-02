@@ -40,6 +40,12 @@ public class UStateMachine<TParamStruct> where TParamStruct : struct
 			ActiveState.OnGUI(parameters);
 	}
 
+	public void OnDrawGizmos(TParamStruct parameters)
+	{
+		if (ActiveState != null)
+			ActiveState.OnDrawGizmos(parameters);
+	}
+
 	public void SetState(Type stateType, TParamStruct parameters)
 	{
 		// Set the state to a certain state type

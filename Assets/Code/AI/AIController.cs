@@ -10,6 +10,8 @@ namespace gmtk.AI
 		public Transform CachedTarget;
 		public Vector3? LastKnownPosition;
 
+		public GameObject BulletPrefab;
+
 		private UStateMachine<AIStateParams> stateMachine;
 
 		private AIStateParams paramsInstance;
@@ -20,11 +22,15 @@ namespace gmtk.AI
 			{
 				Controller = this,
 				NavMeshAgent = GetComponent<NavMeshAgent>(),
+				Animator = GetComponent<Animator>(),
+				Renderer = GetComponentInChildren<Renderer>(),
 				Transform = transform
 			};
 			stateMachine = new UStateMachine<AIStateParams>(paramsInstance,
 				new AIState_Idle(),
-				new AIState_Chase()
+				new AIState_Chase(),
+				new AIState_AttackCharge(),
+				new AIState_AttackShoot()
 				);
 			stateMachine.SetState(typeof(AIState_Idle), paramsInstance);
 		}
@@ -38,6 +44,12 @@ namespace gmtk.AI
 		{
 			stateMachine.OnGUI(paramsInstance);
 			GUI.Label(new Rect(0, 0, 100, 50), stateMachine.ActiveState.GetType()+"");
+		}
+
+		private void OnDrawGizmos()
+		{
+			if(stateMachine != null)
+			stateMachine.OnDrawGizmos(paramsInstance);
 		}
 	}
 }

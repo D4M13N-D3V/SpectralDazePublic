@@ -21,15 +21,16 @@ namespace gmtk.Player
 			if (Vector3.Distance(adjustedHitPoint, pc.transform.position) > 12f)
 				return;
 
-			if (Input.GetMouseButton(1))
+			if (Input.GetMouseButton(0))
 			{
 				// If they're holding right click
 				mouseHit.point.DrawDebug(Color.red, 0.1f, 0.25f);
-			}else if (Input.GetMouseButtonUp(1))
+				Time.timeScale = 0.45f;
+			}
+			else if (Input.GetMouseButtonUp(0))
 			{
 				// Move the player
-				
-
+				Time.timeScale = 1f;
 				pc.transform.position = mouseHit.point + Vector3.up;
 			}
 		}

@@ -9,6 +9,7 @@ public abstract class UState<TParamStruct> where TParamStruct : struct
 	public virtual void Enter(TParamStruct ps) { }
 	public virtual void Update(TParamStruct ps) { }
 	public virtual void OnGUI(TParamStruct ps) { }
+	public virtual void OnDrawGizmos(TParamStruct ps) { }
 	public virtual void CheckForTransitions(TParamStruct ps) { }
 	public virtual void Exit(TParamStruct ps) { }
 }
