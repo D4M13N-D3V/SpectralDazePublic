@@ -66,15 +66,25 @@ public class DialogueManager : MonoBehaviour
 
     private Sprite GetCharacterSprite(Character lineCharacter)
     {
-        if (lineCharacter == Character.Be)
-            return CharacterSprites[0];
+        switch (lineCharacter)
+        {
+            case Character.Be:
+                return CharacterSprites[0];
+            case Character.Stitches:
+                return CharacterSprites[1];
+        }
         return CharacterSprites[0];
     }
 
     private string GetCharacterName(Character lineCharacter)
     {
-        if (lineCharacter == Character.Be)
-            return "Be:";
+        switch (lineCharacter)
+        {
+            case Character.Be:
+                return "Be:";
+            case Character.Stitches:
+                return "Stiches:";
+        }
         return "???:";
     }
 

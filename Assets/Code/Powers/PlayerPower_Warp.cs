@@ -14,7 +14,7 @@ namespace gmtk.Player
 				return;
 
 			Vector3 adjustedHitPoint = mouseHit.point + Vector3.up;
-			if (Vector3.Distance(adjustedHitPoint, pc.transform.position) > 6f)
+			if (Vector3.Distance(adjustedHitPoint, pc.transform.position) > 12f)
 				return;
 
 			if (Input.GetMouseButton(1))

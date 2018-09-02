@@ -5,5 +5,6 @@ using System.Text;
 
 public enum Character
 {
-    Be
+    Be,
+    Stitches
 }
