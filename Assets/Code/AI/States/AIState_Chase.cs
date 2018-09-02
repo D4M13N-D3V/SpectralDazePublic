@@ -23,7 +23,7 @@ namespace gmtk.AI
 		{
 			if (cachedPosition != Vector3.zero)
 			{
-
+				
 			}
 
 			cachedPosition = ps.Transform.position;
