@@ -13,6 +13,10 @@ namespace gmtk.Player
 			if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
 				return;
 
+            // Switch this out with something better.
+            if (mouseHit.collider.gameObject.tag != "Walkable")
+                return;
+
 			Vector3 adjustedHitPoint = mouseHit.point + Vector3.up;
 			if (Vector3.Distance(adjustedHitPoint, pc.transform.position) > 12f)
 				return;

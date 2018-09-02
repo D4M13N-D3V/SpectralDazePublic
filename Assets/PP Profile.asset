@@ -16,8 +16,8 @@ MonoBehaviour:
   - {fileID: 114213261679327512}
   - {fileID: 114996703735246942}
   - {fileID: 114972074294093588}
-  - {fileID: 114328688957296140}
   - {fileID: 114752144558747320}
+  - {fileID: 114552772863157674}
 --- !u!114 &114213261679327512
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -38,7 +38,7 @@ MonoBehaviour:
     value: {fileID: 2800000, guid: 318cbcd94840f1d48aca4d86234dc2e7, type: 3}
   intensity:
     overrideState: 1
-    value: 0.035
+    value: 0.134
   fastMode:
     overrideState: 0
     value: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.75
+    value: 1
   color:
     overrideState: 1
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -80,7 +80,7 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 3.34
+    value: 4.73
   directLightingStrength:
     overrideState: 0
     value: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
   quality:
     overrideState: 0
     value: 2
---- !u!114 &114328688957296140
+--- !u!114 &114552772863157674
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,13 +107,13 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 2
+    value: 1
   threshold:
     overrideState: 1
-    value: 3
+    value: 1
   softKnee:
-    overrideState: 1
-    value: 0.266
+    overrideState: 0
+    value: 0.5
   diffusion:
     overrideState: 0
     value: 7
@@ -182,10 +182,10 @@ MonoBehaviour:
     value: {fileID: 0}
   temperature:
     overrideState: 1
-    value: -18
+    value: -2
   tint:
     overrideState: 1
-    value: -40
+    value: 11
   colorFilter:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -424,11 +424,11 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   shutterAngle:
-    overrideState: 0
+    overrideState: 1
     value: 270
   sampleCount:
-    overrideState: 0
-    value: 10
+    overrideState: 1
+    value: 15
 --- !u!114 &114996703735246942
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -455,7 +455,7 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.322
+    value: 0.364
   smoothness:
     overrideState: 0
     value: 0.2

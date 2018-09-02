@@ -13,10 +13,12 @@ namespace gmtk.Player
 
         private Animator animator;
         private DialogueManager dialogueMan;
+        private Rigidbody rbody;
 
 
         private void Start()
         {
+            rbody = GetComponent<Rigidbody>();
             animator = GetComponentInChildren<Animator>();
             dialogueMan = FindObjectOfType<DialogueManager>();
         }
@@ -32,6 +34,10 @@ namespace gmtk.Player
             Vector3 pos = transform.position;
             pos += new Vector3(computedInput.x, 0, computedInput.y);
             transform.position = pos;
+
+
+            // The rigidbody keeps sliding all over the place when your dash in to things
+            rbody.velocity = Vector3.zero;
 
             // We dont want the player Rotating if we have no motion as it defaults to 0,0,0
             if (computedInput != Vector2.zero)

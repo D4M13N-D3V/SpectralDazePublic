@@ -20,6 +20,7 @@ ModelImporter:
     100028: Woodbeam2
     100030: WoodBeam3
     100032: Cylinder
+    100034: Door
     400000: //RootNode
     400002: floor
     400004: floorSmall
@@ -37,6 +38,7 @@ ModelImporter:
     400028: Woodbeam2
     400030: WoodBeam3
     400032: Cylinder
+    400034: Door
     2100000: Material
     2100002: Material_001
     2100004: Material_003
@@ -48,6 +50,7 @@ ModelImporter:
     2100016: Material_007
     2100018: Material_005
     2100020: Material_013
+    2100022: Material_009
     2300000: floor
     2300002: floorSmall
     2300004: Stone01
@@ -64,6 +67,7 @@ ModelImporter:
     2300026: Woodbeam2
     2300028: WoodBeam3
     2300030: Cylinder
+    2300032: Door
     3300000: floor
     3300002: floorSmall
     3300004: Stone01
@@ -80,6 +84,7 @@ ModelImporter:
     3300026: Woodbeam2
     3300028: WoodBeam3
     3300030: Cylinder
+    3300032: Door
     4300000: floorSmall
     4300002: wallCornerOpen
     4300004: WallCornerClosed
@@ -96,6 +101,7 @@ ModelImporter:
     4300026: Woodbeam2
     4300028: WoodBeam3
     4300030: Cylinder
+    4300032: Door
     7400000: Default Take
     9500000: //RootNode
   externalObjects:
