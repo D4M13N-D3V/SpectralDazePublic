@@ -8,10 +8,15 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField]
     public Sprite[] CharacterSprites;
+    public List<AudioClip> BeeGibberish;
+    public List<AudioClip> StichesGibberish;
+
     public Image CharacterImage { get; set; }
     public Text CharacterName { get; set; }
     public Text DialogueText { get; set; }
+
     DateTime OnEnterTime;
+    AudioClip tmpAudioClip;
 
     public Conversation TestConversation { get; set; }
 
@@ -22,6 +27,8 @@ public class DialogueManager : MonoBehaviour
     public bool IsDialogueActive = false;
 
     private Queue<DialogueLine> DialogueQueue;
+
+    public AudioSource myAudioSource;
 
     public bool IsQueueEmpty
     {
@@ -39,6 +46,7 @@ public class DialogueManager : MonoBehaviour
         CharacterName = GameObject.FindGameObjectWithTag("CharacterName").GetComponent<Text>();
         DialogueText = GameObject.FindGameObjectWithTag("DialogueText").GetComponent<Text>();
         TextAnimator = GameObject.FindGameObjectWithTag("DialogueText").GetComponent<Animator>();
+        myAudioSource = GetComponent<AudioSource>();
 
         DialogueParentObj.SetActive(false);
         DialogueQueue = new Queue<DialogueLine>();
@@ -62,6 +70,7 @@ public class DialogueManager : MonoBehaviour
         CharacterImage.sprite = GetCharacterSprite(Line.LineCharacter);
         CharacterName.text = GetCharacterName(Line.LineCharacter);
         DialogueText.text = Line.LineText;
+        PlayVoice(Line.LineCharacter);
     }
 
     private Sprite GetCharacterSprite(Character lineCharacter)
@@ -86,6 +95,35 @@ public class DialogueManager : MonoBehaviour
                 return "Stiches:";
         }
         return "???:";
+    }
+
+    private void PlayVoice(Character lineCharacter)
+    {
+        var rnd = new System.Random();
+        var lastVoice = tmpAudioClip;
+
+        var i = 0;
+        while (lastVoice == tmpAudioClip && i < 10)
+        {
+            GetVoice(lineCharacter, rnd);
+            i++;
+        }
+        myAudioSource.Stop();
+        myAudioSource.clip = tmpAudioClip;
+        myAudioSource.Play();
+    }
+
+    private void GetVoice(Character lineCharacter, System.Random rnd)
+    {
+        switch (lineCharacter)
+        {
+            case Character.Be:
+                tmpAudioClip = BeeGibberish[rnd.Next(0,BeeGibberish.Count)];
+                break;
+            default:
+                tmpAudioClip = StichesGibberish[rnd.Next(0, StichesGibberish.Count)];
+                break;
+        }
     }
 
     public void ShowDialogueBox()
