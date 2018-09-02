@@ -7,15 +7,13 @@ namespace gmtk.AI
 {
 	public class AIState_Idle : UState<AIStateParams>
 	{
-		private const float SPAWN_DIST = 6f;
+		private const float CHASE_DIST = 6f;
 
 		private Transform player;
-		private RaycastHit[] raycastResults;
 
 		public override void Enter(AIStateParams ps)
 		{
 			player = GameObject.FindWithTag("Player").transform;
-			raycastResults = new RaycastHit[16];
 		}
 
 		public override void Update(AIStateParams ps)
@@ -23,29 +21,26 @@ namespace gmtk.AI
 			// Initially check within a radius around our AI, this way we don't waste any unnecessary resources if they aren't in range.
 			float dist = Vector3.Distance(ps.Transform.position, player.transform.position);
 
-			if (dist > SPAWN_DIST)
-				return;
-
-			if (!CanSeePlayer(ps))
+			if (dist > CHASE_DIST)
 				return;
 
 			ps.Controller.CachedTarget = player;
+
+			if (!ps.CanSeePlayer())
+			{
+				Debug.Log("Can't see player, exiting");
+				ps.Controller.CachedTarget = null;
+				return;
+			}
+
 			// TODO - Add a check here, we could possibly jump directly into attacking.
 			Parent.SetState(typeof(AIState_Chase), ps);
 		}
 
-		private bool CanSeePlayer(AIStateParams ps)
+		public override void OnDrawGizmos(AIStateParams ps)
 		{
-			Vector3 dir = (player.position - ps.Transform.position).normalized;
-			Ray ray = new Ray(ps.Transform.position, dir);
-			RaycastHit hit;
-
-			if (!Physics.Raycast(ray, out hit)) return false;
-
-			if (hit.distance > 10f)
-				return false;
-
-			return hit.transform == player || hit.transform.IsChildOf(player);
+			using(new GizmoColorScope(Color.yellow))
+			Gizmos.DrawWireSphere(ps.Transform.position, CHASE_DIST);
 		}
 	}
 }

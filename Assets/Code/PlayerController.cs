@@ -17,6 +17,11 @@ namespace gmtk.Player
         private Rigidbody rbody;
 
 
+		public void EndGame()
+		{
+
+		}
+
         private void Start()
         {
             rbody = GetComponent<Rigidbody>();

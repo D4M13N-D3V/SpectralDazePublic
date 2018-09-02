@@ -18,13 +18,21 @@ public class MouseMarker : MonoBehaviour
         UnityEngine.Cursor.visible = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+		if (!Input.GetMouseButton(0))
+		{
+			renderer.material = NotValidPoint;
+			particleSys.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+		}
+		else
+		{
+			renderer.material = ValidPoint;
+			if (particleSys.isStopped)
+				particleSys.Play();
+		}
 
-        if (UnityEngine.Cursor.visible == true)
-            UnityEngine.Cursor.visible = false;
-
+		Cursor.visible = false;
 
         RaycastHit mouseHit;
         if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))

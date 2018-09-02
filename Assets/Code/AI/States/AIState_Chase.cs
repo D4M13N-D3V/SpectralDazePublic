@@ -11,11 +11,14 @@ namespace gmtk.AI
 		private float idleTimer = 0f;
 		private const float IDLE_TIME = 3f;
 
+		private const float ATK_DIST = 4f;
+
 		private Vector3 cachedPosition;
 
 		public override void Enter(AIStateParams ps)
 		{
 			// Start moving towards the cached enemy
+			ps.NavMeshAgent.isStopped = false;
 			ps.NavMeshAgent.SetDestination(ps.Controller.CachedTarget.transform.position);
 		}
 
@@ -36,7 +39,15 @@ namespace gmtk.AI
 
 			float distanceToPlayer = Vector3.Distance(ps.Controller.transform.position, ps.Controller.CachedTarget.position);
 
-			if (CanSeePlayer(ps))
+			if (distanceToPlayer <= ATK_DIST)
+			{
+				// Go ahead and change over to attack charge
+				ps.NavMeshAgent.isStopped = true;
+				Parent.SetState(typeof(AIState_AttackCharge), ps);
+				return;
+			}
+
+			if (ps.CanSeePlayer())
 				memoryTimer = 0f;
 			else
 				memoryTimer += Time.deltaTime;
@@ -66,18 +77,10 @@ namespace gmtk.AI
 			idleTimer = 0f;
 		}
 
-		private bool CanSeePlayer(AIStateParams ps)
+		public override void OnDrawGizmos(AIStateParams ps)
 		{
-			Vector3 dir = (ps.Controller.CachedTarget.position - ps.Transform.position).normalized;
-			Ray ray = new Ray(ps.Transform.position, dir);
-			RaycastHit hit;
-
-			if (!Physics.Raycast(ray, out hit)) return false;
-
-			if (hit.distance > 10f)
-				return false;
-
-			return hit.transform == ps.Controller.CachedTarget || hit.transform.IsChildOf(ps.Controller.CachedTarget);
+			using(new GizmoColorScope(Color.red))
+				Gizmos.DrawWireSphere(ps.Transform.position, ATK_DIST);
 		}
 	}
 }
