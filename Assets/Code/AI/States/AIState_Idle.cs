@@ -45,7 +45,7 @@ namespace gmtk.AI
 			if (hit.distance > 10f)
 				return false;
 
-			return hit.transform == ps.Controller.CachedTarget || hit.transform.IsChildOf(ps.Controller.CachedTarget);
+			return hit.transform == player || hit.transform.IsChildOf(player);
 		}
 	}
 }

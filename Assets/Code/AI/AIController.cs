@@ -37,6 +37,7 @@ namespace gmtk.AI
 		private void OnGUI()
 		{
 			stateMachine.OnGUI(paramsInstance);
+			GUI.Label(new Rect(0, 0, 100, 50), stateMachine.ActiveState.GetType()+"");
 		}
 	}
 }

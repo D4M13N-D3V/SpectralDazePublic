@@ -11,5 +11,6 @@ namespace gmtk.AI
 		public Transform Transform;
 		public AIController Controller;
 		public NavMeshAgent NavMeshAgent;
+		public Animator Animator;
 	}
 }

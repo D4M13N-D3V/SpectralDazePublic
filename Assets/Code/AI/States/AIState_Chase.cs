@@ -11,6 +11,8 @@ namespace gmtk.AI
 		private float idleTimer = 0f;
 		private const float IDLE_TIME = 3f;
 
+		private Vector3 cachedPosition;
+
 		public override void Enter(AIStateParams ps)
 		{
 			// Start moving towards the cached enemy
@@ -19,6 +21,13 @@ namespace gmtk.AI
 
 		public override void Update(AIStateParams ps)
 		{
+			if (cachedPosition != Vector3.zero)
+			{
+
+			}
+
+			cachedPosition = ps.Transform.position;
+
 			if (ps.Controller.CachedTarget == null)
 			{
 				Parent.SetState(typeof(AIState_Idle), ps);
