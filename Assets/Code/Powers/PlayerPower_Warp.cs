@@ -27,7 +27,7 @@ namespace gmtk.Player
 				mouseHit.point.DrawDebug(Color.red, 0.1f, 0.25f);
 				Time.timeScale = 0.45f;
 			}
-			else if (Input.GetMouseButtonUp(0))
+			if (Input.GetMouseButtonUp(0))
 			{
 				// Move the player
 				Time.timeScale = 1f;
