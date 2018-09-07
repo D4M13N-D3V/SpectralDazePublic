@@ -4,6 +4,7 @@ using SpectralDaze.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SpectralDaze.ScriptableObjects.Time;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,9 +16,12 @@ namespace SpectralDaze.Player
         public PlayerInfo playerInfo;
         public Conversation TestConversation;
 
-        private Animator animator;
+        public Animator Animator;
+
         private DialogueManager dialogueMan;
         private Rigidbody rbody;
+
+        public Information timeInfo;
 
         public void EndGame()
         {
@@ -27,7 +31,7 @@ namespace SpectralDaze.Player
         private void Start()
         {
             rbody = GetComponent<Rigidbody>();
-            animator = GetComponentInChildren<Animator>();
+            Animator = GetComponentInChildren<Animator>();
             dialogueMan = FindObjectOfType<DialogueManager>();
         }
 
@@ -59,7 +63,7 @@ namespace SpectralDaze.Player
             Vector2 computedInput = input * UnityEngine.Time.deltaTime * playerInfo.MoveSpeed;
             computedInput = Vector2.ClampMagnitude(computedInput, UnityEngine.Time.deltaTime * playerInfo.MoveSpeed);
 
-            animator.SetFloat("RunSpeed", computedInput.magnitude);
+            Animator.SetFloat("RunSpeed", computedInput.magnitude);
 
             Vector3 pos = transform.position;
             pos += new Vector3(computedInput.x, 0, computedInput.y);

@@ -4,54 +4,20 @@ using UnityEngine;
 
 namespace SpectralDaze.Time.Information
 {
+    [System.Serializable]
     public class Information
     {
-        public float AnimationModifier
-        {
-            get { return AnimationModifier; }
-            set
-            {
-                if (value > 1 || value<=0 )
-                {
-                    AnimationModifier = 1;
-                }
-                else
-                {
-                    AnimationModifier = value;
-                }
-            }
-        }
-
-        public float PhysicsModifier
-        {
-            get { return PhysicsModifier; }
-            set
-            {
-                if (value > 1 || value<=0 )
-                {
-                    PhysicsModifier = 1;
-                }
-                else
-                {
-                    PhysicsModifier = value;
-                }
-            }
-        }
-
-        public float MovementModifier
-        {
-            get { return MovementModifier; }
-            set
-            {
-                if (value > 1 || value<=0 )
-                {
-                    MovementModifier = 1;
-                }
-                else
-                {
-                    MovementModifier = value;
-                }
-            }
-        }
+        /// <summary>
+        /// Normalized variable to use to modify the speed of the existing playback speed. Between 0-1
+        /// </summary>
+        public float AnimationModifier = 1;
+        /// <summary>
+        /// Normalized variable to use to modify the physics of the existing physics speed. Between 0-1
+        /// </summary>
+        public float PhysicsModifier = 1;
+        /// <summary>
+        /// Normalized variable to use to modify the movement of the existing movement speed. Between 0-1
+        /// </summary>
+        public float MovementModifier = 1;
     }
 }
