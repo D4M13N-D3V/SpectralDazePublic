@@ -689,7 +689,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c40260c113b77ce4383034c021a7b7e0, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.186
+  m_Volume: 0.044
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -784,7 +784,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3895b5f2e32b926498130ad0e2c43c2c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.257
+  m_Volume: 0.096
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1837364628123728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbdc15114a9453244ad942e7184ee9b3, type: 3}
+  m_Script: {fileID: 11500000, guid: f72e55b382770d4499e3ef2b0a5576a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentPower: {fileID: 11400000, guid: 48ab086ebb9146140be6c3a863097326, type: 2}
@@ -1053,29 +1053,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1837364628123728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7e08b9ea9aadd4c9421b49fa8e2198, type: 3}
+  m_Script: {fileID: 11500000, guid: f2f65ee96d386d445ae3fe3be62b9b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 6
-  TestConversation:
-    DialogueLines:
-    - LineText: 'Hah!
-
-        It''s cute you think you can still escape.'
-      LineCharacter: 1
-    - LineText: I'll escape without you're help!
-      LineCharacter: 0
-    - LineText: Bahahahaha!
-      LineCharacter: 1
-    - LineText: 'You? escape on you''re own?!
-
-        Such comedy! you''re killing me kid'''
-      LineCharacter: 1
-    - LineText: If you're not going to be helpful just be quite I can't hear my self
-        think over your obnoxiousness.
-      LineCharacter: 0
-    - LineText: pfft...
-      LineCharacter: 1
+  playerInfo: {fileID: 11400000, guid: d6d87505ca827ee4982ac19c98caba52, type: 2}
+  TestConversation: {fileID: 11400000, guid: aac3fc7a14f9cf94aa00bbaad9e5ebe2, type: 2}
 --- !u!135 &135184111095156814
 SphereCollider:
   m_ObjectHideFlags: 1
