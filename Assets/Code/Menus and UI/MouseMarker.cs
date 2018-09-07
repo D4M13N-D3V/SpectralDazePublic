@@ -8,12 +8,12 @@ public class MouseMarker : MonoBehaviour
     public Material ValidPoint;
     public Material NotValidPoint;
 
-    private Renderer renderer;
+    private Renderer _renderer;
     private ParticleSystem particleSys;
 
     private void Start()
     {
-        renderer = this.gameObject.GetComponentInChildren<Renderer>();
+        _renderer = this.gameObject.GetComponentInChildren<Renderer>();
         particleSys = this.gameObject.GetComponentInChildren<ParticleSystem>();
         UnityEngine.Cursor.visible = false;
     }
@@ -22,12 +22,12 @@ public class MouseMarker : MonoBehaviour
     {
 		if (!Input.GetMouseButton(0))
 		{
-			renderer.material = NotValidPoint;
+			_renderer.material = NotValidPoint;
 			particleSys.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 		}
 		else
 		{
-			renderer.material = ValidPoint;
+			_renderer.material = ValidPoint;
 			if (particleSys.isStopped)
 				particleSys.Play();
 		}
@@ -42,13 +42,13 @@ public class MouseMarker : MonoBehaviour
 
         if (mouseHit.collider.gameObject.tag != "Walkable")
         {
-            renderer.material = NotValidPoint;
+            _renderer.material = NotValidPoint;
             if (!particleSys.isStopped)
             particleSys.Stop(false, ParticleSystemStopBehavior.StopEmitting);
         }
         else
         {
-            renderer.material = ValidPoint;
+            _renderer.material = ValidPoint;
             if (particleSys.isStopped)
                 particleSys.Play();
         }

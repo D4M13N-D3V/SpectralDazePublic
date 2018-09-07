@@ -13,7 +13,7 @@ public class SmoothCameraFollow : MonoBehaviour {
     {
         if (Target)
         {
-            var tempVec = new Vector3(Target.position.x, 0, Target.position.z) + Offset;
+            var tempVec = Target.position + Offset;
             transform.position = Vector3.Lerp(transform.position, tempVec, Smoothness);
         }
     }
