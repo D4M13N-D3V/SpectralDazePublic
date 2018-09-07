@@ -5,7 +5,13 @@ using UnityEngine;
 namespace SpectralDaze.Time.Information
 {
     [System.Serializable]
-    public class Information
+    public class InformationListItem
+    {
+        public Manipulations Type;
+        public InformationStats Stats;
+    }
+    [System.Serializable]
+    public class InformationStats
     {
         /// <summary>
         /// Normalized variable to use to modify the speed of the existing playback speed. Between 0-1

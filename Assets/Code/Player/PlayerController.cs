@@ -13,7 +13,7 @@ namespace SpectralDaze.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        public PlayerInfo playerInfo;
+        public PlayerInfo PlayerInfo;
         public Conversation TestConversation;
 
         public Animator Animator;
@@ -56,12 +56,12 @@ namespace SpectralDaze.Player
             Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
             // if we are not allowed to move set input to 0,0
-            if (!playerInfo.CanMove)
+            if (!PlayerInfo.CanMove)
                 input = Vector2.zero;
 
 
-            Vector2 computedInput = input * UnityEngine.Time.deltaTime * playerInfo.MoveSpeed;
-            computedInput = Vector2.ClampMagnitude(computedInput, UnityEngine.Time.deltaTime * playerInfo.MoveSpeed);
+            Vector2 computedInput = input * UnityEngine.Time.deltaTime * PlayerInfo.MoveSpeed;
+            computedInput = Vector2.ClampMagnitude(computedInput, UnityEngine.Time.deltaTime * PlayerInfo.MoveSpeed);
 
             Animator.SetFloat("RunSpeed", computedInput.magnitude);
 

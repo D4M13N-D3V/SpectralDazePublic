@@ -33,7 +33,7 @@ public class UStateMachine<TParamStruct> where TParamStruct : struct
 		ActiveState.Update(parameters);
 		ActiveState.CheckForTransitions(parameters);
 	}
-
+        
 	public void OnGUI(TParamStruct parameters)
 	{
 		if (ActiveState != null)

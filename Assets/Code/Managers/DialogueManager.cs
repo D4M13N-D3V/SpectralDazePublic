@@ -1,12 +1,12 @@
-﻿using System;
+﻿using SpectralDaze.DataTypes.Conversations;
+using SpectralDaze.ScriptableObjects.Characters;
+using SpectralDaze.ScriptableObjects.Conversations;
+using SpectralDaze.ScriptableObjects.Stats;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using SpectralDaze.ScriptableObjects.Conversations;
-using SpectralDaze.ScriptableObjects.Characters;
-using SpectralDaze.DataTypes.Conversations;
-using SpectralDaze.ScriptableObjects.Stats;
 
 namespace SpectralDaze.Managers
 {

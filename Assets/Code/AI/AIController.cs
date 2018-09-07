@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using SpectralDaze.ScriptableObjects.Time;
+using SpectralDaze.Time;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,13 +15,20 @@ namespace SpectralDaze.AI
 
 		public GameObject BulletPrefab;
 
+
 		private UStateMachine<AIStateParams> stateMachine;
 
 		private AIStateParams paramsInstance;
 
+	    public Information TimeInfo;
+        private Animator _animator;
+        private bool _timeBeingManipulated;
+	    private Manipulations _manipulationType;
+
 		private void Start()
 		{
-			paramsInstance = new AIStateParams()
+		    _animator = GetComponent<Animator>();
+            paramsInstance = new AIStateParams()
 			{
 				Controller = this,
 				NavMeshAgent = GetComponent<NavMeshAgent>(),
@@ -51,5 +61,22 @@ namespace SpectralDaze.AI
 			if(stateMachine != null)
 			stateMachine.OnDrawGizmos(paramsInstance);
 		}
+
+        /*
+         * Time Bubble/Manipulation Code
+         */
+	    public void StartTimeManipulation(int type)
+	    {
+	        _timeBeingManipulated = true;
+	        _manipulationType = (Manipulations) type;
+	        _animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
+	    }
+
+	    public void StopTimeManipulation()
+	    {
+	        _timeBeingManipulated = true;
+	        _manipulationType = Manipulations.Normal;
+            _animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
+        }
 	}
 }
