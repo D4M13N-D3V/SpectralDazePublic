@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-class GameManager : MonoBehaviour
+namespace SpectralDaze.Managers
 {
-    public static GameManager Instance { get; private set; }
-
-    public DialogueManager DialogueManager { get; private set; }
-    public AudioManager AudioManager { get; private set; }
-
-    void Awake()
+    class GameManager : MonoBehaviour
     {
-        if (Instance == null) { Instance = this; } else { Debug.Log("Warning: multiple " + this + " in scene!"); }
-        DialogueManager = FindObjectOfType<DialogueManager>();
-        AudioManager = FindObjectOfType<AudioManager>();
-    }
+        public static GameManager Instance { get; private set; }
 
-    private void Start()
-    {
+        public DialogueManager DialogueManager { get; private set; }
+        public AudioManager AudioManager { get; private set; }
+
+        void Awake()
+        {
+            if (Instance == null) { Instance = this; } else { Debug.Log("Warning: multiple " + this + " in scene!"); }
+            DialogueManager = FindObjectOfType<DialogueManager>();
+            AudioManager = FindObjectOfType<AudioManager>();
+        }
+
+        private void Start()
+        {
+        }
     }
 }

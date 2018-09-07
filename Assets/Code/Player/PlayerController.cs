@@ -1,5 +1,6 @@
 ﻿using SpectralDaze.ScriptableObjects.Conversations;
 using SpectralDaze.ScriptableObjects.Stats;
+using SpectralDaze.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;

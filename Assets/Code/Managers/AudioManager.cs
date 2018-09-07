@@ -1,27 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AudioManager : MonoBehaviour
+namespace SpectralDaze.Managers
 {
-
-
-    AudioSource SfxSource;
-
-    // Use this for initialization
-    void Start()
-    {
-        SfxSource = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
+    public class AudioManager : MonoBehaviour
     {
 
-    }
 
-    public void PlaySfx(AudioClip clip)
-    {
-        SfxSource.clip = clip;
-        SfxSource.Play();
+        AudioSource SfxSource;
+
+        // Use this for initialization
+        void Start()
+        {
+            SfxSource = GetComponent<AudioSource>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        public void PlaySfx(AudioClip clip)
+        {
+            SfxSource.clip = clip;
+            SfxSource.Play();
+        }
     }
 }

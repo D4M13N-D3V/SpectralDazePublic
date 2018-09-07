@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
-class DDOL : MonoBehaviour
+namespace SpectralDaze.Managers
 {
-    private void Awake()
+    class DDOL : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
-        Debug.Log("DDOL " + gameObject.name);
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("DDOL " + gameObject.name);
+        }
     }
 }
