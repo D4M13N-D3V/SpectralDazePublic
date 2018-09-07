@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace gmtk.AI
+namespace SpectralDaze.AI
 {
 	public class AIController : MonoBehaviour
 	{

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace gmtk.AI
+namespace SpectralDaze.AI
 {
 	public class AIState_Idle : UState<AIStateParams>
 	{
-		private const float CHASE_DIST = 6f;
+		private const float CHASE_DIST = 12f;
 
 		private Transform player;
 

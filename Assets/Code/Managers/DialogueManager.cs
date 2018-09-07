@@ -3,38 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using SpectralDaze.ScriptableObjects.Conversations;
+using SpectralDaze.ScriptableObjects.Characters;
+using SpectralDaze.DataTypes.Conversations;
+using SpectralDaze.ScriptableObjects.Stats;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField]
-    public Sprite[] CharacterSprites;
-    public List<AudioClip> BeeGibberish;
-    public List<AudioClip> StichesGibberish;
-
     public Image CharacterImage { get; set; }
     public Text CharacterName { get; set; }
     public Text DialogueText { get; set; }
 
-    DateTime OnEnterTime;
-    AudioClip tmpAudioClip;
-
-    public Conversation TestConversation { get; set; }
-
     public GameObject DialogueParentObj;
     public Animator TextAnimator;
     public AudioClip NextDialogueSfxClip;
+    public AudioSource myAudioSource;
 
     public bool IsDialogueActive = false;
 
-    private Queue<DialogueLine> DialogueQueue;
+    DateTime OnEnterTime;
+    AudioClip tmpAudioClip;
+    PlayerInfo playerInfo;
 
-    public AudioSource myAudioSource;
+    private Queue<ConversationLine> ConversationQueue;
+
 
     public bool IsQueueEmpty
     {
         get
         {
-            if (!DialogueQueue.Any()) return true;
+            if (!ConversationQueue.Any()) return true;
             else
                 return false;
         }
@@ -48,13 +46,15 @@ public class DialogueManager : MonoBehaviour
         TextAnimator = GameObject.FindGameObjectWithTag("DialogueText").GetComponent<Animator>();
         myAudioSource = GetComponent<AudioSource>();
 
+        playerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
+
         DialogueParentObj.SetActive(false);
-        DialogueQueue = new Queue<DialogueLine>();
+        ConversationQueue = new Queue<ConversationLine>();
     }
 
     public void StartDialogue(Conversation dialogue)
     {
-        DialogueQueue = new Queue<DialogueLine>(dialogue.DialogueLines);
+        ConversationQueue = new Queue<ConversationLine>(dialogue.ConversationLines);
         OnEnterTime = DateTime.Now;
         CycleDialogue();
     }
@@ -65,39 +65,23 @@ public class DialogueManager : MonoBehaviour
         ShowDialogueBox();
         TextAnimator.Play("Anim_NextDialogue");
 
-        var Line = DialogueQueue.Dequeue();
+        var Line = ConversationQueue.Dequeue();
 
-        CharacterImage.sprite = GetCharacterSprite(Line.LineCharacter);
-        CharacterName.text = GetCharacterName(Line.LineCharacter);
-        DialogueText.text = Line.LineText;
+        CharacterImage.sprite = GetCharacterSprite(Line);
+        CharacterName.text = Line.LineCharacter.Name;
+        DialogueText.text = Line.Text;
         PlayVoice(Line.LineCharacter);
     }
 
-    private Sprite GetCharacterSprite(Character lineCharacter)
+    private Sprite GetCharacterSprite(ConversationLine line)
     {
-        switch (lineCharacter)
-        {
-            case Character.Be:
-                return CharacterSprites[0];
-            case Character.Stitches:
-                return CharacterSprites[1];
-        }
-        return CharacterSprites[0];
+        CharacterPortrait charPort = line.LineCharacter.CharacterPortraits.First(x => x.Emotion == line.LineEmotion);
+        if (charPort)
+            return charPort.Sprite;
+        return null;
     }
 
-    private string GetCharacterName(Character lineCharacter)
-    {
-        switch (lineCharacter)
-        {
-            case Character.Be:
-                return "Be:";
-            case Character.Stitches:
-                return "Stiches:";
-        }
-        return "???:";
-    }
-
-    private void PlayVoice(Character lineCharacter)
+    private void PlayVoice(Character character)
     {
         var rnd = new System.Random();
         var lastVoice = tmpAudioClip;
@@ -105,35 +89,25 @@ public class DialogueManager : MonoBehaviour
         var i = 0;
         while (lastVoice == tmpAudioClip && i < 10)
         {
-            GetVoice(lineCharacter, rnd);
+            tmpAudioClip = character.VoiceLines.AudioClips[rnd.Next(0, character.VoiceLines.AudioClips.Count)];
             i++;
         }
+
         myAudioSource.Stop();
         myAudioSource.clip = tmpAudioClip;
         myAudioSource.Play();
     }
 
-    private void GetVoice(Character lineCharacter, System.Random rnd)
-    {
-        switch (lineCharacter)
-        {
-            case Character.Be:
-                tmpAudioClip = BeeGibberish[rnd.Next(0,BeeGibberish.Count)];
-                break;
-            default:
-                tmpAudioClip = StichesGibberish[rnd.Next(0, StichesGibberish.Count)];
-                break;
-        }
-    }
-
     public void ShowDialogueBox()
     {
         DialogueParentObj.SetActive(true);
+        playerInfo.CanMove = false;
     }
 
     public void HideDialogueBox()
     {
         DialogueParentObj.SetActive(false);
+        playerInfo.CanMove = true;
     }
 
     public void CycleDialogue()

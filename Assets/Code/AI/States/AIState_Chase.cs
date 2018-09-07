@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace gmtk.AI
+namespace SpectralDaze.AI
 {
 	public class AIState_Chase : UState<AIStateParams>
 	{
@@ -11,7 +11,7 @@ namespace gmtk.AI
 		private float idleTimer = 0f;
 		private const float IDLE_TIME = 3f;
 
-		private const float ATK_DIST = 4f;
+		private const float ATK_DIST = 8f;
 
 		private Vector3 cachedPosition;
 

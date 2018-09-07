@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 423f250916019464e91600337c2984c0, type: 3}
+  m_Name: TestConversation
+  m_EditorClassIdentifier: 
+  ConversationLines:
+  - LineCharacter: {fileID: 11400000, guid: 81a76442ec765274ea4587e119fb5ca8, type: 2}
+    Text: 'Heh..
+
+'
+    LineEmotion: {fileID: 11400000, guid: e1e0fe457f418444b9b2851ef55cdf98, type: 2}
+  - LineCharacter: {fileID: 11400000, guid: 81a76442ec765274ea4587e119fb5ca8, type: 2}
+    Text: I see you're making progress.
+    LineEmotion: {fileID: 11400000, guid: e1e0fe457f418444b9b2851ef55cdf98, type: 2}
+  - LineCharacter: {fileID: 11400000, guid: a972296730091694285f7a86eaa456c6, type: 2}
+    Text: I won't stop until I'm out of here.
+    LineEmotion: {fileID: 11400000, guid: e1e0fe457f418444b9b2851ef55cdf98, type: 2}

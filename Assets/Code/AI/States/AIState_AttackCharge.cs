@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace gmtk.AI
+namespace SpectralDaze.AI
 {
 	public class AIState_AttackCharge : UState<AIStateParams>
 	{

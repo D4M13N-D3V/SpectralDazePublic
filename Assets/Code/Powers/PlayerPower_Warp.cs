@@ -25,7 +25,7 @@ namespace gmtk.Player
 			{
 				// If they're holding right click
 				mouseHit.point.DrawDebug(Color.red, 0.1f, 0.25f);
-				Time.timeScale = 0.45f;
+				Time.timeScale = 0.10f;
 			}
 			if (Input.GetMouseButtonUp(0))
 			{

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace gmtk.AI
+namespace SpectralDaze.AI
 {
 	public struct AIStateParams
 	{

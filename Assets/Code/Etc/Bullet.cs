@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using gmtk.Player;
+using SpectralDaze.Player;
 
 public class Bullet : MonoBehaviour
 {
