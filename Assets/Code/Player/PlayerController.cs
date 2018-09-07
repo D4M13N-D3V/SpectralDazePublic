@@ -56,8 +56,8 @@ namespace SpectralDaze.Player
                 input = Vector2.zero;
 
 
-            Vector2 computedInput = input * Time.deltaTime * playerInfo.MoveSpeed;
-            computedInput = Vector2.ClampMagnitude(computedInput, Time.deltaTime * playerInfo.MoveSpeed);
+            Vector2 computedInput = input * UnityEngine.Time.deltaTime * playerInfo.MoveSpeed;
+            computedInput = Vector2.ClampMagnitude(computedInput, UnityEngine.Time.deltaTime * playerInfo.MoveSpeed);
 
             animator.SetFloat("RunSpeed", computedInput.magnitude);
 
@@ -73,7 +73,7 @@ namespace SpectralDaze.Player
             if (computedInput != Vector2.zero)
             {
                 Quaternion goalRotation = Quaternion.LookRotation(new Vector3(input.x, 0, input.y), Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, goalRotation, Time.deltaTime * 9f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, goalRotation, UnityEngine.Time.deltaTime * 9f);
             }
         }
     }

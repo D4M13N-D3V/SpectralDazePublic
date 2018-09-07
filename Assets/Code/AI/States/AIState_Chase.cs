@@ -50,7 +50,7 @@ namespace SpectralDaze.AI
 			if (ps.CanSeePlayer())
 				memoryTimer = 0f;
 			else
-				memoryTimer += Time.deltaTime;
+				memoryTimer += UnityEngine.Time.deltaTime;
 
 			// If we can still see the player(or if they're in recent memory), continue moving towards their position.
 			// If not, go ahead and stop for a second until we transition back into idle.
@@ -62,7 +62,7 @@ namespace SpectralDaze.AI
 			else
 			{
 				ps.NavMeshAgent.isStopped = true;
-				idleTimer += Time.deltaTime;
+				idleTimer += UnityEngine.Time.deltaTime;
 				if (idleTimer > IDLE_TIME)
 				{
 					Parent.SetState(typeof(AIState_Idle), ps);
