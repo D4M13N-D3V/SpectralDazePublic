@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: New Quest NPC Options
+  m_EditorClassIdentifier: Assembly-CSharp:SpectralDaze.ScriptableObjects.AI:QuestNPCOptions
+  MovementType: 1
+  WanderDistance: 10
+  IdleTime: 2
+  StartingPatorlPoint: 0
+  PatrolPoints: []
+  Conversation: {fileID: 11400000, guid: 70f1380ebc37e204db02e9c0099e8be8, type: 2}
