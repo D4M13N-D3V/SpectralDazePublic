@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2c63820fc367a4b8d3e64592c182f0, type: 3}
+  m_Name: Test Tileset
+  m_EditorClassIdentifier: 
+  WallPieces:
+  - {fileID: 1513142166379674, guid: 352b153dd841c2048981b3084087152b, type: 2}
+  - {fileID: 1648615765508312, guid: 00243cb1c10cf1648bf82d35aafa76c2, type: 2}
+  - {fileID: 1260521606418758, guid: ff9931a135a8ba44dabe2fcdd231d1d5, type: 2}
+  - {fileID: 1664366806294562, guid: 669af842112124342a34ca7e3b746ebb, type: 2}
+  Wall: {fileID: 1743315927687456, guid: c0e492ec70309c44f9f832b98bf665a7, type: 2}
+  WallOuterCorner: {fileID: 1866017988612628, guid: 717ac3b3086c33b4c904631f04d21bdf,
+    type: 2}
+  WallInnerCorner: {fileID: 0}
+  Floor: {fileID: 1217327483073030, guid: d56faeb181351684e8699c31dd89b610, type: 2}
+  FloorColor: {r: 1, g: 1, b: 1, a: 1}
+  TileSize: 6
