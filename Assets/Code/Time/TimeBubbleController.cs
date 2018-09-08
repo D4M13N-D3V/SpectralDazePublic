@@ -23,16 +23,15 @@ public class TimeBubbleController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 9)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Time"))
         {
             other.gameObject.SendMessage("StartTimeManipulation", (int)Type);
         }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == 9)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Time"))
         {
-            Debug.Log("TESTSETS");
             other.gameObject.SendMessage("StopTimeManipulation");
         }
     }
