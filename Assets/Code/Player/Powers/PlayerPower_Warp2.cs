@@ -42,7 +42,7 @@ namespace SpectralDaze.Player
                 return;
 
             Vector3 adjustedHitPoint = mouseHit.point + Vector3.up;
-            if (Vector3.Distance(adjustedHitPoint, pc.transform.position) > 12f)
+            if (Vector3.Distance(adjustedHitPoint, pc.transform.position) > 7.5f)
                 return;
 
             if (Input.GetMouseButton(0))
