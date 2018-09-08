@@ -14,6 +14,7 @@ namespace SpectralDaze.Player
     public class PlayerPower_Warp2 : PlayerPower
     {
         public GameObject TimeBubblePrefab;
+        public Vector3 BubbleScale = new Vector3(7,7,7);
 
         private GameObject _timeBubble;
 
@@ -52,6 +53,7 @@ namespace SpectralDaze.Player
                 if (_timeBubble == null)
                 {
                     _timeBubble = Instantiate(TimeBubblePrefab, pc.transform);
+                    _timeBubble.GetComponent<TimeBubbleController>().BubbleScale = BubbleScale;
                     _timeBubble.transform.localPosition = new Vector3(0,-1,0);
                     _timeBubble.GetComponent<TimeBubbleController>().Type = Manipulations.Slow;
                     _timeBubble.name = "TimeBubble";

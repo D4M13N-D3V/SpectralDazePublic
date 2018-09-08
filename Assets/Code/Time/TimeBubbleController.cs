@@ -7,10 +7,12 @@ public class TimeBubbleController : MonoBehaviour
 {
     public Manipulations Type = Manipulations.Slow;
 
+    public Vector3 BubbleScale = new Vector3(7,7,7);
+
     private void Start()
     {
         transform.localScale = Vector3.zero;
-        LeanTween.scale(gameObject, new Vector3(7, 7, 7), 0.5f);
+        LeanTween.scale(gameObject, BubbleScale, 0.5f);
     }
 
     public void SelfDestruct()
