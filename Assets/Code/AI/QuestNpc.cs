@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using SpectralDaze.ScriptableObjects.Time;
+using SpectralDaze.Time;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,6 +13,12 @@ namespace SpectralDaze.AI.QuestNPC
         public QuestNPCOptions Options;
         private UStateMachine<QuestNpcParams> stateMachine;
         private QuestNpcParams paramsInstance;
+
+
+        public Information TimeInfo;
+        //private Animator _animator;
+        private bool _timeBeingManipulated;
+        private Manipulations _manipulationType;
 
         private void Start()
         {
@@ -29,6 +38,8 @@ namespace SpectralDaze.AI.QuestNPC
             };
             stateMachine = new UStateMachine<QuestNpcParams>(paramsInstance, new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
+            _manipulationType = Manipulations.Normal;
+            paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
         }
 
         private void Update()
@@ -39,6 +50,26 @@ namespace SpectralDaze.AI.QuestNPC
         private void FixedUpdate()
         {
             stateMachine.FixedUpdate(paramsInstance);
+        }
+
+
+        /*
+         * Time Bubble/Manipulation Code
+         */
+        public void StartTimeManipulation(int type)
+        {
+            _timeBeingManipulated = true;
+            _manipulationType = (Manipulations)type;
+            paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
+        }
+
+        public void StopTimeManipulation()
+        {
+            _timeBeingManipulated = false;
+            _manipulationType = Manipulations.Normal;
+            paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
         private class Idle : UState<QuestNpcParams>
@@ -57,7 +88,6 @@ namespace SpectralDaze.AI.QuestNPC
                     if (_timeLeftIdle > 0)
                     {
                         _timeLeftIdle = _timeLeftIdle - UnityEngine.Time.deltaTime;
-                        Debug.Log(_timeLeftIdle);
                     }
                     else
                     {
