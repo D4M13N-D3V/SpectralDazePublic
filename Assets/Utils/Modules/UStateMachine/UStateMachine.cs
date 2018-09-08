@@ -33,6 +33,13 @@ public class UStateMachine<TParamStruct> where TParamStruct : struct
 		ActiveState.Update(parameters);
 		ActiveState.CheckForTransitions(parameters);
 	}
+
+	public void FixedUpdate(TParamStruct parameters)
+	{
+		if (ActiveState == null)
+			return;
+		ActiveState.FixedUpdate(parameters);
+	}
         
 	public void OnGUI(TParamStruct parameters)
 	{
