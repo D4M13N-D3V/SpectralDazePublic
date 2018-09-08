@@ -30138,8 +30138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2f65ee96d386d445ae3fe3be62b9b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInfo: {fileID: 11400000, guid: d6d87505ca827ee4982ac19c98caba52, type: 2}
+  PlayerInfo: {fileID: 11400000, guid: 3ba1d7f0ad1c7bf4e8e8884a37083de8, type: 2}
   TestConversation: {fileID: 11400000, guid: aac3fc7a14f9cf94aa00bbaad9e5ebe2, type: 2}
+  Animator: {fileID: 0}
+  timeInfo: {fileID: 11400000, guid: 6586469dfc5ab6b4a877e77eec8005af, type: 2}
 --- !u!54 &824558878
 Rigidbody:
   m_ObjectHideFlags: 0
