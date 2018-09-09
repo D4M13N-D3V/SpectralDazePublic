@@ -18,3 +18,5 @@ MonoBehaviour:
   PatrolPoints: []
   AggroDistance: 4
   TimeBetweenCharges: 2
+  LaunchVelocity: 5
+  MovementSpeed: 3

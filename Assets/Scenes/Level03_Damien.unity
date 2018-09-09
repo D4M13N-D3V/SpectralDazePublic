@@ -28800,7 +28800,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!195 &707077349
 NavMeshAgent:
@@ -28835,6 +28835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6725f62a7c799a044a48967ab5ab6575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _localTimeScale: 1
   Options: {fileID: 11400000, guid: b3f1700d3b1b548478e367e0bf5fafb2, type: 2}
   TimeInfo: {fileID: 11400000, guid: 13517c1a443ca6847a435657540e6214, type: 2}
 --- !u!95 &707077351
@@ -57185,13 +57186,13 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1964130725}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.09845994, y: -0.0000000018626451, z: -2.3283064e-10, w: 0.995141}
+  m_LocalPosition: {x: 0.0000017052516, y: 0.022050858, z: 0.28536242}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 707077352}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -11.301001, y: 0, z: 0}
 --- !u!137 &1964130727
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

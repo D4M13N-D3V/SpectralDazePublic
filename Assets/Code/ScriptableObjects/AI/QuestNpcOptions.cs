@@ -18,5 +18,7 @@ namespace SpectralDaze.ScriptableObjects.AI
         public int StartingPatorlPoint;
         public List<Vector3> PatrolPoints;
         public Conversation Conversation;
+        public float MovementModifier;
+        public float MovementSpeed=3;
     }
 }

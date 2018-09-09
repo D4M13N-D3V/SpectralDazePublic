@@ -46,7 +46,7 @@ namespace SpectralDaze.AI.QuestNPC
             stateMachine = new UStateMachine<QuestNpcParams>(paramsInstance, new Conversing(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
             _manipulationType = Manipulations.Normal;
-            paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed*TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
@@ -249,6 +249,8 @@ namespace SpectralDaze.AI.QuestNPC
             public List<Vector3> PatrolPoints;
             public Conversation Conversation;
             public PlayerController Player;
+            public float MovementModifier;
+            public float MovementSpeed;
         }
     }
 

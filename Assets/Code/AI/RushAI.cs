@@ -12,6 +12,36 @@ namespace SpectralDaze.AI
 {
     public class RushAI : MonoBehaviour
     {
+        public float _localTimeScale = 1.0f;
+        public float localTimeScale
+        {
+            get
+            {
+                return _localTimeScale;
+            }
+            set
+            {
+                //            if (r == null) r = GetComponent<Rigidbody>();
+                //            if (r != null)
+                //            {
+                float multiplier = value / _localTimeScale;
+                paramsInstance.RigidBody.angularDrag *= multiplier;
+                paramsInstance.RigidBody.drag *= multiplier;
+                paramsInstance.RigidBody.mass /= multiplier;
+                paramsInstance.RigidBody.velocity *= multiplier;
+                paramsInstance.RigidBody.angularVelocity *= multiplier;
+                //            }
+
+                _localTimeScale = value;
+            }
+        }
+        public float localDeltaTime
+        {
+            get
+            {
+                return UnityEngine.Time.deltaTime * UnityEngine.Time.timeScale * _localTimeScale;
+            }
+        }
 
         public RushAIOptions Options;
         private UStateMachine<RushAIParams> stateMachine;
@@ -41,13 +71,17 @@ namespace SpectralDaze.AI
                 Player = FindObjectOfType<PlayerController>(),
                 AggroDistance = Options.AggroDistance,
                 TimeBetweenCharges = Options.TimeBetweenCharges,
+                RigidBody = GetComponent<Rigidbody>(),
+                LaunchVelocity = Options.LaunchVelocity,
+                MovementSpeed = Options.MovementSpeed
             };
             stateMachine = new UStateMachine<RushAIParams>(paramsInstance, new Attacking(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
             _manipulationType = Manipulations.Normal;
-            paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed * TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
             paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
         }
 
         private void Update()
@@ -67,9 +101,10 @@ namespace SpectralDaze.AI
         {
             _timeBeingManipulated = true;
             _manipulationType = (Manipulations)type;
-            paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed * TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
             paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
             //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
@@ -77,9 +112,10 @@ namespace SpectralDaze.AI
         {
             _timeBeingManipulated = false;
             _manipulationType = Manipulations.Normal;
-            paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed*TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
             paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
             //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
@@ -90,7 +126,7 @@ namespace SpectralDaze.AI
             public override void Enter(RushAIParams p)
             {
                 p.NavAgent.isStopped = true;
-                _remainderChargeCooldown = 0;
+                _remainderChargeCooldown = p.TimeBetweenCharges;
             }
 
             public override void FixedUpdate(RushAIParams p)
@@ -100,18 +136,9 @@ namespace SpectralDaze.AI
                 {
                     p.NpcTransform.LookAt(p.Player.transform);
                     _chargeInProgress = true;
-                    var targetPos = p.Player.transform.position + p.NpcTransform.forward * 5;
-                    LeanTween.scale(p.NpcTransform.gameObject, p.NpcTransform.lossyScale / 1.5f, 0.5f / p.MovementModifier).setOnComplete(() =>
-                    {
-                        LeanTween.move(p.NpcTransform.gameObject, targetPos, 1.5f / p.MovementModifier).setOnComplete(() =>
-                        {
-                            LeanTween.scale(p.NpcTransform.gameObject, p.NpcTransform.lossyScale * 1.5f, 0.5f / p.MovementModifier).setOnComplete(() =>
-                            {
-                                _remainderChargeCooldown = p.TimeBetweenCharges;
-                                _chargeInProgress = false;
-                            });
-                        });
-                    });
+                    p.RigidBody.velocity= p.NpcTransform.forward * p.LaunchVelocity * p.MovementModifier;
+                    _remainderChargeCooldown = p.TimeBetweenCharges;
+                    _chargeInProgress = false;
                 }
             }
 
@@ -252,6 +279,9 @@ namespace SpectralDaze.AI
             public float AggroDistance;
             public float TimeBetweenCharges;
             public float MovementModifier;
+            public Rigidbody RigidBody;
+            public float LaunchVelocity;
+            public float MovementSpeed;
         }
     }
 }
