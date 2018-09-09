@@ -25,6 +25,8 @@ ModelImporter:
     100038: Wall1_L
     100040: Wall1_M
     100042: Wall1_R
+    100044: Wall1_R_001
+    100046: Wall1_R_002
     400000: //RootNode
     400002: floor
     400004: floorSmall
@@ -47,6 +49,8 @@ ModelImporter:
     400038: Wall1_L
     400040: Wall1_M
     400042: Wall1_R
+    400044: Wall1_R_001
+    400046: Wall1_R_002
     2100000: Material
     2100002: Material_001
     2100004: Material_003
@@ -80,6 +84,8 @@ ModelImporter:
     2300036: Wall1_L
     2300038: Wall1_M
     2300040: Wall1_R
+    2300042: Wall1_R_001
+    2300044: Wall1_R_002
     3300000: floor
     3300002: floorSmall
     3300004: Stone01
@@ -101,6 +107,8 @@ ModelImporter:
     3300036: Wall1_L
     3300038: Wall1_M
     3300040: Wall1_R
+    3300042: Wall1_R_001
+    3300044: Wall1_R_002
     4300000: floorSmall
     4300002: wallCornerOpen
     4300004: WallCornerClosed
@@ -122,6 +130,8 @@ ModelImporter:
     4300036: Wall1_M
     4300038: Wall1_R
     4300040: smallerwall
+    4300042: Wall1_R_001
+    4300044: Wall1_R_002
     7400000: Default Take
     9500000: //RootNode
   externalObjects:
