@@ -1,38 +1,35 @@
-﻿ using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
- using SpectralDaze.Managers;
- using SpectralDaze.Player;
- using SpectralDaze.ScriptableObjects.AI;
- using SpectralDaze.ScriptableObjects.Conversations;
- using SpectralDaze.ScriptableObjects.Time;
+using SpectralDaze.Managers;
+using SpectralDaze.Player;
+using SpectralDaze.ScriptableObjects.AI;
+using SpectralDaze.ScriptableObjects.Time;
 using SpectralDaze.Time;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace SpectralDaze.AI.QuestNPC
+namespace SpectralDaze.AI
 {
-    public class QuestNpc : MonoBehaviour
+    public class RushAI : MonoBehaviour
     {
-        public QuestNPCOptions Options;
-        private UStateMachine<QuestNpcParams> stateMachine;
-        private QuestNpcParams paramsInstance;
 
+        public RushAIOptions Options;
+        private UStateMachine<RushAIParams> stateMachine;
+        private RushAIParams paramsInstance;
 
         public Information TimeInfo;
-        //private Animator _animator;
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;
-
-        private void Start()
+        
+        private void Start()    
         {
-            paramsInstance = new QuestNpcParams()
+            paramsInstance = new RushAIParams()
             {
                 NpcTransform = transform,
                 Npc = this,
                 NavAgent = GetComponent<NavMeshAgent>(),
                 Animator = GetComponent<Animator>(),
-                CachedTargetPos = Vector3.zero,
+                CachedTargetMoveToTargetPos = Vector3.zero,
                 OriginPosistion = transform.position,
                 MovementType = Options.MovementType,
                 WanderDistance = Options.WanderDistance,
@@ -40,14 +37,17 @@ namespace SpectralDaze.AI.QuestNPC
                 TimeLeftIdle = Options.IdleTime,
                 PatrolPoints = Options.PatrolPoints,
                 CurrentPatrolPoint = Options.StartingPatorlPoint,
-                Conversation = Options.Conversation,
-                Player = FindObjectOfType<PlayerController>()
-        };
-            stateMachine = new UStateMachine<QuestNpcParams>(paramsInstance, new Conversing(), new Idle(), new Move());
+                CachedTarget = null,
+                Player = FindObjectOfType<PlayerController>(),
+                AggroDistance = Options.AggroDistance,
+                TimeBetweenCharges = Options.TimeBetweenCharges,
+            };
+            stateMachine = new UStateMachine<RushAIParams>(paramsInstance, new Attacking(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
             _manipulationType = Manipulations.Normal;
             paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
+            paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
         }
 
         private void Update()
@@ -60,7 +60,6 @@ namespace SpectralDaze.AI.QuestNPC
             stateMachine.FixedUpdate(paramsInstance);
         }
 
-
         /*
          * Time Bubble/Manipulation Code
          */
@@ -70,6 +69,7 @@ namespace SpectralDaze.AI.QuestNPC
             _manipulationType = (Manipulations)type;
             paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
+            paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
@@ -79,57 +79,61 @@ namespace SpectralDaze.AI.QuestNPC
             _manipulationType = Manipulations.Normal;
             paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
+            paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
-        private class Conversing : UState<QuestNpcParams>
+        private class Attacking : UState<RushAIParams>
         {
-            DialogueManager _dialogueManager;
-
-            public override void Enter(QuestNpcParams p)
+            private float _remainderChargeCooldown;
+            private bool _chargeInProgress = false;
+            public override void Enter(RushAIParams p)
             {
-                _dialogueManager = GameManager.Instance.DialogueManager;
+                p.NavAgent.isStopped = true;
+                _remainderChargeCooldown = 0;
             }
 
-            public override void Update(QuestNpcParams p)
+            public override void FixedUpdate(RushAIParams p)
             {
-                if (Input.GetButtonDown("Interact"))
+                _remainderChargeCooldown -= UnityEngine.Time.deltaTime;
+                if (_remainderChargeCooldown <= 0 && !_chargeInProgress)
                 {
-                    if(_dialogueManager.IsQueueEmpty && _dialogueManager.DialogueParentObj.activeSelf == false)
+                    p.NpcTransform.LookAt(p.Player.transform);
+                    _chargeInProgress = true;
+                    var targetPos = p.Player.transform.position + p.NpcTransform.forward * 5;
+                    LeanTween.scale(p.NpcTransform.gameObject, p.NpcTransform.lossyScale / 1.5f, 0.5f / p.MovementModifier).setOnComplete(() =>
                     {
-                        _dialogueManager.StartDialogue(p.Conversation);
-                    }
-                    else
-                    {
-                        GameManager.Instance.DialogueManager.CycleDialogue();
-                    }
+                        LeanTween.move(p.NpcTransform.gameObject, targetPos, 1.5f / p.MovementModifier).setOnComplete(() =>
+                        {
+                            LeanTween.scale(p.NpcTransform.gameObject, p.NpcTransform.lossyScale * 1.5f, 0.5f / p.MovementModifier).setOnComplete(() =>
+                            {
+                                _remainderChargeCooldown = p.TimeBetweenCharges;
+                                _chargeInProgress = false;
+                            });
+                        });
+                    });
                 }
             }
 
-            public override void CheckForTransitions(QuestNpcParams p)
+            public override void CheckForTransitions(RushAIParams p)
             {
-                if (Vector3.Distance(p.NpcTransform.position, p.Player.transform.position) >= 4)
-                {
-                    Parent.SetState(typeof(Move), p);
-                }
             }
-
-
         }
 
-        private class Idle : UState<QuestNpcParams>
+        private class Idle : UState<RushAIParams>
         {
             private float _timeLeftIdle = 0;
 
-            public override void Enter(QuestNpcParams p)
+            public override void Enter(RushAIParams p)
             {
                 _timeLeftIdle = p.IdleTime;
             }
 
-            public override void FixedUpdate(QuestNpcParams p)
+            public override void FixedUpdate(RushAIParams p)
             {
                 if (!p.NavAgent.pathPending && p.NavAgent.remainingDistance <= p.NavAgent.stoppingDistance &&
-                    !p.NavAgent.hasPath || p.NavAgent.velocity.sqrMagnitude == 0f){
+                    !p.NavAgent.hasPath || p.NavAgent.velocity.sqrMagnitude == 0f)
+                {
                     if (_timeLeftIdle > 0)
                     {
                         _timeLeftIdle = _timeLeftIdle - UnityEngine.Time.deltaTime;
@@ -141,21 +145,19 @@ namespace SpectralDaze.AI.QuestNPC
                 }
             }
 
-            public override void CheckForTransitions(QuestNpcParams p)
+            public override void CheckForTransitions(RushAIParams p)
             {
-                if (Vector3.Distance(p.NpcTransform.position, p.Player.transform.position)<4)
+                if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
                 {
-                    p.NavAgent.SetDestination(p.NpcTransform.position);
-                    p.NavAgent.isStopped = true;
-                    p.NpcTransform.LookAt(p.Player.transform.position);
-                    Parent.SetState(typeof(Conversing), p);
+                    p.CachedTarget = p.Player.gameObject;
+                    Parent.SetState(typeof(Attacking), p);
                 }
             }
         }
 
-        private class Move : UState<QuestNpcParams>
+        private class Move : UState<RushAIParams>
         {
-            public override void Enter(QuestNpcParams p)
+            public override void Enter(RushAIParams p)
             {
                 p.NavAgent.isStopped = false;
                 if (p.MovementType == MovementType.Wander || p.MovementType == MovementType.NoLimitsWander)
@@ -165,7 +167,7 @@ namespace SpectralDaze.AI.QuestNPC
 
 
                     NavMeshHit hit;
-                    while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas)==false)
+                    while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false)
                     {
                         randomOffset = Random.insideUnitSphere * p.WanderDistance;
                         randomWanderPosistion = randomOffset += p.NpcTransform.position;
@@ -176,7 +178,7 @@ namespace SpectralDaze.AI.QuestNPC
                                 randomOffset = Random.insideUnitSphere * p.WanderDistance;
                                 randomWanderPosistion = randomOffset += p.NpcTransform.position;
                             }
-                        p.CachedTargetPos = hit.position;
+                        p.CachedTargetMoveToTargetPos = hit.position;
                         if (p.NavAgent.SetDestination(randomWanderPosistion))
                         {
                             Parent.SetState(typeof(Idle), p);
@@ -190,14 +192,14 @@ namespace SpectralDaze.AI.QuestNPC
                 else if (p.MovementType == MovementType.Patrol)
                 {
                     p.CurrentPatrolPoint++;
-                    if (p.CurrentPatrolPoint > p.PatrolPoints.Count-1)
+                    if (p.CurrentPatrolPoint > p.PatrolPoints.Count - 1)
                     {
                         p.CurrentPatrolPoint = 0;
                     }
                     NavMeshHit hit;
                     if (NavMesh.SamplePosition(p.PatrolPoints[p.CurrentPatrolPoint], out hit, p.WanderDistance, NavMesh.AllAreas))
                     {
-                        p.CachedTargetPos = hit.position;
+                        p.CachedTargetMoveToTargetPos = hit.position;
                         if (p.NavAgent.SetDestination(p.PatrolPoints[p.CurrentPatrolPoint]))
                         {
                             Parent.SetState(typeof(Idle), p);
@@ -214,14 +216,12 @@ namespace SpectralDaze.AI.QuestNPC
                 }
             }
 
-            public override void CheckForTransitions(QuestNpcParams p)
+            public override void CheckForTransitions(RushAIParams p)
             {
-                if (Vector3.Distance(p.NpcTransform.position, p.Player.transform.position) < 4)
+                if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
                 {
-                    p.NavAgent.SetDestination(p.NpcTransform.position);
-                    p.NavAgent.isStopped = true;
-                    p.NpcTransform.LookAt(p.Player.transform.position);
-                    Parent.SetState(typeof(Conversing), p);
+                    p.CachedTarget = p.Player.gameObject;
+                    Parent.SetState(typeof(Attacking), p);
                 }
             }
         }
@@ -233,13 +233,13 @@ namespace SpectralDaze.AI.QuestNPC
             NoLimitsWander
         }
 
-        private struct QuestNpcParams
+        private struct RushAIParams
         {
             public Transform NpcTransform;
-            public QuestNpc Npc;
+            public RushAI Npc;
             public NavMeshAgent NavAgent;
             public Animator Animator;
-            public Vector3 CachedTargetPos;
+            public Vector3 CachedTargetMoveToTargetPos;
             public Vector3 OriginPosistion;
             public MovementType MovementType;
             public float WanderDistance;
@@ -247,9 +247,11 @@ namespace SpectralDaze.AI.QuestNPC
             public float TimeLeftIdle;
             public int CurrentPatrolPoint;
             public List<Vector3> PatrolPoints;
-            public Conversation Conversation;
+            public GameObject CachedTarget;
             public PlayerController Player;
+            public float AggroDistance;
+            public float TimeBetweenCharges;
+            public float MovementModifier;
         }
     }
-
 }
