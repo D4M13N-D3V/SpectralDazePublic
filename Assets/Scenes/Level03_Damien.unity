@@ -8683,6 +8683,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4445543911903160, guid: 10f02fbf10ba4c545b600fc686b42000,
     type: 2}
   m_PrefabInternal: {fileID: 187264292}
+--- !u!1 &189204218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1909673128754576, guid: 3038cf763cf66c141be3c5e8297b1773,
+    type: 2}
+  m_PrefabInternal: {fileID: 269677050}
+--- !u!195 &189204219
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 189204218}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!4 &189204225 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4717588041281366, guid: 3038cf763cf66c141be3c5e8297b1773,
@@ -9898,6 +9924,11 @@ Prefab:
       value: 
       objectReference: {fileID: 11400000, guid: 14e5665cadd11474da9c62883e68c0a9,
         type: 2}
+    - target: {fileID: 54283165493369402, guid: 3038cf763cf66c141be3c5e8297b1773,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
   m_IsPrefabAsset: 0

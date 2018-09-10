@@ -36,19 +36,17 @@ namespace SpectralDaze.Player
             // Switch this out with something better.
             if (mouseHit.collider.gameObject.tag != "Walkable")
                 return;
-
-            Debug.Log(Vector3.Distance(mouseHit.point, pc.transform.position) +" "+ MaximumDashDistance);
+            
             if (Vector3.Distance(mouseHit.point, pc.transform.position) > MaximumDashDistance)
                 return;
 
             if (!NavMesh.SamplePosition(mouseHit.point, out hit, 1, NavMesh.AllAreas))
                 return;
-
-            if (!_isDashing && Input.GetMouseButtonDown(0))
+            if ( !_isDashing && Input.GetMouseButtonDown(0))
             {
+                pc.transform.rotation = Quaternion.LookRotation(hit.position-pc.transform.position);
                 _isDashing = true;
-                pc.transform.rotation = Quaternion.LookRotation(hit.position+Vector3.up-pc.transform.position);
-                LeanTween.move(pc.gameObject, hit.position+Vector3.up, DashSpeed * distBetweenMouseAndPlayer).setOnComplete(() =>
+                LeanTween.move(pc.gameObject, hit.position, DashSpeed * distBetweenMouseAndPlayer).setOnComplete(() =>
                 {
                     _isDashing = false;;
                 });
