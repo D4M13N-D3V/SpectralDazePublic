@@ -50,8 +50,9 @@ namespace SpectralDaze.Player
             if ( !_isDashing && Input.GetMouseButtonDown(0))
             {
                 pc.transform.rotation = Quaternion.LookRotation(hit.position-pc.transform.position);
+                pc.transform.eulerAngles = new Vector3(0,pc.transform.eulerAngles.y,0);
                 _isDashing = true;
-                LeanTween.move(pc.gameObject, hit.position, DashSpeed * distBetweenMouseAndPlayer).setOnComplete(() =>
+                LeanTween.move(pc.gameObject, hit.position+Vector3.up, DashSpeed * distBetweenMouseAndPlayer).setOnComplete(() =>
                 {
                     _isDashing = false;;
                 });
