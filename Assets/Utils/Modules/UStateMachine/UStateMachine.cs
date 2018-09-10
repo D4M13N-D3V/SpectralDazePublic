@@ -55,7 +55,6 @@ public class UStateMachine<TParamStruct> where TParamStruct : struct
 
 	public void SetState(Type stateType, TParamStruct parameters)
 	{
-        Debug.Log("<color=blue>"+stateType+"</color>");
 		// Set the state to a certain state type
 		if (ActiveState != null)
 			ActiveState.Exit(parameters);
