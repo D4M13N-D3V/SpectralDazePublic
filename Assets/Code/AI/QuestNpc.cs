@@ -167,26 +167,19 @@ namespace SpectralDaze.AI.QuestNPC
 
 
                     NavMeshHit hit;
-                    while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas)==false)
+                    while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false && Vector3.Distance(randomWanderPosistion, p.OriginPosistion) > p.WanderDistance || NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false)
                     {
                         randomOffset = Random.insideUnitSphere * p.WanderDistance;
                         randomWanderPosistion = randomOffset += p.NpcTransform.position;
-
-                        if (p.MovementType == MovementType.Wander)
-                            while (Vector3.Distance(randomWanderPosistion, p.OriginPosistion) > p.WanderDistance)
-                            {
-                                randomOffset = Random.insideUnitSphere * p.WanderDistance;
-                                randomWanderPosistion = randomOffset += p.NpcTransform.position;
-                            }
-                        p.CachedTargetPos = hit.position;
-                        if (p.NavAgent.SetDestination(randomWanderPosistion))
-                        {
-                            Parent.SetState(typeof(Idle), p);
-                        }
-                        else
-                        {
-                            Debug.LogError("Error occured when setting destination of navmesh agent.");
-                        }
+                    }
+                    p.CachedTargetPos = hit.position;
+                    if (p.NavAgent.SetDestination(randomWanderPosistion))
+                    {
+                        Parent.SetState(typeof(Idle), p);
+                    }
+                    else
+                    {
+                        Debug.LogError("Error occured when setting destination of navmesh agent.");
                     }
                 }
                 else if (p.MovementType == MovementType.Patrol)

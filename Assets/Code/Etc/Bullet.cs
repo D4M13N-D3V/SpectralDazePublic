@@ -9,7 +9,7 @@ using SpectralDaze.Time;
 public class Bullet : MonoBehaviour
 {
 	public float Speed = 4f;
-
+    public bool Homing = false;
 	private Vector3 cachedPosition;
 
     public Information TimeInfo;
@@ -18,12 +18,14 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        TimeInfo.Data.SingleOrDefault(x => x.Type == Manipulations.Normal).Stats.MovementModifier = Speed;
+        transform.rotation = Quaternion.LookRotation(GameObject.FindObjectOfType<PlayerController>().gameObject.transform.position - transform.position);
     }
 
     private void Update()
 	{
-		Vector3 velocity = transform.position - cachedPosition;
+        if(Homing)
+            transform.rotation = Quaternion.LookRotation(GameObject.FindObjectOfType<PlayerController>().gameObject.transform.position - transform.position);
+        Vector3 velocity = transform.position - cachedPosition;
 
 		Ray r = new Ray(transform.position, transform.forward);
 		RaycastHit hit;

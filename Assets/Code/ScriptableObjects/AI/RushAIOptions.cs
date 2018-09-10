@@ -19,8 +19,11 @@ namespace SpectralDaze.ScriptableObjects.AI
         public int StartingPatorlPoint;
         public List<Vector3> PatrolPoints;
         public float AggroDistance;
+        public float LoseAggroDistance;
         public float TimeBetweenCharges;
         public float LaunchVelocity = 10;
         public float MovementSpeed = 3;
+        public bool Chase;
+        public float ChaseDistance = 20;
     }
 }

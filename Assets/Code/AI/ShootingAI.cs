@@ -70,14 +70,17 @@ namespace SpectralDaze.AI
                 CurrentPatrolPoint = Options.StartingPatorlPoint,
                 Player = FindObjectOfType<PlayerController>(),
                 AggroDistance = Options.AggroDistance,
+                LoseAggroDistance = Options.LoseAggroDistance,
                 RigidBody = GetComponent<Rigidbody>(),
                 MovementSpeed = Options.MovementSpeed,
                 TimeBetweenAttacks = Options.TimeBetweenAttacks,
                 BulletPrefab = Options.BulletPrefab,
                 AttackChargeAmount = Options.AttackChargeAmount,
-                Renderer = Renderer
+                Renderer = Renderer,
+                Chase = Options.Chase,
+                ChaseDistance = Options.ChaseDistance
             };
-            stateMachine = new UStateMachine<ShootingAIParams>(paramsInstance, new Attacking(), new Idle(), new Move());
+            stateMachine = new UStateMachine<ShootingAIParams>(paramsInstance, new Chase(), new Attacking(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
             _manipulationType = Manipulations.Normal;
             paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed * TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
@@ -183,11 +186,61 @@ namespace SpectralDaze.AI
 
             public override void CheckForTransitions(ShootingAIParams p)
             {
+                if (!p.Chase && p.LoseAggroDistance <= Vector3.Distance(p.NpcTransform.position, p.Player.transform.position))
+                    Parent.SetState(typeof(Idle), p);
+                if (p.Chase && p.LoseAggroDistance <= Vector3.Distance(p.NpcTransform.position, p.Player.transform.position))
+                    Parent.SetState(typeof(Chase), p);
             }
 
             private void CreateProjectile(ShootingAIParams p)
             {
-                _currentProjectile = Instantiate(p.BulletPrefab, (p.NpcTransform.position + p.NpcTransform.forward),Quaternion.LookRotation(p.Player.transform.position-p.NpcTransform.position));
+                _currentProjectile = Instantiate(p.BulletPrefab, (p.NpcTransform.position + p.NpcTransform.forward), Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position));
+                _currentProjectile.transform.eulerAngles = new Vector3(0, _currentProjectile.transform.eulerAngles.y, 0);
+                _currentProjectile.transform.position = p.NpcTransform.position + p.NpcTransform.transform.forward + p.NpcTransform.transform.up;
+            }
+        }
+
+        private class Chase : UState<ShootingAIParams>
+        {
+            private float _idleTimeLeft = 0;
+
+            public override void FixedUpdate(ShootingAIParams p)
+            {
+                p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
+                p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
+
+                _idleTimeLeft -= p.Npc.localDeltaTime;
+                if (_idleTimeLeft <= 0)
+                {
+                    p.NavAgent.isStopped = false;
+                    Vector3 randomOffset = Random.insideUnitSphere * p.AggroDistance/2;
+                    Vector3 randomWanderPosistion = randomOffset += p.Player.transform.position;
+
+                    NavMeshHit hit;
+                    while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false)
+                    {
+                        randomOffset = Random.insideUnitSphere * p.AggroDistance/2;
+                        randomWanderPosistion = randomOffset += p.NpcTransform.position;
+                    }
+                    p.CachedTargetMoveToTargetPos = hit.position;
+                    if (p.NavAgent.SetDestination(randomWanderPosistion))
+                    {
+                        _idleTimeLeft = p.IdleTime / 2;
+                    }
+                    else
+                    {
+                        Debug.LogError("Error occured when setting destination of navmesh agent.");
+                    }
+                }
+            }
+
+            public override void CheckForTransitions(ShootingAIParams p)
+            {
+                if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
+                    Parent.SetState(typeof(Attacking), p);
+
+                if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) >= p.ChaseDistance)
+                    Parent.SetState(typeof(Move), p);
             }
         }
 
@@ -248,15 +301,15 @@ namespace SpectralDaze.AI
                                 randomOffset = Random.insideUnitSphere * p.WanderDistance;
                                 randomWanderPosistion = randomOffset += p.NpcTransform.position;
                             }
-                        p.CachedTargetMoveToTargetPos = hit.position;
-                        if (p.NavAgent.SetDestination(randomWanderPosistion))
-                        {
-                            Parent.SetState(typeof(Idle), p);
-                        }
-                        else
-                        {
-                            Debug.LogError("Error occured when setting destination of navmesh agent.");
-                        }
+                    }
+                    p.CachedTargetMoveToTargetPos = hit.position;
+                    if (p.NavAgent.SetDestination(randomWanderPosistion))
+                    {
+                        Parent.SetState(typeof(Idle), p);
+                    }
+                    else
+                    {
+                        Debug.LogError("Error occured when setting destination of navmesh agent.");
                     }
                 }
                 else if (p.MovementType == MovementType.Patrol)
@@ -319,6 +372,7 @@ namespace SpectralDaze.AI
             public GameObject CachedTarget;
             public PlayerController Player;
             public float AggroDistance;
+            public float LoseAggroDistance;
             public float MovementModifier;
             public Rigidbody RigidBody;
             public float MovementSpeed;
@@ -326,6 +380,8 @@ namespace SpectralDaze.AI
             public float TimeBetweenAttacks;
             public float AttackChargeAmount;
             public Renderer Renderer;
+            public bool Chase;
+            public float ChaseDistance;
         }
     }
 }
