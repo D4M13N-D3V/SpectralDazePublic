@@ -21,7 +21,7 @@ MonoBehaviour:
     Stats:
       AnimationModifier: 1
       PhysicsModifier: 1
-      MovementModifier: 5
+      MovementModifier: 1
   - Type: 2
     Stats:
       AnimationModifier: 2

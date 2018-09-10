@@ -44,33 +44,37 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         transform.rotation = Quaternion.LookRotation(GameObject.FindObjectOfType<PlayerController>().gameObject.transform.position - transform.position);
+        transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
     }
 
     private void Update()
     {
         if (Homing)
+        {
             transform.rotation = Quaternion.LookRotation(GameObject.FindObjectOfType<PlayerController>().gameObject.transform.position - transform.position);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        }
         Vector3 velocity = transform.position - cachedPosition;
 
-        Ray r = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(r, out hit))
+        var hitColliders = Physics.OverlapSphere(transform.position, 0.5f);
+        for (var i = 0; i < hitColliders.Length; i++)
         {
-            if (hit.collider.tag == "Player" && hit.distance < 0.1f && hit.collider.gameObject != Source)
+            var v = hitColliders[i].gameObject.GetInstanceID();
+            if (hitColliders[i].tag == "Player" && hitColliders[i].gameObject != Source)
             {
-                hit.collider.GetComponent<PlayerController>().EndGame();
+                hitColliders[i].GetComponent<PlayerController>().EndGame();
                 Destroy(gameObject);
             }
-            else if (hit.collider.tag == "Enemy" && hit.distance < 0.6f && hit.collider.gameObject != Source)
+            else if (hitColliders[i].tag == "Enemy" && hitColliders[i].gameObject != Source)
             {
-                foreach (var comp in hit.collider.gameObject.GetComponents(typeof(Component)))
+                foreach (var comp in hitColliders[i].gameObject.GetComponents(typeof(Component)))
                 {
                     //SHouldnt have to use refelect GetComponent should work but isnt.
                     if (comp.GetType().IsSubclassOf(typeof(BaseAI))) { var enemy = (BaseAI)comp; enemy.Die(); }
                 }
                 Destroy(gameObject);
             }
-            else if (hit.collider.gameObject != Source && hit.distance < 0.1f && !hit.collider.isTrigger)
+            else if (hitColliders[i].gameObject != Source &&  !hitColliders[i].isTrigger)
             {
                 Destroy(gameObject);
             }
