@@ -40,12 +40,7 @@ public class Bullet : MonoBehaviour
     public Information TimeInfo;
     private bool _timeBeingManipulated;
     private Manipulations _manipulationType;
-
-    private void Start()
-    {
-        transform.rotation = Quaternion.LookRotation(GameObject.FindObjectOfType<PlayerController>().gameObject.transform.position - transform.position);
-        transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
-    }
+    
 
     private void Update()
     {

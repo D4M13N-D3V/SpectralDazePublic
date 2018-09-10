@@ -204,10 +204,11 @@ namespace SpectralDaze.AI
 
             private void CreateProjectile(ShootingAIParams p)
             {
-                _currentProjectile = Instantiate(p.BulletPrefab, (p.NpcTransform.position + p.NpcTransform.forward), Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position));
+                _currentProjectile = Instantiate(p.BulletPrefab, (p.NpcTransform.position + p.NpcTransform.forward), Quaternion.Euler(p.NpcTransform.eulerAngles));
                 _currentProjectile.transform.eulerAngles = new Vector3(0, _currentProjectile.transform.eulerAngles.y, 0);
                 _currentProjectile.transform.position = p.NpcTransform.position + p.NpcTransform.transform.forward + p.NpcTransform.transform.up;
                 _currentProjectile.GetComponent<Bullet>().Source = p.Npc.gameObject;
+
             }
         }
 
