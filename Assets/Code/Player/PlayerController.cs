@@ -8,6 +8,7 @@ using SpectralDaze.ScriptableObjects.Time;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 namespace SpectralDaze.Player
 {
@@ -25,11 +26,11 @@ namespace SpectralDaze.Player
 
         public void EndGame()
         {
-
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         private void Start()
-        {
+        {   
             rbody = GetComponent<Rigidbody>();
             Animator = GetComponentInChildren<Animator>();
             dialogueMan = FindObjectOfType<DialogueManager>();

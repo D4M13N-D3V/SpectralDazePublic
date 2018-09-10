@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Code.AI;
 using SpectralDaze.Managers;
 using SpectralDaze.Player;
 using SpectralDaze.ScriptableObjects.AI;
@@ -10,7 +11,7 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI
 {
-    public class RushAI : MonoBehaviour
+    public class RushAI : BaseAI
     {
         public float _localTimeScale = 1.0f;
         public float localTimeScale

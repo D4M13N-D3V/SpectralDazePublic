@@ -8,6 +8,7 @@ TagManager:
   - CharacterName
   - DialogueText
   - Walkable
+  - Enemy
   layers:
   - Default
   - TransparentFX

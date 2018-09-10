@@ -1,6 +1,7 @@
 ﻿ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+ using Assets.Code.AI;
  using SpectralDaze.Managers;
  using SpectralDaze.Player;
  using SpectralDaze.ScriptableObjects.AI;
@@ -12,7 +13,7 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI.QuestNPC
 {
-    public class QuestNpc : MonoBehaviour
+    public class QuestNpc : BaseAI
     {
         public QuestNPCOptions Options;
         private UStateMachine<QuestNpcParams> stateMachine;

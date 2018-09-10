@@ -20,7 +20,6 @@ namespace SpectralDaze.Player
 
         public override void Init(PlayerController pc)
         {
-            pc.timeInfo.Data.SingleOrDefault(x => x.Type == Manipulations.Normal).Stats.MovementModifier = pc.PlayerInfo.MoveSpeed;
         }
 
         public override void OnUpdate(PlayerController pc)

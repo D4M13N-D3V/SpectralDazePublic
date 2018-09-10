@@ -11,14 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7a989da1cdfcb4c804f1f4501f302f, type: 3}
   m_Name: New Shooting AI Options
   m_EditorClassIdentifier: 
-  MovementType: 0
+  MovementType: 1
   WanderDistance: 10
   IdleTime: 2
   StartingPatorlPoint: 0
   PatrolPoints: []
-  AggroDistance: 4
-  TimeBetweenAttacks: 2
+  AggroDistance: 8
+  LoseAggroDistance: 12
+  TimeBetweenAttacks: 1.5
   MovementSpeed: 3
   BulletPrefab: {fileID: 1541629895786640, guid: 64224564fef16be44b2a8651b6cc8cc3,
     type: 2}
   AttackChargeAmount: 0.5
+  Chase: 1
+  ChaseDistance: 20

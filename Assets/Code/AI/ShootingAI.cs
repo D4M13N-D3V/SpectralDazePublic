@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Code.AI;
 using SpectralDaze.Managers;
 using SpectralDaze.Player;
 using SpectralDaze.ScriptableObjects.AI;
@@ -10,7 +11,7 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI
 {
-    public class ShootingAI : MonoBehaviour
+    public class ShootingAI : BaseAI
     {
         public Renderer Renderer;
 
@@ -197,6 +198,7 @@ namespace SpectralDaze.AI
                 _currentProjectile = Instantiate(p.BulletPrefab, (p.NpcTransform.position + p.NpcTransform.forward), Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position));
                 _currentProjectile.transform.eulerAngles = new Vector3(0, _currentProjectile.transform.eulerAngles.y, 0);
                 _currentProjectile.transform.position = p.NpcTransform.position + p.NpcTransform.transform.forward + p.NpcTransform.transform.up;
+                p.BulletPrefab.GetComponent<Bullet>().Source = p.Npc.gameObject;
             }
         }
 
