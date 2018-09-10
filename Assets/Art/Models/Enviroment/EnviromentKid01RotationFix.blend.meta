@@ -1,0 +1,229 @@
+fileFormatVersion: 2
+guid: b2dfaf661edb5e84287b8a08f47514dd
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Cone
+    100002: Cube
+    100004: Cylinder
+    100006: Door
+    100008: //RootNode
+    100010: floor
+    100012: floorSmall
+    100014: Plants
+    100016: smallerwall
+    100018: Stone01
+    100020: Stone02
+    100022: Stone03
+    100024: Wall
+    100026: Wall1_L
+    100028: Wall1_M
+    100030: Wall1_R
+    100032: Wall1_R_001
+    100034: Wall1_R_002
+    100036: Wall_001
+    100038: Wall_002
+    100040: Wall_003
+    100042: WallCornerClosed
+    100044: wallCornerOpen
+    100046: Woodbeam1
+    100048: Woodbeam2
+    100050: WoodBeam3
+    400000: Cone
+    400002: Cube
+    400004: Cylinder
+    400006: Door
+    400008: //RootNode
+    400010: floor
+    400012: floorSmall
+    400014: Plants
+    400016: smallerwall
+    400018: Stone01
+    400020: Stone02
+    400022: Stone03
+    400024: Wall
+    400026: Wall1_L
+    400028: Wall1_M
+    400030: Wall1_R
+    400032: Wall1_R_001
+    400034: Wall1_R_002
+    400036: Wall_001
+    400038: Wall_002
+    400040: Wall_003
+    400042: WallCornerClosed
+    400044: wallCornerOpen
+    400046: Woodbeam1
+    400048: Woodbeam2
+    400050: WoodBeam3
+    2100000: Material_003
+    2100002: Material_004
+    2100004: Material
+    2100006: Material_009
+    2100008: Material_013
+    2100010: Material_011
+    2100012: Material_010
+    2100014: Material_002
+    2100016: Material_001
+    2100018: Material_006
+    2100020: Material_007
+    2100022: Material_005
+    2300000: Cone
+    2300002: Cube
+    2300004: Cylinder
+    2300006: Door
+    2300008: floor
+    2300010: floorSmall
+    2300012: Plants
+    2300014: smallerwall
+    2300016: Stone01
+    2300018: Stone02
+    2300020: Stone03
+    2300022: Wall
+    2300024: Wall1_L
+    2300026: Wall1_M
+    2300028: Wall1_R
+    2300030: Wall1_R_001
+    2300032: Wall1_R_002
+    2300034: Wall_001
+    2300036: Wall_002
+    2300038: Wall_003
+    2300040: WallCornerClosed
+    2300042: wallCornerOpen
+    2300044: Woodbeam1
+    2300046: Woodbeam2
+    2300048: WoodBeam3
+    3300000: Cone
+    3300002: Cube
+    3300004: Cylinder
+    3300006: Door
+    3300008: floor
+    3300010: floorSmall
+    3300012: Plants
+    3300014: smallerwall
+    3300016: Stone01
+    3300018: Stone02
+    3300020: Stone03
+    3300022: Wall
+    3300024: Wall1_L
+    3300026: Wall1_M
+    3300028: Wall1_R
+    3300030: Wall1_R_001
+    3300032: Wall1_R_002
+    3300034: Wall_001
+    3300036: Wall_002
+    3300038: Wall_003
+    3300040: WallCornerClosed
+    3300042: wallCornerOpen
+    3300044: Woodbeam1
+    3300046: Woodbeam2
+    3300048: WoodBeam3
+    4300000: Wall_002
+    4300002: Wall_003
+    4300004: Wall1_R_001
+    4300006: Wall1_R_002
+    4300008: Wall1_L
+    4300010: Wall1_M
+    4300012: Wall1_R
+    4300014: smallerwall
+    4300016: Door
+    4300018: Cylinder
+    4300020: Cube
+    4300022: Cone
+    4300024: Plants
+    4300026: Woodbeam1
+    4300028: Woodbeam2
+    4300030: WoodBeam3
+    4300032: Wall_001
+    4300034: floorSmall
+    4300036: wallCornerOpen
+    4300038: WallCornerClosed
+    4300040: Wall
+    4300042: Stone03
+    4300044: Stone02
+    4300046: Stone01
+    4300048: floor
+    7400000: Default Take
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

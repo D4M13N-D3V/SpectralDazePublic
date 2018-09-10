@@ -105,7 +105,7 @@ namespace O3DWB
             // Note: Because of floating point rounding errors it is possible that the rotation
             //       quaternion is not normalized. So we will first normalize it before doing
             //       anything else with it. Otherwise invalid quaternion exceptions will be thrown.
-            rotation = rotation.Normalize();
+            rotation = rotation.normalized;
 
             _transformMatrix.Rotation = rotation;
             RecalculateLocalAxes();

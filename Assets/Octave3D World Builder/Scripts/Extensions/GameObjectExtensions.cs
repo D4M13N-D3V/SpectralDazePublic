@@ -285,7 +285,7 @@ namespace O3DWB
 
         public static GameObject GetSourcePrefab(this GameObject gameObject)
         {
-            return PrefabUtility.GetPrefabParent(gameObject) as GameObject;
+            return PrefabUtility.GetCorrespondingObjectFromSource(gameObject) as GameObject;
         }
 
         public static GameObject GetSourcePrefabRoot(this GameObject gameObject)
