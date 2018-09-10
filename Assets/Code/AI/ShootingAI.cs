@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Code.AI;
 using SpectralDaze.Etc;
@@ -79,6 +80,7 @@ namespace SpectralDaze.AI
                 TimeBetweenAttacks = Options.TimeBetweenAttacks,
                 BulletPrefab = Options.BulletPrefab,
                 AttackChargeAmount = Options.AttackChargeAmount,
+                ShootDelay = Options.ShootDelay,
                 Renderer = Renderer,
                 Chase = Options.Chase,
                 ChaseDistance = Options.ChaseDistance
@@ -132,9 +134,10 @@ namespace SpectralDaze.AI
             private Color _originalColor;
             private float t = 0;
             private GameObject _currentProjectile;
-
+            private float _shootDelayLeft;
             public override void Enter(ShootingAIParams p)
             {
+                _shootDelayLeft = p.ShootDelay;
                 _originalColor = p.Renderer.material.color;
                 p.NavAgent.isStopped = true;
                 _timeLeftUntilAttack = p.TimeBetweenAttacks;
@@ -142,9 +145,6 @@ namespace SpectralDaze.AI
 
             public override void FixedUpdate(ShootingAIParams p)
             {
-                p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
-                p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
-
                 _timeLeftUntilAttack -= p.Npc.localDeltaTime;
                 if (_timeLeftUntilAttack <= 0)
                 {
@@ -166,9 +166,14 @@ namespace SpectralDaze.AI
                         if (p.Renderer.material.color == Color.red)
                         {
                             t = 0;
-                            CreateProjectile(p);
-                            _timeLeftUntilAttack = p.TimeBetweenAttacks;
-                            _chargingShotInProgress = false;
+                            _shootDelayLeft -= p.Npc.localDeltaTime;
+                            if (_shootDelayLeft <= 0)
+                            {
+                                CreateProjectile(p);
+                                _timeLeftUntilAttack = p.TimeBetweenAttacks;
+                                _chargingShotInProgress = false;
+                                _shootDelayLeft = p.ShootDelay;
+                            }
                         }
                         else
                         {
@@ -184,6 +189,8 @@ namespace SpectralDaze.AI
                         t += p.Npc.localDeltaTime;
                         p.Renderer.material.color = Color.Lerp(p.Renderer.material.color, _originalColor, t);
                     }
+                    p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
+                    p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
                 }
             }
 
@@ -386,6 +393,7 @@ namespace SpectralDaze.AI
             public Renderer Renderer;
             public bool Chase;
             public float ChaseDistance;
+            public float ShootDelay;
         }
     }
 }

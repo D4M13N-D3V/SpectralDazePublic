@@ -23,6 +23,7 @@ namespace SpectralDaze.ScriptableObjects.AI
         public float TimeBetweenAttacks;
         public float MovementSpeed = 3;
         public GameObject BulletPrefab;
+        public float ShootDelay;
         public float AttackChargeAmount = 0.5f;
         public bool Chase = true;
         public float ChaseDistance = 20;
