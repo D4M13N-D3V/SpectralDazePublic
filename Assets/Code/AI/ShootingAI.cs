@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Code.AI;
+using SpectralDaze.Etc;
 using SpectralDaze.Managers;
 using SpectralDaze.Player;
 using SpectralDaze.ScriptableObjects.AI;
@@ -11,6 +12,7 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI
 {
+    [RequireComponent(typeof(KillOnTouch))]
     public class ShootingAI : BaseAI
     {
         public Renderer Renderer;
