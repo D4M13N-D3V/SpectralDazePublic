@@ -9556,6 +9556,10 @@ Prefab:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 1296270175345972, guid: 27a6a7f29fda3c64390a60dcc0cb73ef, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27a6a7f29fda3c64390a60dcc0cb73ef, type: 2}
   m_IsPrefabAsset: 0
@@ -30143,7 +30147,7 @@ GameObject:
   - component: {fileID: 824558876}
   - component: {fileID: 824558875}
   - component: {fileID: 824558874}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -30370,7 +30374,8 @@ MonoBehaviour:
   PlayerInfo: {fileID: 11400000, guid: 3ba1d7f0ad1c7bf4e8e8884a37083de8, type: 2}
   TestConversation: {fileID: 11400000, guid: aac3fc7a14f9cf94aa00bbaad9e5ebe2, type: 2}
   Animator: {fileID: 0}
-  timeInfo: {fileID: 11400000, guid: 6586469dfc5ab6b4a877e77eec8005af, type: 2}
+  TimeInfo: {fileID: 11400000, guid: 6586469dfc5ab6b4a877e77eec8005af, type: 2}
+  _localTimeScale: 1
 --- !u!54 &824558878
 Rigidbody:
   m_ObjectHideFlags: 0
