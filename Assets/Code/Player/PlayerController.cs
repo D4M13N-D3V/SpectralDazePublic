@@ -54,7 +54,6 @@ namespace SpectralDaze.Player
          */
         public void StartTimeManipulation(int type)
         {
-            Debug.Log("TEST");
             _timeBeingManipulated = true;
             _manipulationType = (Manipulations)type;
             Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;;
