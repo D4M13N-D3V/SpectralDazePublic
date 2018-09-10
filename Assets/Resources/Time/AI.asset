@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6cdadc8cc474340ba9eeaf047be279, type: 3}
-  m_Name: RushAI
+  m_Name: AI
   m_EditorClassIdentifier: 
   Data:
   - Type: 1
@@ -17,13 +17,16 @@ MonoBehaviour:
       AnimationModifier: 0.5
       PhysicsModifier: 0.5
       MovementModifier: 0.5
+      AbilityModifier: 0.5
   - Type: 0
     Stats:
       AnimationModifier: 1
       PhysicsModifier: 1
       MovementModifier: 1
+      AbilityModifier: 1
   - Type: 2
     Stats:
       AnimationModifier: 1.5
       PhysicsModifier: 1.5
       MovementModifier: 1.5
+      AbilityModifier: 1.5

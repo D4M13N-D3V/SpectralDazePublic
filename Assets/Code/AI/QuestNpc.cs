@@ -93,6 +93,8 @@ namespace SpectralDaze.AI.QuestNPC
 
             public override void Update(QuestNpcParams p)
             {
+                p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
+                p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
                 if (Input.GetButtonDown("Interact"))
                 {
                     if(_dialogueManager.IsQueueEmpty && _dialogueManager.DialogueParentObj.activeSelf == false)

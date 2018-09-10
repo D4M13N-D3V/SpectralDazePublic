@@ -25,5 +25,6 @@ namespace SpectralDaze.Time.Information
         /// Normalized variable to use to modify the movement of the existing movement speed. Between 0-1
         /// </summary>
         public float MovementModifier = 1;
+        
     }
 }
