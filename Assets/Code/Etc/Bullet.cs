@@ -70,9 +70,8 @@ public class Bullet : MonoBehaviour
                 }
                 Destroy(gameObject);
             }
-            else if (hit.collider.gameObject != Source && hit.distance < 0.1f)
+            else if (hit.collider.gameObject != Source && hit.distance < 0.1f && !hit.collider.isTrigger)
             {
-                Debug.Log(hit.collider.gameObject);
                 Destroy(gameObject);
             }
         }
