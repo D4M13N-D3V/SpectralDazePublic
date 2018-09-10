@@ -10,20 +10,23 @@ using UnityEngine;
 
 namespace SpectralDaze.ScriptableObjects.AI
 {
-    [CreateAssetMenu(menuName = "Spectral Daze/AI/Chase AI Settings")]
-    public class RushAIOptions : ScriptableObject
+    [CreateAssetMenu(menuName = "Spectral Daze/AI/Shooting AI Options")]
+    public class ShootingAIOptions : ScriptableObject
     {
-        public RushAI.MovementType MovementType;
+        public ShootingAI.MovementType MovementType;
         public float WanderDistance;
         public float IdleTime;
         public int StartingPatorlPoint;
         public List<Vector3> PatrolPoints;
         public float AggroDistance;
         public float LoseAggroDistance;
-        public float TimeBetweenCharges;
-        public float LaunchVelocity = 10;
+        public float TimeBetweenAttacks;
         public float MovementSpeed = 3;
-        public bool Chase;
+        public GameObject BulletPrefab;
+        public float ShootDelay;
+        public float AttackChargeAmount = 0.5f;
+        public bool Chase = true;
         public float ChaseDistance = 20;
     }
 }
+ 

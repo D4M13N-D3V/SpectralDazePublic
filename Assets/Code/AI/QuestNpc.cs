@@ -1,6 +1,7 @@
 ﻿ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+ using Assets.Code.AI;
  using SpectralDaze.Managers;
  using SpectralDaze.Player;
  using SpectralDaze.ScriptableObjects.AI;
@@ -12,7 +13,7 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI.QuestNPC
 {
-    public class QuestNpc : MonoBehaviour
+    public class QuestNpc : BaseAI
     {
         public QuestNPCOptions Options;
         private UStateMachine<QuestNpcParams> stateMachine;
@@ -46,7 +47,7 @@ namespace SpectralDaze.AI.QuestNPC
             stateMachine = new UStateMachine<QuestNpcParams>(paramsInstance, new Conversing(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
             _manipulationType = Manipulations.Normal;
-            paramsInstance.NavAgent.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed*TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
@@ -93,6 +94,8 @@ namespace SpectralDaze.AI.QuestNPC
 
             public override void Update(QuestNpcParams p)
             {
+                p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
+                p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
                 if (Input.GetButtonDown("Interact"))
                 {
                     if(_dialogueManager.IsQueueEmpty && _dialogueManager.DialogueParentObj.activeSelf == false)
@@ -165,26 +168,19 @@ namespace SpectralDaze.AI.QuestNPC
 
 
                     NavMeshHit hit;
-                    while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas)==false)
+                    while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false && Vector3.Distance(randomWanderPosistion, p.OriginPosistion) > p.WanderDistance || NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false)
                     {
                         randomOffset = Random.insideUnitSphere * p.WanderDistance;
                         randomWanderPosistion = randomOffset += p.NpcTransform.position;
-
-                        if (p.MovementType == MovementType.Wander)
-                            while (Vector3.Distance(randomWanderPosistion, p.OriginPosistion) > p.WanderDistance)
-                            {
-                                randomOffset = Random.insideUnitSphere * p.WanderDistance;
-                                randomWanderPosistion = randomOffset += p.NpcTransform.position;
-                            }
-                        p.CachedTargetPos = hit.position;
-                        if (p.NavAgent.SetDestination(randomWanderPosistion))
-                        {
-                            Parent.SetState(typeof(Idle), p);
-                        }
-                        else
-                        {
-                            Debug.LogError("Error occured when setting destination of navmesh agent.");
-                        }
+                    }
+                    p.CachedTargetPos = hit.position;
+                    if (p.NavAgent.SetDestination(randomWanderPosistion))
+                    {
+                        Parent.SetState(typeof(Idle), p);
+                    }
+                    else
+                    {
+                        Debug.LogError("Error occured when setting destination of navmesh agent.");
                     }
                 }
                 else if (p.MovementType == MovementType.Patrol)
@@ -249,6 +245,8 @@ namespace SpectralDaze.AI.QuestNPC
             public List<Vector3> PatrolPoints;
             public Conversation Conversation;
             public PlayerController Player;
+            public float MovementModifier;
+            public float MovementSpeed;
         }
     }
 

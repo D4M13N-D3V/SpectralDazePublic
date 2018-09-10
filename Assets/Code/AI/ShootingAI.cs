@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Code.AI;
 using SpectralDaze.Etc;
@@ -13,9 +14,13 @@ using UnityEngine.AI;
 namespace SpectralDaze.AI
 {
     [RequireComponent(typeof(KillOnTouch))]
-    public class RushAI : BaseAI
+    public class ShootingAI : BaseAI
     {
+        public Renderer Renderer;
+
+        [HideInInspector]
         public float _localTimeScale = 1.0f;
+        [HideInInspector]
         public float localTimeScale
         {
             get
@@ -24,20 +29,17 @@ namespace SpectralDaze.AI
             }
             set
             {
-                //            if (r == null) r = GetComponent<Rigidbody>();
-                //            if (r != null)
-                //            {
                 float multiplier = value / _localTimeScale;
                 paramsInstance.RigidBody.angularDrag *= multiplier;
                 paramsInstance.RigidBody.drag *= multiplier;
                 paramsInstance.RigidBody.mass /= multiplier;
                 paramsInstance.RigidBody.velocity *= multiplier;
                 paramsInstance.RigidBody.angularVelocity *= multiplier;
-                //            }
 
                 _localTimeScale = value;
             }
         }
+        [HideInInspector]
         public float localDeltaTime
         {
             get
@@ -46,17 +48,17 @@ namespace SpectralDaze.AI
             }
         }
 
-        public RushAIOptions Options;
-        private UStateMachine<RushAIParams> stateMachine;
-        private RushAIParams paramsInstance;
+        public ShootingAIOptions Options;
+        private UStateMachine<ShootingAIParams> stateMachine;
+        private ShootingAIParams paramsInstance;
 
         public Information TimeInfo;
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;
-        
-        private void Start()    
+
+        private void Start()
         {
-            paramsInstance = new RushAIParams()
+            paramsInstance = new ShootingAIParams()
             {
                 NpcTransform = transform,
                 Npc = this,
@@ -72,14 +74,18 @@ namespace SpectralDaze.AI
                 CurrentPatrolPoint = Options.StartingPatorlPoint,
                 Player = FindObjectOfType<PlayerController>(),
                 AggroDistance = Options.AggroDistance,
-                TimeBetweenCharges = Options.TimeBetweenCharges,
+                LoseAggroDistance = Options.LoseAggroDistance,
                 RigidBody = GetComponent<Rigidbody>(),
-                LaunchVelocity = Options.LaunchVelocity,
                 MovementSpeed = Options.MovementSpeed,
+                TimeBetweenAttacks = Options.TimeBetweenAttacks,
+                BulletPrefab = Options.BulletPrefab,
+                AttackChargeAmount = Options.AttackChargeAmount,
+                ShootDelay = Options.ShootDelay,
+                Renderer = Renderer,
                 Chase = Options.Chase,
                 ChaseDistance = Options.ChaseDistance
             };
-            stateMachine = new UStateMachine<RushAIParams>(paramsInstance, new Chase(), new Attacking(), new Idle(), new Move());
+            stateMachine = new UStateMachine<ShootingAIParams>(paramsInstance, new Chase(), new Attacking(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
             _manipulationType = Manipulations.Normal;
             paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed * TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
@@ -109,26 +115,107 @@ namespace SpectralDaze.AI
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
             paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
-            //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
         public void StopTimeManipulation()
         {
             _timeBeingManipulated = false;
             _manipulationType = Manipulations.Normal;
-            paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed*TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed * TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
             paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
-            //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
+        private class Attacking : UState<ShootingAIParams>
+        {
+            private float _timeLeftUntilAttack;
+            private bool _chargingShotInProgress;
+            private Color _originalColor;
+            private float t = 0;
+            private GameObject _currentProjectile;
+            private float _shootDelayLeft;
+            public override void Enter(ShootingAIParams p)
+            {
+                _shootDelayLeft = p.ShootDelay;
+                _originalColor = p.Renderer.material.color;
+                p.NavAgent.isStopped = true;
+                _timeLeftUntilAttack = p.TimeBetweenAttacks;
+            }
 
-        private class Chase : UState<RushAIParams>
+            public override void FixedUpdate(ShootingAIParams p)
+            {
+                _timeLeftUntilAttack -= p.Npc.localDeltaTime;
+                if (_timeLeftUntilAttack <= 0)
+                {
+                    if (!_chargingShotInProgress)
+                    {
+                        if (p.Renderer.material.color != _originalColor)
+                        {
+                            t += p.Npc.localDeltaTime;
+                            p.Renderer.material.color = Color.Lerp(p.Renderer.material.color, _originalColor, t);
+                        }
+                        else
+                        {
+                            t = 0;
+                            _chargingShotInProgress = true;
+                        }
+                    }
+                    else
+                    {
+                        if (p.Renderer.material.color == Color.red)
+                        {
+                            t = 0;
+                            _shootDelayLeft -= p.Npc.localDeltaTime;
+                            if (_shootDelayLeft <= 0)
+                            {
+                                CreateProjectile(p);
+                                _timeLeftUntilAttack = p.TimeBetweenAttacks;
+                                _chargingShotInProgress = false;
+                                _shootDelayLeft = p.ShootDelay;
+                            }
+                        }
+                        else
+                        {
+                            t += p.Npc.localDeltaTime;
+                            p.Renderer.material.color = Color.Lerp(p.Renderer.material.color, Color.red, t);
+                        }
+                    }
+                }
+                else
+                {
+                    if (p.Renderer.material.color != _originalColor)
+                    {
+                        t += p.Npc.localDeltaTime;
+                        p.Renderer.material.color = Color.Lerp(p.Renderer.material.color, _originalColor, t);
+                    }
+                    p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
+                    p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
+                }
+            }
+
+            public override void CheckForTransitions(ShootingAIParams p)
+            {
+                if (!p.Chase && p.LoseAggroDistance <= Vector3.Distance(p.NpcTransform.position, p.Player.transform.position))
+                    Parent.SetState(typeof(Idle), p);
+                if (p.Chase && p.LoseAggroDistance <= Vector3.Distance(p.NpcTransform.position, p.Player.transform.position))
+                    Parent.SetState(typeof(Chase), p);
+            }
+
+            private void CreateProjectile(ShootingAIParams p)
+            {
+                _currentProjectile = Instantiate(p.BulletPrefab, (p.NpcTransform.position + p.NpcTransform.forward), Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position));
+                _currentProjectile.transform.eulerAngles = new Vector3(0, _currentProjectile.transform.eulerAngles.y, 0);
+                _currentProjectile.transform.position = p.NpcTransform.position + p.NpcTransform.transform.forward + p.NpcTransform.transform.up;
+                _currentProjectile.GetComponent<Bullet>().Source = p.Npc.gameObject;
+            }
+        }
+
+        private class Chase : UState<ShootingAIParams>
         {
             private float _idleTimeLeft = 0;
 
-            public override void FixedUpdate(RushAIParams p)
+            public override void FixedUpdate(ShootingAIParams p)
             {
                 p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
                 p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
@@ -137,19 +224,19 @@ namespace SpectralDaze.AI
                 if (_idleTimeLeft <= 0)
                 {
                     p.NavAgent.isStopped = false;
-                    Vector3 randomOffset = Random.insideUnitSphere * p.AggroDistance / 2;
+                    Vector3 randomOffset = Random.insideUnitSphere * p.AggroDistance/2;
                     Vector3 randomWanderPosistion = randomOffset += p.Player.transform.position;
 
                     NavMeshHit hit;
                     while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false)
                     {
-                        randomOffset = Random.insideUnitSphere * p.AggroDistance / 2;
+                        randomOffset = Random.insideUnitSphere * p.AggroDistance/2;
                         randomWanderPosistion = randomOffset += p.NpcTransform.position;
                     }
                     p.CachedTargetMoveToTargetPos = hit.position;
                     if (p.NavAgent.SetDestination(randomWanderPosistion))
                     {
-                        _idleTimeLeft = p.IdleTime/2;
+                        _idleTimeLeft = p.IdleTime / 2;
                     }
                     else
                     {
@@ -158,7 +245,7 @@ namespace SpectralDaze.AI
                 }
             }
 
-            public override void CheckForTransitions(RushAIParams p)
+            public override void CheckForTransitions(ShootingAIParams p)
             {
                 if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
                     Parent.SetState(typeof(Attacking), p);
@@ -168,77 +255,23 @@ namespace SpectralDaze.AI
             }
         }
 
-        private class Attacking : UState<RushAIParams>
-        {
-            private float _remainderChargeCooldown;
-            private bool _chargeInProgress = false;
-            private float _remainderOfCurrentCharge = 1.5f;
-            private Vector3 _targetPos;
-            public override void Enter(RushAIParams p)
-            {
-                p.NavAgent.isStopped = true;
-                _remainderChargeCooldown = p.TimeBetweenCharges;
-            }
-
-            public override void Update(RushAIParams p)
-            {
-                _remainderChargeCooldown -= p.Npc.localDeltaTime;
-                if (_remainderChargeCooldown <= 0 && !_chargeInProgress)
-                {
-                    p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
-                    p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
-                    _targetPos = p.Player.transform.position;
-                    _chargeInProgress = true;
-                    p.RigidBody.velocity= p.NpcTransform.forward * p.LaunchVelocity * p.MovementModifier;
-                }
-                else if (_remainderChargeCooldown > 0 && !_chargeInProgress)
-                {
-                    p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
-                    p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
-                }
-
-                if (_chargeInProgress)
-                {
-                    _remainderOfCurrentCharge -= p.Npc.localDeltaTime;
-                    if (_remainderOfCurrentCharge <= 0)
-                    {
-                        _remainderChargeCooldown = p.TimeBetweenCharges;
-                        _chargeInProgress = false;
-                        _remainderOfCurrentCharge = 1.5f;
-                    }
-
-                    p.NpcTransform.position += p.NpcTransform.forward * p.Npc.localDeltaTime * p.MovementSpeed*2;
-                }
-
-
-            }
-
-            public override void CheckForTransitions(RushAIParams p)
-            {
-                if (!p.Chase && p.LoseAggroDistance >= Vector3.Distance(p.NpcTransform.position, p.Player.transform.position))
-                    Parent.SetState(typeof(Move), p);
-                if (p.Chase && p.LoseAggroDistance >= Vector3.Distance(p.NpcTransform.position, p.Player.transform.position))
-                    Parent.SetState(typeof(Chase), p);
-            }
-        }
-
-        private class Idle : UState<RushAIParams>
+        private class Idle : UState<ShootingAIParams>
         {
             private float _timeLeftIdle = 0;
 
-            public override void Enter(RushAIParams p)
+            public override void Enter(ShootingAIParams p)
             {
                 _timeLeftIdle = p.IdleTime;
             }
 
-            public override void FixedUpdate(RushAIParams p)
+            public override void FixedUpdate(ShootingAIParams p)
             {
                 if (!p.NavAgent.pathPending && p.NavAgent.remainingDistance <= p.NavAgent.stoppingDistance &&
                     !p.NavAgent.hasPath || p.NavAgent.velocity.sqrMagnitude == 0f)
                 {
                     if (_timeLeftIdle > 0)
                     {
-                        _timeLeftIdle = _timeLeftIdle - p.Npc.localDeltaTime;
+                        _timeLeftIdle = _timeLeftIdle - UnityEngine.Time.deltaTime;
                     }
                     else
                     {
@@ -247,7 +280,7 @@ namespace SpectralDaze.AI
                 }
             }
 
-            public override void CheckForTransitions(RushAIParams p)
+            public override void CheckForTransitions(ShootingAIParams p)
             {
                 if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
                 {
@@ -256,9 +289,9 @@ namespace SpectralDaze.AI
             }
         }
 
-        private class Move : UState<RushAIParams>
+        private class Move : UState<ShootingAIParams>
         {
-            public override void Enter(RushAIParams p)
+            public override void Enter(ShootingAIParams p)
             {
                 p.NavAgent.isStopped = false;
                 if (p.MovementType == MovementType.Wander || p.MovementType == MovementType.NoLimitsWander)
@@ -268,10 +301,17 @@ namespace SpectralDaze.AI
 
 
                     NavMeshHit hit;
-                    while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false && Vector3.Distance(randomWanderPosistion, p.OriginPosistion) > p.WanderDistance || NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false)
+                    while (NavMesh.SamplePosition(randomWanderPosistion, out hit, 1, NavMesh.AllAreas) == false)
                     {
                         randomOffset = Random.insideUnitSphere * p.WanderDistance;
                         randomWanderPosistion = randomOffset += p.NpcTransform.position;
+
+                        if (p.MovementType == MovementType.Wander)
+                            while (Vector3.Distance(randomWanderPosistion, p.OriginPosistion) > p.WanderDistance)
+                            {
+                                randomOffset = Random.insideUnitSphere * p.WanderDistance;
+                                randomWanderPosistion = randomOffset += p.NpcTransform.position;
+                            }
                     }
                     p.CachedTargetMoveToTargetPos = hit.position;
                     if (p.NavAgent.SetDestination(randomWanderPosistion))
@@ -281,7 +321,7 @@ namespace SpectralDaze.AI
                     else
                     {
                         Debug.LogError("Error occured when setting destination of navmesh agent.");
-                    }   
+                    }
                 }
                 else if (p.MovementType == MovementType.Patrol)
                 {
@@ -310,7 +350,7 @@ namespace SpectralDaze.AI
                 }
             }
 
-            public override void CheckForTransitions(RushAIParams p)
+            public override void CheckForTransitions(ShootingAIParams p)
             {
                 if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
                 {
@@ -326,10 +366,10 @@ namespace SpectralDaze.AI
             NoLimitsWander
         }
 
-        private struct RushAIParams
+        private struct ShootingAIParams
         {
             public Transform NpcTransform;
-            public RushAI Npc;
+            public ShootingAI Npc;
             public NavMeshAgent NavAgent;
             public Animator Animator;
             public Vector3 CachedTargetMoveToTargetPos;
@@ -340,16 +380,20 @@ namespace SpectralDaze.AI
             public float TimeLeftIdle;
             public int CurrentPatrolPoint;
             public List<Vector3> PatrolPoints;
+            public GameObject CachedTarget;
             public PlayerController Player;
             public float AggroDistance;
             public float LoseAggroDistance;
-            public float TimeBetweenCharges;
             public float MovementModifier;
             public Rigidbody RigidBody;
-            public float LaunchVelocity;
             public float MovementSpeed;
+            public GameObject BulletPrefab;
+            public float TimeBetweenAttacks;
+            public float AttackChargeAmount;
+            public Renderer Renderer;
             public bool Chase;
             public float ChaseDistance;
+            public float ShootDelay;
         }
     }
 }

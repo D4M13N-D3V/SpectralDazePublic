@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TitleScreen.unity
     guid: a68bae2025680de49b18aab8c6f40aa8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level03.unity
     guid: d8841060476cd83448dc193561bd4887
   - enabled: 0
@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Intro.unity
     guid: 856e1b6956100db40846a29d3929df3f
+  - enabled: 1
+    path: Assets/Scenes/Level03_Damien.unity
+    guid: 27f1b3ff64711994886515ab6fcb1a44
   m_configObjects: {}
