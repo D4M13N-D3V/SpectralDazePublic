@@ -172,26 +172,45 @@ namespace SpectralDaze.AI
         {
             private float _remainderChargeCooldown;
             private bool _chargeInProgress = false;
+            private float _remainderOfCurrentCharge = 1.5f;
+            private Vector3 _targetPos;
             public override void Enter(RushAIParams p)
             {
                 p.NavAgent.isStopped = true;
                 _remainderChargeCooldown = p.TimeBetweenCharges;
             }
 
-            public override void FixedUpdate(RushAIParams p)
+            public override void Update(RushAIParams p)
             {
-                p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
-                p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
-
                 _remainderChargeCooldown -= p.Npc.localDeltaTime;
                 if (_remainderChargeCooldown <= 0 && !_chargeInProgress)
                 {
-                    p.NpcTransform.LookAt(p.Player.transform);
+                    p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
+                    p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
+                    _targetPos = p.Player.transform.position;
                     _chargeInProgress = true;
                     p.RigidBody.velocity= p.NpcTransform.forward * p.LaunchVelocity * p.MovementModifier;
-                    _remainderChargeCooldown = p.TimeBetweenCharges;
-                    _chargeInProgress = false;
                 }
+                else if (_remainderChargeCooldown > 0 && !_chargeInProgress)
+                {
+                    p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
+                    p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
+                }
+
+                if (_chargeInProgress)
+                {
+                    _remainderOfCurrentCharge -= p.Npc.localDeltaTime;
+                    if (_remainderOfCurrentCharge <= 0)
+                    {
+                        _remainderChargeCooldown = p.TimeBetweenCharges;
+                        _chargeInProgress = false;
+                        _remainderOfCurrentCharge = 1.5f;
+                    }
+
+                    p.NpcTransform.position += p.NpcTransform.forward * p.Npc.localDeltaTime * p.MovementSpeed*2;
+                }
+
+
             }
 
             public override void CheckForTransitions(RushAIParams p)

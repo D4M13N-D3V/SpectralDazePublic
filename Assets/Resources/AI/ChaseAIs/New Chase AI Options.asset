@@ -16,7 +16,10 @@ MonoBehaviour:
   IdleTime: 2
   StartingPatorlPoint: 0
   PatrolPoints: []
-  AggroDistance: 4
+  AggroDistance: 8
+  LoseAggroDistance: 12
   TimeBetweenCharges: 2
   LaunchVelocity: 8
   MovementSpeed: 3
+  Chase: 0
+  ChaseDistance: 20

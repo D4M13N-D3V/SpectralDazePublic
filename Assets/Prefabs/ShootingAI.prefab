@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 54283200326419090}
   - component: {fileID: 65720413960625834}
   - component: {fileID: 114632121736428162}
+  - component: {fileID: 114472684073409646}
   m_Layer: 9
   m_Name: ShootingAI
   m_TagString: Untagged
@@ -235,6 +236,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114472684073409646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1763254701310984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9af044d3b0e32c4293d55eb1d4872a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114632121736428162
 MonoBehaviour:
   m_ObjectHideFlags: 1
