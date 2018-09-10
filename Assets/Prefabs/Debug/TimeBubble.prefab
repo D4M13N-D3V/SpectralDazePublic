@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 135546143590809392}
   - component: {fileID: 54429328281471984}
   - component: {fileID: 114520562301664734}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TimeBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
+  BubbleScale: {x: 7, y: 7, z: 7}
 --- !u!135 &135546143590809392
 SphereCollider:
   m_ObjectHideFlags: 1

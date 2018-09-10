@@ -16,14 +16,14 @@ MonoBehaviour:
     Stats:
       AnimationModifier: 0.5
       PhysicsModifier: 0.5
-      MovementModifier: 0.5
+      MovementModifier: 1.5
   - Type: 0
     Stats:
       AnimationModifier: 1
       PhysicsModifier: 1
-      MovementModifier: 1
+      MovementModifier: 5
   - Type: 2
     Stats:
       AnimationModifier: 2
       PhysicsModifier: 2
-      MovementModifier: 2
+      MovementModifier: 6
