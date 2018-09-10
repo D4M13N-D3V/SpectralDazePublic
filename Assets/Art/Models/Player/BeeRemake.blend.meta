@@ -15,6 +15,8 @@ ModelImporter:
     100018: Cylinder_004
     100020: Plane
     100022: Plane_001
+    100024: Cube_002
+    100026: Plane_002
     400000: //RootNode
     400002: Cube
     400004: Cube_001
@@ -27,6 +29,8 @@ ModelImporter:
     400018: Cylinder_004
     400020: Plane
     400022: Plane_001
+    400024: Cube_002
+    400026: Plane_002
     2100000: unnamed
     2100002: Hair
     2100004: Skin
@@ -45,6 +49,8 @@ ModelImporter:
     2300016: Cylinder_004
     2300018: Plane
     2300020: Plane_001
+    2300022: Cube_002
+    2300024: Plane_002
     3300000: Cube
     3300002: Cube_001
     3300004: Cylinder
@@ -56,6 +62,8 @@ ModelImporter:
     3300016: Cylinder_004
     3300018: Plane
     3300020: Plane_001
+    3300022: Cube_002
+    3300024: Plane_002
     4300000: Cube_001
     4300002: Cylinder_002
     4300004: Cylinder_001
@@ -67,6 +75,8 @@ ModelImporter:
     4300016: Cylinder_004
     4300018: Cylinder_003
     4300020: Cube_003
+    4300022: Cube_002
+    4300024: Plane_002
     7400000: Default Take
     9500000: //RootNode
     2186277476908879412: ImportLogs

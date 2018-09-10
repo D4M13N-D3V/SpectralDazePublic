@@ -42,7 +42,19 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Metallic:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Occlusion:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -55,17 +67,26 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Amplitude: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DissolvePercentage: 0
+    - _DissolvePercentage2: 1.2
     - _DstBlend: 0
+    - _Frequency: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _Intensity: 1
+    - _Lacunarity: 0.1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Octaves: 1
     - _Parallax: 0.02
+    - _Persistence: 1
+    - _Size: 4
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -73,4 +94,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.027450982, g: 0.06666667, b: 0.058823533, a: 1}
+    - _Color1: {r: 0, g: 0, b: 0, a: 1}
+    - _Color2: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.002428216, g: 0.0060488326, b: 0.0056053917, a: 0}
+    - _Offset: {r: 2.25, g: 0.92, b: 0, a: 5}
