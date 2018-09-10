@@ -30,6 +30,7 @@ namespace SpectralDaze.Player
             if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
                 return;
             NavMeshHit hit;
+            NavMeshPath path = new NavMeshPath(); ;
 
             var distBetweenMouseAndPlayer = Vector3.Distance(pc.transform.position, mouseHit.point);
 
@@ -39,9 +40,13 @@ namespace SpectralDaze.Player
             
             if (Vector3.Distance(mouseHit.point, pc.transform.position) > MaximumDashDistance)
                 return;
-
             if (!NavMesh.SamplePosition(mouseHit.point, out hit, 1, NavMesh.AllAreas))
                 return;
+
+            pc.Agent.CalculatePath(hit.position, path);
+            if(path.status != NavMeshPathStatus.PathComplete)
+                return;;
+
             if ( !_isDashing && Input.GetMouseButtonDown(0))
             {
                 pc.transform.rotation = Quaternion.LookRotation(hit.position-pc.transform.position);

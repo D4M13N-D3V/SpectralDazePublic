@@ -21,6 +21,7 @@ namespace SpectralDaze.Player
         private DialogueManager dialogueMan;
         private Rigidbody rbody;
         public Information TimeInfo;
+        public NavMeshAgent Agent;
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;
 
@@ -79,6 +80,7 @@ namespace SpectralDaze.Player
             rbody = GetComponent<Rigidbody>();
             Animator = GetComponentInChildren<Animator>();
             dialogueMan = FindObjectOfType<DialogueManager>();
+            Agent = GetComponent<NavMeshAgent>();
         }
 
         private void Update()
