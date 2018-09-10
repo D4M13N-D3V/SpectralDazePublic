@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
 
     public float Speed = 4f;
     public bool Homing = false;
-	private Vector3 cachedPosition;
+    private Vector3 cachedPosition;
 
     public GameObject Source;
 
@@ -47,42 +47,39 @@ public class Bullet : MonoBehaviour
     }
 
     private void Update()
-	{
-        if(Homing)
+    {
+        if (Homing)
             transform.rotation = Quaternion.LookRotation(GameObject.FindObjectOfType<PlayerController>().gameObject.transform.position - transform.position);
         Vector3 velocity = transform.position - cachedPosition;
 
-		Ray r = new Ray(transform.position, transform.forward);
-		RaycastHit hit;
-		if (Physics.Raycast(r, out hit))
-		{
-		    if (hit.collider.tag == "Player" && hit.distance < 0.1f && hit.collider.gameObject != Source)
-		    {
-		        hit.collider.GetComponent<PlayerController>().EndGame();
-		        Destroy(gameObject);
-            }
-			else if (hit.collider.tag == "Enemy" && hit.distance < 0.1f && hit.collider.gameObject != Source)
-		    {
-                foreach (var comp in hit.collider.gameObject.GetComponents(typeof(Component)))
-		        {
-		            if (comp.GetType().IsSubclassOf(typeof(BaseAI)))
-		            {
-		                var enemy = (BaseAI) comp;
-                        enemy.Die();
-		            }
-		        }
+        Ray r = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit))
+        {
+            if (hit.collider.tag == "Player" && hit.distance < 0.1f && hit.collider.gameObject != Source)
+            {
+                hit.collider.GetComponent<PlayerController>().EndGame();
                 Destroy(gameObject);
             }
-		    else if(hit.collider.gameObject!= Source && hit.distance < 0.1f)
+            else if (hit.collider.tag == "Enemy" && hit.distance < 0.6f && hit.collider.gameObject != Source)
+            {
+                foreach (var comp in hit.collider.gameObject.GetComponents(typeof(Component)))
+                {
+                    //SHouldnt have to use refelect GetComponent should work but isnt.
+                    if (comp.GetType().IsSubclassOf(typeof(BaseAI))) { var enemy = (BaseAI)comp; enemy.Die(); }
+                }
+                Destroy(gameObject);
+            }
+            else if (hit.collider.gameObject != Source && hit.distance < 0.1f)
             {
                 Debug.Log(hit.collider.gameObject);
                 Destroy(gameObject);
-		    }
-		}   
+            }
+        }
 
-		End:
-		transform.position += transform.forward * Time.deltaTime * Speed;
-	}
+        End:
+        transform.position += transform.forward * Time.deltaTime * Speed;
+    }
 
     /*
      * Time Bubble/Manipulation Code
