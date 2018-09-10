@@ -19,10 +19,10 @@ namespace SpectralDaze.Time
 
         public void SelfDestruct()
         {
-            LeanTween.scale(gameObject, Vector3.zero, 0.5f).setOnComplete(() =>
-            {
-                Destroy(gameObject);
-            });
+            LeanTween.scale(gameObject, Vector3.one, 0.5f).setOnComplete(() =>
+                {
+                    LeanTween.move(gameObject, -transform.up * 10, 0.1f).setOnComplete(() => { Destroy(gameObject); });
+                });
         }
 
         void OnTriggerEnter(Collider other)

@@ -4,7 +4,9 @@ using SpectralDaze.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SpectralDaze.ScriptableObjects.Time;
+using SpectralDaze.Time;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,13 +18,58 @@ namespace SpectralDaze.Player
     {
         public PlayerInfo PlayerInfo;
         public Conversation TestConversation;
-
         public Animator Animator;
-
         private DialogueManager dialogueMan;
         private Rigidbody rbody;
+        public Information TimeInfo;
+        private bool _timeBeingManipulated;
+        private Manipulations _manipulationType;
 
-        public Information timeInfo;
+        [HideInInspector]
+        public float _localTimeScale = 1.0f;
+        [HideInInspector]
+        public float localTimeScale
+        {
+            get
+            {
+                return _localTimeScale;
+            }
+            set
+            {
+                float multiplier = value / _localTimeScale;
+                _localTimeScale = value;
+            }
+        }
+        [HideInInspector]
+        public float localDeltaTime
+        {
+            get
+            {
+                return UnityEngine.Time.deltaTime * UnityEngine.Time.timeScale * _localTimeScale;
+            }
+        }
+
+        /*
+         * Time Bubble/Manipulation Code
+         */
+        public void StartTimeManipulation(int type)
+        {
+            Debug.Log("TEST");
+            _timeBeingManipulated = true;
+            _manipulationType = (Manipulations)type;
+            Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;;
+            _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
+            //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
+        }
+
+        public void StopTimeManipulation()
+        {
+            _timeBeingManipulated = false;
+            _manipulationType = Manipulations.Normal;
+            Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
+            _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
+            //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
+        }
 
         public void EndGame()
         {
@@ -61,8 +108,8 @@ namespace SpectralDaze.Player
                 input = Vector2.zero;
 
 
-            Vector2 computedInput = input * UnityEngine.Time.deltaTime * PlayerInfo.MoveSpeed;
-            computedInput = Vector2.ClampMagnitude(computedInput, UnityEngine.Time.deltaTime * PlayerInfo.MoveSpeed);
+            Vector2 computedInput = input * localDeltaTime * PlayerInfo.MoveSpeed;
+            computedInput = Vector2.ClampMagnitude(computedInput, localDeltaTime * PlayerInfo.MoveSpeed * TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier);
 
             Animator.SetFloat("RunSpeed", computedInput.magnitude);
 
@@ -78,7 +125,7 @@ namespace SpectralDaze.Player
             if (computedInput != Vector2.zero)
             {
                 Quaternion goalRotation = Quaternion.LookRotation(new Vector3(input.x, 0, input.y), Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, goalRotation, UnityEngine.Time.deltaTime * 9f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, goalRotation, localDeltaTime * 9f);
             }
         }
     }

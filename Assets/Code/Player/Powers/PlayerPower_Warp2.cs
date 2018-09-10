@@ -26,8 +26,6 @@ namespace SpectralDaze.Player
         {
             if (!Input.GetMouseButton(0))
             {
-                pc.PlayerInfo.MoveSpeed = pc.timeInfo.Data.SingleOrDefault(x=>x.Type==Manipulations.Normal).Stats.MovementModifier;
-                pc.Animator.speed = pc.timeInfo.Data.SingleOrDefault(x => x.Type == Manipulations.Normal).Stats.AnimationModifier;
                 if (_timeBubble != null)
                     _timeBubble.GetComponent<TimeBubbleController>().SelfDestruct();
             }
@@ -57,17 +55,10 @@ namespace SpectralDaze.Player
                     _timeBubble.GetComponent<TimeBubbleController>().Type = Manipulations.Slow;
                     _timeBubble.name = "TimeBubble";
                 }
-
-                //NEW ADDITION IN THIS VERSION (Sets the players movement speed and animator speed back)
-                pc.PlayerInfo.MoveSpeed = pc.timeInfo.Data.SingleOrDefault(x => x.Type == Manipulations.Slow).Stats.MovementModifier;
-                pc.Animator.speed = pc.timeInfo.Data.SingleOrDefault(x => x.Type == Manipulations.Slow).Stats.AnimationModifier;
             }
 
             if (Input.GetMouseButtonUp(0))
             {
-                // Move the player
-                pc.PlayerInfo.MoveSpeed = pc.timeInfo.Data.SingleOrDefault(x => x.Type == Manipulations.Normal).Stats.MovementModifier;
-                pc.Animator.speed = pc.timeInfo.Data.SingleOrDefault(x => x.Type == Manipulations.Normal).Stats.AnimationModifier;
                 pc.transform.position = mouseHit.point + Vector3.up;
                 _timeBubble.GetComponent<TimeBubbleController>().SelfDestruct();    
             }
