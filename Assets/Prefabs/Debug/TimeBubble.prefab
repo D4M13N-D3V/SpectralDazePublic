@@ -113,6 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
+  TimeManipulateableTags:
+  - Enemy
+  - Player
+  - Projectile
   BubbleScale: {x: 7, y: 7, z: 7}
 --- !u!135 &135546143590809392
 SphereCollider:

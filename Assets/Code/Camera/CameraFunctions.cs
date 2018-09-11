@@ -16,7 +16,6 @@ namespace SpectralDaze.Camera
             float elapsedTime = 0.0f;
             while (elapsedTime < duration)
             {
-                Debug.Log(elapsedTime);
                 float x = Random.Range(-1, 1) * magnitude;
                 float z = Random.Range(-1, 1) * magnitude;
                 transform.localPosition = orignalPosistion + new Vector3(x, orignalPosistion.y, z);

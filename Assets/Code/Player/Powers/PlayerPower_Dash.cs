@@ -67,6 +67,10 @@ namespace SpectralDaze.Player
                 {
                     _particleSystem.Stop();
                     _isDashing = false;
+                    _playerInfo.CanMove = true;
+                    //pc.Animator.SetBool("IsDashing", false);
+                    Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), false);
+                    pc.Agent.enabled = true;
                 }
             }
 
@@ -83,14 +87,16 @@ namespace SpectralDaze.Player
                 _particleSystem.Stop();
                 _isDashing = false;
                 _playerInfo.CanMove = true;
-                pc.Animator.SetBool("IsDashing", false);
+                //pc.Animator.SetBool("IsDashing", false);
+                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), false);
+                pc.Agent.enabled = true;
             }
             _lastPos = pc.transform.position;
 
             if (!_isDashing && Input.GetMouseButtonDown(0))
             {
                 //PUTTHIS BACK IN WHEN BETTER ANIMATION
-                pc.Animator.SetBool("IsDashing", true);
+                //pc.Animator.SetBool("IsDashing", true);
                 pc.transform.rotation = Quaternion.LookRotation(mouseHit.point - pc.transform.position);
                 pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
                 _particleSystem.Play();
@@ -99,6 +105,8 @@ namespace SpectralDaze.Player
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
                 _isDashing = true;
                 _playerInfo.CanMove = false;
+                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"),true);
+                pc.Agent.enabled = false;
             }
         }
     }

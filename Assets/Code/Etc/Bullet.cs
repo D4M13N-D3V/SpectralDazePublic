@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour
     public Information TimeInfo;
     private bool _timeBeingManipulated;
     private Manipulations _manipulationType;
-    
+
 
     private void Update()
     {
@@ -50,32 +50,6 @@ public class Bullet : MonoBehaviour
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
         Vector3 velocity = transform.position - cachedPosition;
-
-        var hitColliders = Physics.OverlapSphere(transform.position, 0.5f);
-        for (var i = 0; i < hitColliders.Length; i++)
-        {
-            var v = hitColliders[i].gameObject.GetInstanceID();
-            if (hitColliders[i].tag == "Player" && hitColliders[i].gameObject != Source)
-            {
-                hitColliders[i].GetComponent<PlayerController>().EndGame();
-                Destroy(gameObject);
-            }
-            else if (hitColliders[i].tag == "Enemy" && hitColliders[i].gameObject != Source)
-            {
-                foreach (var comp in hitColliders[i].gameObject.GetComponents(typeof(Component)))
-                {
-                    //SHouldnt have to use refelect GetComponent should work but isnt.
-                    if (comp.GetType().IsSubclassOf(typeof(BaseAI))) { var enemy = (BaseAI)comp; enemy.Die(); }
-                }
-                Destroy(gameObject);
-            }
-            else if (hitColliders[i].gameObject != Source &&  !hitColliders[i].isTrigger)
-            {
-                Destroy(gameObject);
-            }
-        }
-
-        End:
         transform.position += transform.forward * Time.deltaTime * Speed;
     }
 
@@ -94,5 +68,26 @@ public class Bullet : MonoBehaviour
         _timeBeingManipulated = true;
         _manipulationType = Manipulations.Normal;
         Speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<PlayerController>().EndGame();
+        }
+        else if (collision.gameObject.tag == "Enemy" && collision.gameObject != Source)
+        {
+            foreach (var comp in collision.gameObject.GetComponents(typeof(Component)))
+            {
+                if (comp.GetType().IsSubclassOf(typeof(BaseAI))) { var enemy = (BaseAI)comp; enemy.Die(); }
+            }
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.tag=="Wall" || collision.gameObject.tag=="Obstacle" && collision.gameObject != Source && !collision.collider.isTrigger)
+        {
+            Destroy(gameObject);
+        }
+
     }
 }

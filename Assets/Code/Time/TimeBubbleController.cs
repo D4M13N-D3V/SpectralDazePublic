@@ -8,7 +8,7 @@ namespace SpectralDaze.Time
     public class TimeBubbleController : MonoBehaviour
     {
         public Manipulations Type = Manipulations.Slow;
-
+        public List<string> TimeManipulateableTags;
         public Vector3 BubbleScale = new Vector3(7, 7, 7);
 
         private void Start()
@@ -27,14 +27,14 @@ namespace SpectralDaze.Time
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Time"))
+            if (TimeManipulateableTags.Contains(other.gameObject.tag))
             {
                 other.gameObject.SendMessage("StartTimeManipulation", (int)Type);
             }
         }
         void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Time"))
+            if (TimeManipulateableTags.Contains(other.gameObject.tag))
             {
                 other.gameObject.SendMessage("StopTimeManipulation");
             }

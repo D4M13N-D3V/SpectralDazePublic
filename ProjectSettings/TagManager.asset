@@ -9,6 +9,9 @@ TagManager:
   - DialogueText
   - Walkable
   - Enemy
+  - Wall
+  - Projectile
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -20,8 +23,8 @@ TagManager:
   - 
   - PostProcessing
   - Time
-  - Walls
-  - 
+  - Dashable
+  - Dasher
   - 
   - 
   - 
