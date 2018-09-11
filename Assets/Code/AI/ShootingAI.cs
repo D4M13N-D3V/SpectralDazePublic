@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Code.AI;
+using Assets.Code.AI;   
 using SpectralDaze.Etc;
 using SpectralDaze.Managers;
 using SpectralDaze.Player;
 using SpectralDaze.ScriptableObjects.AI;
+using SpectralDaze.ScriptableObjects.Managers.Audio;
 using SpectralDaze.ScriptableObjects.Time;
 using SpectralDaze.Time;
 using UnityEngine;
@@ -52,12 +53,15 @@ namespace SpectralDaze.AI
         private UStateMachine<ShootingAIParams> stateMachine;
         private ShootingAIParams paramsInstance;
 
+        public AudioQueue AudioQueue;
+
         public Information TimeInfo;
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;
 
         private void Start()
         {
+            AudioQueue = Resources.Load<AudioQueue>("Managers/Audio/AudioQueue");
             GetComponent<KillOnTouch>().KillEnemys = false;
             paramsInstance = new ShootingAIParams()
             {
@@ -171,11 +175,11 @@ namespace SpectralDaze.AI
                             _shootDelayLeft -= p.Npc.localDeltaTime;
                             if (_shootDelayLeft <= 0)
                             {
-                                GameObject.FindObjectOfType<GameManager>().AudioManager.PlaySfx(p.ShootingSound,false,0.4f);
                                 CreateProjectile(p);
                                 _timeLeftUntilAttack = p.TimeBetweenAttacks;
                                 _chargingShotInProgress = false;
                                 _shootDelayLeft = p.ShootDelay;
+                                p.Npc.AudioQueue.Queue.Enqueue(p.ShootingSound);
                             }
                         }
                         else
@@ -398,7 +402,7 @@ namespace SpectralDaze.AI
             public bool Chase;
             public float ChaseDistance;
             public float ShootDelay;
-            public AudioClip ShootingSound;
+            public AudioClipInfo ShootingSound;
         }
     }
 }

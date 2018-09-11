@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SpectralDaze.AI;
 using SpectralDaze.AI.QuestNPC;
 using SpectralDaze.ScriptableObjects.Conversations;
+using SpectralDaze.ScriptableObjects.Managers.Audio;
 using UnityEngine;
 
 namespace SpectralDaze.ScriptableObjects.AI
@@ -27,7 +28,7 @@ namespace SpectralDaze.ScriptableObjects.AI
         public float AttackChargeAmount = 0.5f;
         public bool Chase = true;
         public float ChaseDistance = 20;
-        public AudioClip ShootingSound;
+        public AudioClipInfo ShootingSound;
     }
 }
  

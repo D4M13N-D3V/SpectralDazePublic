@@ -18,3 +18,4 @@ MonoBehaviour:
   MaximumDashDistance: 5
   ParticleSystem: {fileID: 1013219641901000, guid: e0baa8b5c7bb8f34d8b622d3c8ad8dbc,
     type: 2}
+  DashSound: {fileID: 8300000, guid: 16f5c40463439044f9e9c6d488456416, type: 3}

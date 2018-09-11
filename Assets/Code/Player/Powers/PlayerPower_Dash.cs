@@ -1,4 +1,5 @@
 ﻿using SpectralDaze.Camera;
+using SpectralDaze.Managers;
 using SpectralDaze.ScriptableObjects.Stats;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,6 +22,7 @@ namespace SpectralDaze.Player
         private ParticleSystem _particleSystem;
         private Vector3 _originalPos;
         private Vector3 _lastPos;
+        public AudioClip DashSound;
         private float _duration;
 
         private PlayerInfo _playerInfo;
@@ -107,6 +109,7 @@ namespace SpectralDaze.Player
                 _playerInfo.CanMove = false;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"),true);
                 pc.Agent.enabled = false;
+                //GameObject.FindObjectOfType<GameManager>().AudioManager.PlaySfx(DashSound,false,0.5f);
             }
         }
     }

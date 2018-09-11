@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using SpectralDaze.ScriptableObjects.Managers.Audio;
 using UnityEngine;
-using SpectralDaze.ScriptableObjects.Audio;
 
 namespace SpectralDaze.ScriptableObjects.Characters
 {
@@ -9,7 +9,7 @@ namespace SpectralDaze.ScriptableObjects.Characters
     public class Character : ScriptableObject
     {
         public string Name;
-        public AudioQue VoiceLines;
+        public AudioQueue VoiceLines;
         public List<CharacterPortrait> CharacterPortraits;
     }
 }

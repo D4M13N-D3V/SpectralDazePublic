@@ -91,7 +91,7 @@ namespace SpectralDaze.Managers
             var i = 0;
             while (lastVoice == tmpAudioClip && i < 10)
             {
-                tmpAudioClip = character.VoiceLines.AudioClips[rnd.Next(0, character.VoiceLines.AudioClips.Count)];
+                //tmpAudioClip = character.VoiceLines.AudioClips[rnd.Next(0, character.VoiceLines.AudioClips.Count)];
                 i++;
             }
 
