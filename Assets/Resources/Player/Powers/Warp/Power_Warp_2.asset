@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: New Teleport
   TimeBubblePrefab: {fileID: 1330729616256330, guid: 74c6978e05d928f43aaf9534a07e63d8,
     type: 2}
+  BubbleScale: {x: 7, y: 7, z: 7}

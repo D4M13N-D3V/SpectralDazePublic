@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b7a989da1cdfcb4c804f1f4501f302f, type: 3}
-  m_Name: New Shooting AI Options
+  m_Name: DebugShootingAIOptions
   m_EditorClassIdentifier: 
   MovementType: 1
   WanderDistance: 10
@@ -26,4 +26,4 @@ MonoBehaviour:
   AttackChargeAmount: 0.5
   Chase: 1
   ChaseDistance: 20
-  ShootingSound: {fileID: 8300000, guid: d9c3e293590bd8c489b8cb63e80c1278, type: 3}
+  ShootingSound: {fileID: 11400000, guid: 38656cd6908cb3945a4bc67dc2427ee9, type: 2}

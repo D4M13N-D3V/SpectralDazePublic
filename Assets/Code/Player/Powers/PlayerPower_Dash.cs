@@ -100,8 +100,6 @@ namespace SpectralDaze.Player
 
             if (!_isDashing && Input.GetMouseButtonDown(0))
             {
-                //PUTTHIS BACK IN WHEN BETTER ANIMATION
-                //pc.Animator.SetBool("IsDashing", true);
                 pc.transform.rotation = Quaternion.LookRotation(mouseHit.point - pc.transform.position);
                 pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
                 _particleSystem.Play();

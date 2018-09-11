@@ -89,7 +89,7 @@ namespace SpectralDaze.AI.QuestNPC
 
             public override void Enter(QuestNpcParams p)
             {
-                _dialogueManager = GameManager.Instance.DialogueManager;
+                //_dialogueManager = GameManager.Instance.DialogueManager;
             }
 
             public override void Update(QuestNpcParams p)
@@ -104,7 +104,7 @@ namespace SpectralDaze.AI.QuestNPC
                     }
                     else
                     {
-                        GameManager.Instance.DialogueManager.CycleDialogue();
+                        //GameManager.Instance.DialogueManager.CycleDialogue();
                     }
                 }
             }
