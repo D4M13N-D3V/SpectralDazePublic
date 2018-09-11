@@ -22,6 +22,8 @@ MonoBehaviour:
   MovementSpeed: 3
   BulletPrefab: {fileID: 1541629895786640, guid: 64224564fef16be44b2a8651b6cc8cc3,
     type: 2}
+  ShootDelay: 0
   AttackChargeAmount: 0.5
   Chase: 1
   ChaseDistance: 20
+  ShootingSound: {fileID: 8300000, guid: d9c3e293590bd8c489b8cb63e80c1278, type: 3}

@@ -84,7 +84,8 @@ namespace SpectralDaze.AI
                 ShootDelay = Options.ShootDelay,
                 Renderer = Renderer,
                 Chase = Options.Chase,
-                ChaseDistance = Options.ChaseDistance
+                ChaseDistance = Options.ChaseDistance,
+                ShootingSound = Options.ShootingSound,
             };
             stateMachine = new UStateMachine<ShootingAIParams>(paramsInstance, new Chase(), new Attacking(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
@@ -170,6 +171,7 @@ namespace SpectralDaze.AI
                             _shootDelayLeft -= p.Npc.localDeltaTime;
                             if (_shootDelayLeft <= 0)
                             {
+                                GameObject.FindObjectOfType<GameManager>().AudioManager.PlaySfx(p.ShootingSound,false,0.4f);
                                 CreateProjectile(p);
                                 _timeLeftUntilAttack = p.TimeBetweenAttacks;
                                 _chargingShotInProgress = false;
@@ -396,6 +398,7 @@ namespace SpectralDaze.AI
             public bool Chase;
             public float ChaseDistance;
             public float ShootDelay;
+            public AudioClip ShootingSound;
         }
     }
 }
