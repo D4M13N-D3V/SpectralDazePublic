@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d00ca71b60c37f47b7cd55284faa551, type: 3}
+  m_Name: Power_Dash
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 0}
+  Name: 
+  DashSpeed: 0.05
+  MaximumDashDistance: 10
+  ParticleSystem: {fileID: 1013219641901000, guid: e0baa8b5c7bb8f34d8b622d3c8ad8dbc,
+    type: 2}

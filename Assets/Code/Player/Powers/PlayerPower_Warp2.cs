@@ -31,7 +31,7 @@ namespace SpectralDaze.Player
             }
 
             RaycastHit mouseHit;
-            if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
+            if (!Physics.Raycast(UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
                 return;
 
             // Switch this out with something better.

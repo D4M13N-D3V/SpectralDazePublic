@@ -13,7 +13,7 @@ namespace SpectralDaze.Player
                 UnityEngine.Time.timeScale = 1f;
 
             RaycastHit mouseHit;
-            if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
+            if (!Physics.Raycast(UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
                 return;
 
             // Switch this out with something better.
