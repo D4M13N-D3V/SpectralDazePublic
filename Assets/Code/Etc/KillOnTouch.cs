@@ -11,13 +11,14 @@ namespace SpectralDaze.Etc
 {
     public class KillOnTouch : MonoBehaviour
     {
+        public bool KillEnemys = true;
         void OnCollisionEnter(Collision collision)
         {
             if (collision.collider.tag == "Player")
             {
                 collision.collider.GetComponent<PlayerController>().EndGame();
             }
-            else if (collision.collider.tag == "Enemy")
+            else if (KillEnemys && collision.collider.tag == "Enemy")
             {
                 foreach (var comp in collision.collider.gameObject.GetComponents(typeof(Component)))
                 {

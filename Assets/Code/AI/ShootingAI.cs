@@ -58,6 +58,7 @@ namespace SpectralDaze.AI
 
         private void Start()
         {
+            GetComponent<KillOnTouch>().KillEnemys = false;
             paramsInstance = new ShootingAIParams()
             {
                 NpcTransform = transform,
