@@ -3722,6 +3722,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4524242901185636, guid: c0e492ec70309c44f9f832b98bf665a7,
     type: 2}
   m_PrefabInternal: {fileID: 133668668}
+--- !u!95 &135108317 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95991871363841904, guid: 3038cf763cf66c141be3c5e8297b1773,
+    type: 2}
+  m_PrefabInternal: {fileID: 269677050}
 --- !u!1001 &137826023
 Prefab:
   m_ObjectHideFlags: 0
@@ -9933,6 +9938,11 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: -0.319
       objectReference: {fileID: 0}
+    - target: {fileID: 114440626160206550, guid: 3038cf763cf66c141be3c5e8297b1773,
+        type: 2}
+      propertyPath: Animator
+      value: 
+      objectReference: {fileID: 135108317}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
   m_IsPrefabAsset: 0
