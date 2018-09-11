@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using SpectralDaze.Time;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 /*
@@ -17,11 +13,14 @@ namespace SpectralDaze.Player
     {
         public float DashSpeed = 0.1f;
         public float MaximumDashDistance;
-
+        public GameObject ParticleSystem;
         private bool _isDashing = false;
-
+        private ParticleSystem _particleSystem;
         public override void Init(PlayerController pc)
         {
+            _particleSystem = Instantiate(ParticleSystem, pc.transform).GetComponent<ParticleSystem>();
+            _particleSystem.transform.localPosition = Vector3.zero;
+            _particleSystem.Stop();
         }
 
         public override void OnUpdate(PlayerController pc)
@@ -47,13 +46,16 @@ namespace SpectralDaze.Player
             if(path.status != NavMeshPathStatus.PathComplete)
                 return;;
 
+
             if ( !_isDashing && Input.GetMouseButtonDown(0))
             {
                 pc.transform.rotation = Quaternion.LookRotation(hit.position-pc.transform.position);
                 pc.transform.eulerAngles = new Vector3(0,pc.transform.eulerAngles.y,0);
                 _isDashing = true;
+                _particleSystem.Play();
                 LeanTween.move(pc.gameObject, hit.position+Vector3.up, DashSpeed * distBetweenMouseAndPlayer).setOnComplete(() =>
                 {
+                    _particleSystem.Stop();
                     _isDashing = false;;
                 });
             }
