@@ -54,7 +54,7 @@ namespace SpectralDaze.Player
             //    return;; */
 
             if (_isDashing)
-            {Debug.Log(pc.transform.position + pc.transform.forward * DashSpeed * UnityEngine.Time.deltaTime);
+            {
                 pc.transform.position = pc.transform.position + pc.transform.forward * DashSpeed* UnityEngine.Time.deltaTime;
             }
 
