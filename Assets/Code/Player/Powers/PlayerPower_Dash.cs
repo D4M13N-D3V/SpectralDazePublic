@@ -13,13 +13,14 @@ namespace SpectralDaze.Player
     public class PlayerPower_Dash : PlayerPower
     {
         public float DashSpeed = 0.1f;
+        public float MaximumDashTime = 0.5f;
         public float MaximumDashDistance;
         public GameObject ParticleSystem;
         private bool _isDashing = false;
         private ParticleSystem _particleSystem;
         private Vector3 _originalPos;
         private Vector3 _lastPos;
-
+        private float _duration;
         public override void Init(PlayerController pc)
         {
             _particleSystem = Instantiate(ParticleSystem, pc.transform).GetComponent<ParticleSystem>();
@@ -55,6 +56,16 @@ namespace SpectralDaze.Player
 
             if (_isDashing)
             {
+                _duration += UnityEngine.Time.deltaTime;
+                if (_duration >= MaximumDashTime)
+                {
+                    _particleSystem.Stop();
+                    _isDashing = false;
+                }
+            }
+
+            if (_isDashing)
+            {
                 pc.transform.position = pc.transform.position + pc.transform.forward * DashSpeed* UnityEngine.Time.deltaTime;
             }
 
@@ -74,6 +85,7 @@ namespace SpectralDaze.Player
                 pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
                 _particleSystem.Play();
                 _originalPos = pc.transform.position;
+                _duration = 0;
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
                 _isDashing = true;
             }
