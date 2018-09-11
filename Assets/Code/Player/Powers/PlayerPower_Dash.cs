@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpectralDaze.Camera;
+using UnityEngine;
 using UnityEngine.AI;
 
 /*
@@ -16,6 +17,7 @@ namespace SpectralDaze.Player
         public GameObject ParticleSystem;
         private bool _isDashing = false;
         private ParticleSystem _particleSystem;
+
         public override void Init(PlayerController pc)
         {
             _particleSystem = Instantiate(ParticleSystem, pc.transform).GetComponent<ParticleSystem>();
@@ -26,7 +28,7 @@ namespace SpectralDaze.Player
         public override void OnUpdate(PlayerController pc)
         {
             RaycastHit mouseHit;
-            if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
+            if (!Physics.Raycast(UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
                 return;
             NavMeshHit hit;
             NavMeshPath path = new NavMeshPath(); ;
@@ -53,6 +55,7 @@ namespace SpectralDaze.Player
                 pc.transform.eulerAngles = new Vector3(0,pc.transform.eulerAngles.y,0);
                 _isDashing = true;
                 _particleSystem.Play();
+                UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
                 LeanTween.move(pc.gameObject, hit.position+Vector3.up, DashSpeed * distBetweenMouseAndPlayer).setOnComplete(() =>
                 {
                     _particleSystem.Stop();

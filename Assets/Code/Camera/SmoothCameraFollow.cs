@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmoothCameraFollow : MonoBehaviour {
-
-    public Transform Target;
-
-    public float Smoothness = .2f;
-    public Vector3 Offset = Vector3.zero;
-
-    void LateUpdate()
+namespace SpectralDaze.Camera
+{
+    public class SmoothCameraFollow : MonoBehaviour
     {
-        if (Target)
+
+        public Transform Target;
+
+        public float Smoothness = .2f;
+        public Vector3 Offset = Vector3.zero;
+
+        void LateUpdate()
         {
-            var tempVec = Target.position + Offset;
-            transform.position = Vector3.Lerp(transform.position, tempVec, Smoothness);
+            if (Target)
+            {
+                var tempVec = Target.position + Offset;
+                transform.position = Vector3.Lerp(transform.position, tempVec, Smoothness);
+            }
         }
     }
+
 }
