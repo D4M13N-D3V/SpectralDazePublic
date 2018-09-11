@@ -1,5 +1,6 @@
 ﻿using SpectralDaze.Camera;
 using SpectralDaze.Managers;
+using SpectralDaze.ScriptableObjects.Managers.Audio;
 using SpectralDaze.ScriptableObjects.Stats;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,13 +23,15 @@ namespace SpectralDaze.Player
         private ParticleSystem _particleSystem;
         private Vector3 _originalPos;
         private Vector3 _lastPos;
-        public AudioClip DashSound;
+        public AudioClipInfo DashSound;
+        public AudioQueue AudioQueue;
         private float _duration;
 
         private PlayerInfo _playerInfo;
 
         public override void Init(PlayerController pc)
         {
+            AudioQueue = Resources.Load<AudioQueue>("Managers/Audio/AudioQueue");
             _playerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
             _particleSystem = Instantiate(ParticleSystem, pc.transform).GetComponent<ParticleSystem>();
             _particleSystem.transform.localPosition = Vector3.zero;
@@ -109,7 +112,7 @@ namespace SpectralDaze.Player
                 _playerInfo.CanMove = false;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"),true);
                 pc.Agent.enabled = false;
-                //GameObject.FindObjectOfType<GameManager>().AudioManager.PlaySfx(DashSound,false,0.5f);
+                AudioQueue.Queue.Enqueue(DashSound);
             }
         }
     }
