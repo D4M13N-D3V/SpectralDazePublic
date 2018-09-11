@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 0}
   Name: 
-  DashSpeed: 10
+  DashSpeed: 40
   MaximumDashTime: 1
-  MaximumDashDistance: 10
+  MaximumDashDistance: 5
   ParticleSystem: {fileID: 1013219641901000, guid: e0baa8b5c7bb8f34d8b622d3c8ad8dbc,
     type: 2}

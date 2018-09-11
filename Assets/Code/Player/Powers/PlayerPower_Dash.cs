@@ -1,4 +1,5 @@
 ﻿using SpectralDaze.Camera;
+using SpectralDaze.ScriptableObjects.Stats;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,12 +22,17 @@ namespace SpectralDaze.Player
         private Vector3 _originalPos;
         private Vector3 _lastPos;
         private float _duration;
+
+        private PlayerInfo _playerInfo;
+
         public override void Init(PlayerController pc)
         {
+            _playerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
             _particleSystem = Instantiate(ParticleSystem, pc.transform).GetComponent<ParticleSystem>();
             _particleSystem.transform.localPosition = Vector3.zero;
             _particleSystem.Stop();
         }
+
 
         public override void OnUpdate(PlayerController pc)
         {
@@ -66,7 +72,7 @@ namespace SpectralDaze.Player
 
             if (_isDashing)
             {
-                pc.transform.position = pc.transform.position + pc.transform.forward * DashSpeed* UnityEngine.Time.deltaTime;
+                pc.transform.position = pc.transform.position + pc.transform.forward * DashSpeed * UnityEngine.Time.deltaTime;
             }
 
             if (_isDashing && System.Math.Round(_lastPos.x, 1) == System.Math.Round(pc.transform.position.x, 1)
@@ -76,13 +82,15 @@ namespace SpectralDaze.Player
             {
                 _particleSystem.Stop();
                 _isDashing = false;
+                _playerInfo.CanMove = true;
+                pc.Animator.SetBool("IsDashing", false);
             }
             _lastPos = pc.transform.position;
 
             if (!_isDashing && Input.GetMouseButtonDown(0))
             {
                 //PUTTHIS BACK IN WHEN BETTER ANIMATION
-                //pc.Animator.SetTrigger("Dashing");
+                pc.Animator.SetBool("IsDashing", true);
                 pc.transform.rotation = Quaternion.LookRotation(mouseHit.point - pc.transform.position);
                 pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
                 _particleSystem.Play();
@@ -90,6 +98,7 @@ namespace SpectralDaze.Player
                 _duration = 0;
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
                 _isDashing = true;
+                _playerInfo.CanMove = false;
             }
         }
     }

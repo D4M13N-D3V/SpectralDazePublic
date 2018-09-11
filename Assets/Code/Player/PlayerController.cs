@@ -81,6 +81,7 @@ namespace SpectralDaze.Player
             Animator = GetComponentInChildren<Animator>();
             dialogueMan = FindObjectOfType<DialogueManager>();
             Agent = GetComponent<NavMeshAgent>();
+            PlayerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
         }
 
         private void Update()

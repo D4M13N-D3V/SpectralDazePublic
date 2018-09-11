@@ -74,6 +74,7 @@ ModelImporter:
     7400008: Run
     7400010: TeleportSpin
     7400012: Walk
+    7400014: DashExit
     9500000: //RootNode
     13700000: Cube
     13700002: Cube_001
@@ -135,7 +136,7 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
+    previousCalculatedGlobalScale: 0.175
     hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
