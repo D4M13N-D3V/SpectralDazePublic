@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using SpectralDaze.ScriptableObjects.Managers.SceneManager;
+using UnityEditor;
+using UnityEditor.AI;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 namespace SpectralDaze.Managers
@@ -13,9 +16,12 @@ namespace SpectralDaze.Managers
         public CurrentScene CurrentScene;
         public DefaultScene DefaultScene;
         public RequiredScenes RequiredScenes;
-
+        private  NavMeshSurface _surface;
+        private bool navMeshGenerated = false;
         private void Start()
         {
+            _surface = GetComponent<NavMeshSurface>();
+
             CurrentScene = Resources.Load<CurrentScene>("Managers/SceneManager/CurrentScene");
             DefaultScene = Resources.Load<DefaultScene>("Managers/SceneManager/DefaultScene");
             RequiredScenes = Resources.Load<RequiredScenes>("Managers/SceneManager/RequiredScenes");
@@ -27,6 +33,24 @@ namespace SpectralDaze.Managers
         }
         private void Update()
         {
+            if (navMeshGenerated == false)
+            {
+                var loaded = false;
+                foreach (var scene in LoadedScenes)
+                {
+                    loaded = UnityEngine.SceneManagement.SceneManager.GetSceneByName(scene.Scene).isLoaded;
+                    if (loaded == false)
+                    {
+                        break;
+                    }
+                }
+
+                if (loaded)
+                {
+                    _surface.BuildNavMesh();
+                    navMeshGenerated = true;
+                }
+            }
             if (LoadedScenes.Any() && LoadedScenes.Count==RequiredScenes.Scenes.Count)
             {
                 CurrentScene.SceneInfo = DefaultScene.SceneInfo;
@@ -80,8 +104,10 @@ namespace SpectralDaze.Managers
             var oldElement2Index = LoadedScenes.FindIndex(x => x == loadingScene);
             LoadedScenes[RequiredScenes.Scenes.Count] = loadingScene;
             LoadedScenes[oldElement2Index] = oldElement1Object;
+
+            navMeshGenerated = false;
         }
 
     }
-
+        
 }
