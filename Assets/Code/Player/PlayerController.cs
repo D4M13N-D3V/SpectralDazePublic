@@ -72,7 +72,7 @@ namespace SpectralDaze.Player
 
         public void EndGame()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }
 
         private void Start()
