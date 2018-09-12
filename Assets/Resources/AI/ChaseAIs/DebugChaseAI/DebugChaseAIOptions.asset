@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b80558f8afccc140a033b5a1206e72b, type: 3}
-  m_Name: New Chase AI Options
+  m_Name: DebugChaseAIOptions
   m_EditorClassIdentifier: 
   MovementType: 1
   WanderDistance: 10
@@ -23,3 +23,4 @@ MonoBehaviour:
   MovementSpeed: 3
   Chase: 0
   ChaseDistance: 20
+  DeathSound: {fileID: 11400000, guid: 7c547586b29a1d841993643f037e8f93, type: 2}

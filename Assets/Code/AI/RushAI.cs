@@ -5,6 +5,7 @@ using SpectralDaze.Etc;
 using SpectralDaze.Managers;
 using SpectralDaze.Player;
 using SpectralDaze.ScriptableObjects.AI;
+using SpectralDaze.ScriptableObjects.Managers.Audio;
 using SpectralDaze.ScriptableObjects.Time;
 using SpectralDaze.Time;
 using UnityEngine;
@@ -54,8 +55,10 @@ namespace SpectralDaze.AI
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;
         
-        private void Start()    
+        private void Start()
         {
+            DeathSound = Options.DeathSound;
+            GetAudioQueue();
             paramsInstance = new RushAIParams()
             {
                 NpcTransform = transform,
@@ -77,7 +80,8 @@ namespace SpectralDaze.AI
                 LaunchVelocity = Options.LaunchVelocity,
                 MovementSpeed = Options.MovementSpeed,
                 Chase = Options.Chase,
-                ChaseDistance = Options.ChaseDistance
+                ChaseDistance = Options.ChaseDistance,
+                DeathSound = Options.DeathSound
             };
             stateMachine = new UStateMachine<RushAIParams>(paramsInstance, new Chase(), new Attacking(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
@@ -350,6 +354,7 @@ namespace SpectralDaze.AI
             public float MovementSpeed;
             public bool Chase;
             public float ChaseDistance;
+            public AudioClipInfo DeathSound;
         }
     }
 }

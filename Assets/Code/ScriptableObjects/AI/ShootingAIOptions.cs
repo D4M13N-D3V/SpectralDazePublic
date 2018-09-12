@@ -29,6 +29,7 @@ namespace SpectralDaze.ScriptableObjects.AI
         public bool Chase = true;
         public float ChaseDistance = 20;
         public AudioClipInfo ShootingSound;
+        public AudioClipInfo DeathSound;
     }
 }
  

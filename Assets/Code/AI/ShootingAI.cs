@@ -53,15 +53,14 @@ namespace SpectralDaze.AI
         private UStateMachine<ShootingAIParams> stateMachine;
         private ShootingAIParams paramsInstance;
 
-        public AudioQueue AudioQueue;
-
         public Information TimeInfo;
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;
 
         private void Start()
         {
-            AudioQueue = Resources.Load<AudioQueue>("Managers/Audio/AudioQueue");
+            DeathSound = Options.DeathSound;
+            GetAudioQueue();
             GetComponent<KillOnTouch>().KillEnemys = false;
             paramsInstance = new ShootingAIParams()
             {
@@ -90,6 +89,7 @@ namespace SpectralDaze.AI
                 Chase = Options.Chase,
                 ChaseDistance = Options.ChaseDistance,
                 ShootingSound = Options.ShootingSound,
+                DeathSound = Options.DeathSound
             };
             stateMachine = new UStateMachine<ShootingAIParams>(paramsInstance, new Chase(), new Attacking(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
@@ -403,6 +403,7 @@ namespace SpectralDaze.AI
             public float ChaseDistance;
             public float ShootDelay;
             public AudioClipInfo ShootingSound;
+            public AudioClipInfo DeathSound;
         }
     }
 }
