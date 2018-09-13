@@ -1,13 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SpectralDaze.Camera;
 using SpectralDaze.Player;
+using SpectralDaze.ScriptableObjects.Managers.Audio;
 using UnityEngine;
 
 public class DestructableWall : Wall
 {
+    public AudioClipInfo DestructionSound;
+    private AudioQueue AudioQueue;
+
+    void Start()
+    {
+        AudioQueue = Resources.Load<AudioQueue>("Managers/Audio/AudioQueue");
+    }
+
     public IEnumerator SplitMesh(bool destroy)
     {
-
+        AudioQueue.Queue.Enqueue(DestructionSound);
+        UnityEngine.Camera.main.GetComponent<CameraFunctions>().Shake(0.275f,0.4f);
         if (GetComponent<MeshFilter>() == null || GetComponent<SkinnedMeshRenderer>() == null)
         {
             yield return null;
