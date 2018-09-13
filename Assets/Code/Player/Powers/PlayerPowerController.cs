@@ -8,32 +8,61 @@ namespace SpectralDaze.Player
 	public class PlayerPowerController : MonoBehaviour
 	{
         //
-		public PlayerPower CurrentPower;
+        public PlayerPower_Dash DashPower;
+		public PlayerPower Power1;
+		public PlayerPower Power2;
 
 		private PlayerController pc;
 
 		public void AnimationTrigger(string param)
 		{
-			CurrentPower.AnimationTrigger(param);
+			Power1.AnimationTrigger(param);
 		}
 
 		private void Start()
 		{
 			pc = GetComponent<PlayerController>();
-			CurrentPower.Init(pc);
-			CurrentPower.Reset();
+
+		    DashPower.Init(pc);
+
+
+            if (Power1 != null)
+		    {
+		        Power1.Init(pc);
+		        Power1.Reset();
+            }
+
+		    if (Power2 != null)
+		    {
+		        Power2.Init(pc);
+		        Power2.Reset();
+            }
 		}
 
 		private void Update()
 		{
-			if (CurrentPower != null)
-				CurrentPower.OnUpdate(pc);
+		    DashPower.OnUpdate(pc);
+
+
+            if (Power1 != null)
+		    {
+		        Power1.OnUpdate(pc);
+		    }
+		    if (Power2 != null)
+		    {
+		        Power2.OnUpdate(pc);
+		    }
 		}
 
 		private void OnGUI()
 		{
-			if (CurrentPower != null)
-				CurrentPower.OnGUI();
+		    DashPower.OnGUI();
+
+            if (Power1 != null)
+			    Power1.OnGUI();
+
+			if (Power2 != null)
+			    Power2.OnGUI();
 		}
 	}
 }

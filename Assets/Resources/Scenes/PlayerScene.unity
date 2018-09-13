@@ -330,6 +330,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114741920044455998, guid: 3038cf763cf66c141be3c5e8297b1773,
+        type: 2}
+      propertyPath: DashPower
+      value: 
+      objectReference: {fileID: 11400000, guid: 14e5665cadd11474da9c62883e68c0a9,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
   m_IsPrefabAsset: 0
@@ -545,7 +551,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 1
+  m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1

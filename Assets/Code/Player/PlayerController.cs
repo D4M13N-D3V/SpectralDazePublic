@@ -19,12 +19,11 @@ namespace SpectralDaze.Player
         public Conversation TestConversation;
         public Animator Animator;
         private DialogueManager dialogueMan;
-        private Rigidbody rbody;
+        public Rigidbody Rbody;
         public Information TimeInfo;
         public NavMeshAgent Agent;
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;
-
         [HideInInspector]
         public float _localTimeScale = 1.0f;
         [HideInInspector]
@@ -77,7 +76,7 @@ namespace SpectralDaze.Player
 
         private void Start()
         {   
-            rbody = GetComponent<Rigidbody>();
+            Rbody = GetComponent<Rigidbody>();
             Animator = GetComponentInChildren<Animator>();
             dialogueMan = FindObjectOfType<DialogueManager>();
             Agent = GetComponent<NavMeshAgent>();
@@ -120,7 +119,7 @@ namespace SpectralDaze.Player
 
 
             // The rigidbody keeps sliding all over the place when your dash in to things
-            rbody.velocity = Vector3.zero;
+            Rbody.velocity = Vector3.zero;
 
             // We dont want the player Rotating if we have no motion as it defaults to 0,0,0
             if (computedInput != Vector2.zero)

@@ -19,7 +19,7 @@ namespace SpectralDaze.Player
         public float MaximumDashTime = 0.5f;
         public float MaximumDashDistance;
         public GameObject ParticleSystem;
-        private bool _isDashing = false;
+        public bool IsDashing = false;
         private ParticleSystem _particleSystem;
         private Vector3 _originalPos;
         private Vector3 _lastPos;
@@ -45,60 +45,33 @@ namespace SpectralDaze.Player
             if (!Physics.Raycast(UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
                 return;
 
-            /*
-            //NavMeshHit hit;
-            //NavMeshPath path = new NavMeshPath(); ;
+            if(!IsDashing)
+                StopDashing(pc);
 
-            //var distBetweenMouseAndPlayer = Vector3.Distance(pc.transform.position, mouseHit.point);
-
-            // Switch this out with something better.
-            //if (mouseHit.collider.gameObject.tag != "Walkable")
-            //    return;
-            
-            //if (Vector3.Distance(mouseHit.point, pc.transform.position) > MaximumDashDistance)
-            //    return;
-            
-            //if (!NavMesh.SamplePosition(mouseHit.point, out hit, 1, NavMesh.AllAreas))
-            //    return;
-
-            //pc.Agent.CalculatePath(hit.position, path);
-            //if(path.status != NavMeshPathStatus.PathComplete)
-            //    return;; */
-
-            if (_isDashing)
+            if (IsDashing)
             {
                 _duration += UnityEngine.Time.deltaTime;
                 if (_duration >= MaximumDashTime)
                 {
-                    _particleSystem.Stop();
-                    _isDashing = false;
-                    _playerInfo.CanMove = true;
-                    //pc.Animator.SetBool("IsDashing", false);
-                    Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), false);
-                    pc.Agent.enabled = true;
+                    StopDashing(pc);
                 }
             }
 
-            if (_isDashing)
+            if (IsDashing)
             {
                 pc.transform.position = pc.transform.position + pc.transform.forward * DashSpeed * UnityEngine.Time.deltaTime;
             }
 
-            if (_isDashing && System.Math.Round(_lastPos.x, 1) == System.Math.Round(pc.transform.position.x, 1)
+            if (IsDashing && System.Math.Round(_lastPos.x, 1) == System.Math.Round(pc.transform.position.x, 1)
                            && System.Math.Round(_lastPos.y, 1) == System.Math.Round(pc.transform.position.y, 1)
                            && System.Math.Round(_lastPos.z, 1) == System.Math.Round(pc.transform.position.z, 1)
                            || Vector3.Distance(pc.transform.position, _originalPos) > MaximumDashDistance)
             {
-                _particleSystem.Stop();
-                _isDashing = false;
-                _playerInfo.CanMove = true;
-                //pc.Animator.SetBool("IsDashing", false);
-                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), false);
-                pc.Agent.enabled = true;
+                StopDashing(pc);
             }
             _lastPos = pc.transform.position;
 
-            if (!_isDashing && Input.GetMouseButtonDown(0))
+            if (!IsDashing && Input.GetMouseButtonDown(0))
             {
                 pc.transform.rotation = Quaternion.LookRotation(mouseHit.point - pc.transform.position);
                 pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
@@ -106,12 +79,22 @@ namespace SpectralDaze.Player
                 _originalPos = pc.transform.position;
                 _duration = 0;
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
-                _isDashing = true;
+                IsDashing = true;
                 _playerInfo.CanMove = false;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"),true);
                 pc.Agent.enabled = false;
                 AudioQueue.Queue.Enqueue(DashSound);
             }
+        }
+
+        private void StopDashing(PlayerController pc)
+        {
+            _particleSystem.Stop();
+            IsDashing = false;
+            _playerInfo.CanMove = true;
+            //pc.Animator.SetBool("IsDashing", false);
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), false);
+            pc.Agent.enabled = true;
         }
     }
 }
