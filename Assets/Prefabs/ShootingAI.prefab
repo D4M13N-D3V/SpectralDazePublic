@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9af044d3b0e32c4293d55eb1d4872a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KillEnemys: 1
 --- !u!114 &114632121736428162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,6 +259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2443bcdca5fca642bf3d348b67e5312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioQueue: {fileID: 0}
+  DeathSound: {fileID: 0}
   Renderer: {fileID: 137394336929717044}
   _localTimeScale: 1
   Options: {fileID: 11400000, guid: 903a3a6031a4ee94393bdada9171faa1, type: 2}
@@ -277,7 +280,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: ea6ff6a749077d247a859d539889f403, type: 2}
+  - {fileID: 2100000, guid: b1929ff0f41d3a94da5731d3c4fb7f51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
