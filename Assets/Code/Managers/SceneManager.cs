@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SpectralDaze.Player;
 using SpectralDaze.ScriptableObjects.Managers.SceneManager;
 using UnityEditor;
 using UnityEditor.AI;
