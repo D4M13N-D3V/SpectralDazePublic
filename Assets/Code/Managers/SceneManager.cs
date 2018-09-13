@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using SpectralDaze.Player;
 using SpectralDaze.ScriptableObjects.Managers.SceneManager;
-using UnityEditor;
-using UnityEditor.AI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;

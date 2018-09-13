@@ -20,7 +20,6 @@ public class Wall : MonoBehaviour
         {
             var pc = collider.gameObject.GetComponent<PlayerPowerController>();
             pc.DashPower.IsDashing = false;
-            Debug.Log("TEST");
         }
     }
 
