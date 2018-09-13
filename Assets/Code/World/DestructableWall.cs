@@ -89,14 +89,16 @@ public class DestructableWall : Wall
 
     }
 
-    public override void OnTriggerEnter(Collider collider)
+    private new void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player" && collider.gameObject.GetComponent<PlayerPowerController>().DashPower.IsDashing)
         {
             StartCoroutine(SplitMesh(true));
         }
+    }
 
-        base.OnTriggerEnter(collider);
+    private new void OnTriggerStay(Collider collider)
+    {
     }
 }
 

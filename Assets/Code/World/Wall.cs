@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    public virtual void OnTriggerEnter(Collider collider)
+    internal void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
         {
@@ -14,7 +14,7 @@ public class Wall : MonoBehaviour
         }
     }
 
-    public virtual void OnTriggerStay(Collider collider)
+    internal void OnTriggerStay(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
         {
