@@ -45,9 +45,11 @@ namespace SpectralDaze.Player
             base.OnUpdate(pc);
             RaycastHit mouseHit;
 
+            /*
             if (!Physics.Raycast(UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
                 if (!IsDashing)
                     return;
+                    */
 
             if (!IsDashing && _particleSystem.isPlaying)
                 StopDashing(pc);
