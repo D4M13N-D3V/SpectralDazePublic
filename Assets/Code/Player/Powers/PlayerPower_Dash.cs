@@ -73,6 +73,10 @@ namespace SpectralDaze.Player
 
             if (!IsDashing && Control.JustPressed)
             {
+                //If you want it to be based on posistion of mouse use this if not keep it commented
+                //pc.transform.rotation = Quaternion.LookRotation(mouseHit.point - pc.transform.position);
+                //pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
+
                 RaycastHit hit;
                 NavMeshHit navHit;
                 if (NavMesh.SamplePosition(pc.transform.position + pc.transform.forward * MaximumDashDistance, out navHit, 10.0f, NavMesh.AllAreas) &&
@@ -85,8 +89,6 @@ namespace SpectralDaze.Player
                 {
                     _realMaxDistance = MaximumDashDistance - navHit.distance;
                 }
-                pc.transform.rotation = Quaternion.LookRotation(mouseHit.point - pc.transform.position);
-                pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
                 _particleSystem.Play();
                 _originalPos = pc.transform.position;
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
