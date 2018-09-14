@@ -95,7 +95,6 @@ namespace SpectralDaze.Player
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), true);
                 pc.Agent.enabled = false;
                 AudioQueue.Queue.Enqueue(DashSound);
-                Debug.Log(_realMaxDistance);
             }
         }
 

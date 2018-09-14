@@ -86,7 +86,7 @@ namespace SpectralDaze.Player
         private void Update()
         {
 
-            // this is debug / example on how to use the dialogue manager
+           /* // this is debug / example on how to use the dialogue manager
             // replace the TestConversation with some external conversation for conversations started by npcs
             // or signs.
             if (Input.GetButtonDown("Jump"))
@@ -98,7 +98,7 @@ namespace SpectralDaze.Player
                 else
                     dialogueMan.CycleDialogue();
 
-            }
+            }*/
 
             // Get our input
             Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
