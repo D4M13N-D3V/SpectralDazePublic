@@ -24,7 +24,7 @@ namespace SpectralDaze.Player
 
         public override void OnUpdate(PlayerController pc)
         {
-            if (!Input.GetMouseButton(0))
+            if (!Control.BeingPressed)
             {
                 if (_timeBubble != null)
                     _timeBubble.GetComponent<TimeBubbleController>().SelfDestruct();
@@ -42,7 +42,7 @@ namespace SpectralDaze.Player
             if (Vector3.Distance(adjustedHitPoint, pc.transform.position) > 7.5f)
                 return;
 
-            if (Input.GetMouseButton(0))
+            if (Control.BeingPressed)
             {
                 // If they're holding right click
                 mouseHit.point.DrawDebug(Color.red, 0.1f, 0.25f);
@@ -57,7 +57,7 @@ namespace SpectralDaze.Player
                 }
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (Control.JustReleased)
             {
                 pc.transform.position = mouseHit.point + Vector3.up;
                 _timeBubble.GetComponent<TimeBubbleController>().SelfDestruct();    
