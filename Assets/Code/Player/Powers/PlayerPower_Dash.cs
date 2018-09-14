@@ -17,7 +17,6 @@ namespace SpectralDaze.Player
     public class PlayerPower_Dash : PlayerPower
     {
         public float DashSpeed = 0.1f;
-        //public float MaximumDashTime = 0.5f;
         public float MaximumDashDistance;
         public GameObject ParticleSystem;
         public bool IsDashing = false;
@@ -27,7 +26,6 @@ namespace SpectralDaze.Player
         private bool _clearPath = false;
         public AudioClipInfo DashSound;
         public AudioQueue AudioQueue;
-        //private float _duration;
 
         private PlayerInfo _playerInfo;
 
