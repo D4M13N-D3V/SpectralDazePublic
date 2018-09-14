@@ -14,7 +14,7 @@ MonoBehaviour:
   ControlName: Dash
   IsMouseButton: 0
   MouseButton: 0
-  KeyCode: 304
+  KeyCode: 32
   JustPressed: 0
   BeingPressed: 0
   JustReleased: 0
