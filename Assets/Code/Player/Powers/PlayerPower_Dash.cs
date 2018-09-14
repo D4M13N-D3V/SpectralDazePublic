@@ -17,16 +17,17 @@ namespace SpectralDaze.Player
     public class PlayerPower_Dash : PlayerPower
     {
         public float DashSpeed = 0.1f;
-        public float MaximumDashTime = 0.5f;
+        //public float MaximumDashTime = 0.5f;
         public float MaximumDashDistance;
         public GameObject ParticleSystem;
         public bool IsDashing = false;
         private ParticleSystem _particleSystem;
         private Vector3 _originalPos;
         private Vector3 _lastPos;
+        private bool _clearPath = false;
         public AudioClipInfo DashSound;
         public AudioQueue AudioQueue;
-        private float _duration;
+        //private float _duration;
 
         private PlayerInfo _playerInfo;
 
@@ -50,29 +51,25 @@ namespace SpectralDaze.Player
 
             if(!IsDashing && _particleSystem.isPlaying)
                 StopDashing(pc);
-
+            
             if (IsDashing)
             {
-                _duration += UnityEngine.Time.deltaTime;
-                if (_duration >= MaximumDashTime)
-                {
+                var tgt = pc.transform.position + pc.transform.forward * DashSpeed * UnityEngine.Time.deltaTime;
+                RaycastHit hit;
+
+                if (!Physics.Raycast(pc.transform.position, pc.transform.forward, out hit,
+                    Vector3.Distance(pc.transform.position, tgt)))
+                    pc.transform.position = tgt;
+                else
                     StopDashing(pc);
-                }
             }
 
-            if (IsDashing)
-            {
-                pc.transform.position = pc.transform.position + pc.transform.forward * DashSpeed * UnityEngine.Time.deltaTime;
-            }
-
-            if (IsDashing && System.Math.Round(_lastPos.x, 1) == System.Math.Round(pc.transform.position.x, 1)
-                           && System.Math.Round(_lastPos.y, 1) == System.Math.Round(pc.transform.position.y, 1)
-                           && System.Math.Round(_lastPos.z, 1) == System.Math.Round(pc.transform.position.z, 1)
-                           || Vector3.Distance(pc.transform.position, _originalPos) > MaximumDashDistance)
+            _lastPos = pc.transform.position;
+            
+            if (IsDashing && Vector3.Distance(pc.transform.position, _originalPos) > MaximumDashDistance)
             {
                 StopDashing(pc);
             }
-            _lastPos = pc.transform.position;
 
             if (!IsDashing && Control.JustPressed)
             {
@@ -80,11 +77,10 @@ namespace SpectralDaze.Player
                 pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
                 _particleSystem.Play();
                 _originalPos = pc.transform.position;
-                _duration = 0;
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
                 IsDashing = true;
                 _playerInfo.CanMove = false;
-                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"),true);
+                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), true);
                 pc.Agent.enabled = false;
                 AudioQueue.Queue.Enqueue(DashSound);
             }
@@ -95,7 +91,6 @@ namespace SpectralDaze.Player
             _particleSystem.Stop();
             IsDashing = false;
             _playerInfo.CanMove = true;
-            //pc.Animator.SetBool("IsDashing", false);
             Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), false);
             pc.Agent.enabled = true;
         }

@@ -13,10 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 0}
   Name: 
+  Control: {fileID: 11400000, guid: 06cc19b1eccd18347ba075a2a7b7dcb8, type: 2}
   DashSpeed: 40
-  MaximumDashTime: 1
   MaximumDashDistance: 5
   ParticleSystem: {fileID: 1013219641901000, guid: e0baa8b5c7bb8f34d8b622d3c8ad8dbc,
     type: 2}
+  IsDashing: 0
   DashSound: {fileID: 11400000, guid: 91c074632941bd94f84f2e35dd4836f5, type: 2}
   AudioQueue: {fileID: 11400000, guid: dd6ab4cdb0cefc049ad45808ab7d7b9c, type: 2}
