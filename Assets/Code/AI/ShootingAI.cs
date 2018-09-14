@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Code.AI;   
+using Assets.Code.AI;
+using Managers;
 using SpectralDaze.Etc;
 using SpectralDaze.Managers;
 using SpectralDaze.Player;
@@ -59,6 +60,7 @@ namespace SpectralDaze.AI
 
         private void Start()
         {
+            Setup();
             DeathSound = Options.DeathSound;
             GetAudioQueue();
             GetComponent<KillOnTouch>().KillEnemys = false;
@@ -151,6 +153,17 @@ namespace SpectralDaze.AI
 
             public override void FixedUpdate(ShootingAIParams p)
             {
+                /*
+                 * CODE FOR IMPLEMENTING AI DIRECTOR
+                 */
+                if (p.Npc.CurrentToken == null)
+                {
+                    p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
+                    p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
+                    p.Npc.RequestToken(AiDirector.TokenTypes.Shooting);
+                    return;
+                }
+
                 _timeLeftUntilAttack -= p.Npc.localDeltaTime;
                 if (_timeLeftUntilAttack <= 0)
                 {
@@ -223,6 +236,12 @@ namespace SpectralDaze.AI
         {
             private float _idleTimeLeft = 0;
 
+            public override void Enter(ShootingAIParams p)
+            {
+                if (p.Npc.CurrentToken != null)
+                    p.Npc.ReturnToken();
+            }
+
             public override void FixedUpdate(ShootingAIParams p)
             {
                 p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
@@ -269,6 +288,8 @@ namespace SpectralDaze.AI
 
             public override void Enter(ShootingAIParams p)
             {
+                if (p.Npc.CurrentToken != null)
+                    p.Npc.ReturnToken();
                 _timeLeftIdle = p.IdleTime;
             }
 
@@ -301,6 +322,8 @@ namespace SpectralDaze.AI
         {
             public override void Enter(ShootingAIParams p)
             {
+                if (p.Npc.CurrentToken != null)
+                    p.Npc.ReturnToken();
                 p.NavAgent.isStopped = false;
                 if (p.MovementType == MovementType.Wander || p.MovementType == MovementType.NoLimitsWander)
                 {
