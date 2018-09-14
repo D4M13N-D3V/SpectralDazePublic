@@ -8,9 +8,10 @@ using UnityEngine;
 
 namespace SpectralDaze.ScriptableObjects.AIManager
 {
+    [CreateAssetMenu(menuName = "Spectral Daze/Managers/AI Director/Token")]
     public class Token : ScriptableObject
     {
-        public bool InUse = false;
+        public bool     InUse = false;
         public bool NoLongerInUse = false;
         public BaseAI Requestor;
     }

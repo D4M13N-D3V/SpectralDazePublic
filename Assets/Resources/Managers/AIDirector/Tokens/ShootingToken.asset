@@ -8,8 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ca7298b30cbd3e4790105335e6c677f, type: 3}
-  m_Name: ShootingToken2
+  m_Script: {fileID: 11500000, guid: 52a739d5347834443b9c200f31f2b0aa, type: 3}
+  m_Name: ShootingToken
   m_EditorClassIdentifier: 
   InUse: 0
+  NoLongerInUse: 0
   Requestor: {fileID: 0}

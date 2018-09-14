@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Name: RushingTokens
   m_EditorClassIdentifier: 
   Tokens:
-  - {fileID: 11400000, guid: 69fce48b3086e424c8e110339f6145c0, type: 2}
-  - {fileID: 11400000, guid: b4eb73f155233c449a905a6b93a5767e, type: 2}
+  - {fileID: 11400000, guid: d5462f200e5c0994fa6e693352867221, type: 2}
