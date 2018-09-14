@@ -23,15 +23,15 @@ namespace SpectralDaze.Player
         private ParticleSystem _particleSystem;
         private Vector3 _originalPos;
         private Vector3 _lastPos;
-        private bool _clearPath = false;
         public AudioClipInfo DashSound;
         public AudioQueue AudioQueue;
-
         private PlayerInfo _playerInfo;
+
+        private bool _clearPath = false;
+        private float _realMaxDistance = 0;
 
         public override void Init(PlayerController pc)
         {
-            Debug.Log("TEST");
             AudioQueue = Resources.Load<AudioQueue>("Managers/Audio/AudioQueue");
             _playerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
             _particleSystem = Instantiate(ParticleSystem, pc.transform).GetComponent<ParticleSystem>();
@@ -64,23 +64,36 @@ namespace SpectralDaze.Player
 
             _lastPos = pc.transform.position;
             
-            if (IsDashing && Vector3.Distance(pc.transform.position, _originalPos) > MaximumDashDistance)
+            if (IsDashing && Vector3.Distance(pc.transform.position, _originalPos) > _realMaxDistance)
             {
                 StopDashing(pc);
             }
 
             if (!IsDashing && Control.JustPressed)
             {
+                RaycastHit hit;
+                NavMeshHit navHit;
+                if (NavMesh.SamplePosition(pc.transform.position + pc.transform.forward * MaximumDashDistance, out navHit, 10.0f, NavMesh.AllAreas) &&
+                    !Physics.Raycast(pc.transform.position, pc.transform.forward, out hit, Vector3.Distance(pc.transform.position, pc.transform.position+pc.transform.forward*MaximumDashDistance))
+                    && navHit.distance<1f)
+                {
+                    _realMaxDistance = MaximumDashDistance;
+                }
+                else
+                {
+                    _realMaxDistance = MaximumDashDistance - navHit.distance;
+                }
                 pc.transform.rotation = Quaternion.LookRotation(mouseHit.point - pc.transform.position);
-                pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
-                _particleSystem.Play();
-                _originalPos = pc.transform.position;
-                UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
-                IsDashing = true;
-                _playerInfo.CanMove = false;
-                Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), true);
-                pc.Agent.enabled = false;
-                AudioQueue.Queue.Enqueue(DashSound);
+                    pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
+                    _particleSystem.Play();
+                    _originalPos = pc.transform.position;
+                    UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
+                    IsDashing = true;
+                    _playerInfo.CanMove = false;
+                    Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), true);
+                    pc.Agent.enabled = false;
+                    AudioQueue.Queue.Enqueue(DashSound);
+                Debug.Log(_realMaxDistance);
             }
         }
 
