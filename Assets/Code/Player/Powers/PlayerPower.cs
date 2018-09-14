@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SpectralDaze.ScriptableObjects.Managers.InputManager;
 using UnityEngine;
 
 namespace SpectralDaze.Player
@@ -8,7 +9,8 @@ namespace SpectralDaze.Player
 	{
 		public Texture2D Icon;
 		public string Name;
-
+        
+        public Control Control;
 		public virtual void Init(PlayerController pc) { }
 		public virtual void OnUpdate(PlayerController pc) { }
 		public virtual void OnGUI() { }

@@ -1,27 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using SpectralDaze.Player;
+using SpectralDaze.ScriptableObjects.Managers.PowerManager;
 using UnityEngine;
 
-public class Wall : MonoBehaviour
+namespace SpectralDaze.World
 {
-    internal void OnTriggerEnter(Collider collider)
+    public class Wall : MonoBehaviour
     {
-        if (collider.gameObject.tag == "Player")
-        {
-            var pc = collider.gameObject.GetComponent<PlayerPowerController>();
-            pc.DashPower.IsDashing = false;
-        }
-    }
+        public DashPower DashPower;
 
-    internal void OnTriggerStay(Collider collider)
-    {
-        if (collider.gameObject.tag == "Player")
+        internal virtual void Start()
         {
-            var pc = collider.gameObject.GetComponent<PlayerPowerController>();
-            pc.DashPower.IsDashing = false;
+            DashPower = Resources.Load<DashPower>("Managers/PowerManager/DashPower");
         }
+
+        internal void OnTriggerEnter(Collider collider)
+        {
+            if (collider.gameObject.tag == "Player")
+            {
+                DashPower.Power.IsDashing = false;
+            }
+        }
+
+        internal void OnTriggerStay(Collider collider)
+        {
+            if (collider.gameObject.tag == "Player")
+            {
+                DashPower.Power.IsDashing = false;
+            }
+        }
+
     }
 
 }
-

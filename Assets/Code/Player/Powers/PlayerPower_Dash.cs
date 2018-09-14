@@ -1,6 +1,7 @@
 ﻿using SpectralDaze.Camera;
 using SpectralDaze.Managers;
 using SpectralDaze.ScriptableObjects.Managers.Audio;
+using SpectralDaze.ScriptableObjects.Managers.InputManager;
 using SpectralDaze.ScriptableObjects.Stats;
 using UnityEngine;
 using UnityEngine.AI;
@@ -31,6 +32,7 @@ namespace SpectralDaze.Player
 
         public override void Init(PlayerController pc)
         {
+            Debug.Log("TEST");
             AudioQueue = Resources.Load<AudioQueue>("Managers/Audio/AudioQueue");
             _playerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
             _particleSystem = Instantiate(ParticleSystem, pc.transform).GetComponent<ParticleSystem>();
@@ -41,11 +43,12 @@ namespace SpectralDaze.Player
 
         public override void OnUpdate(PlayerController pc)
         {
+            base.OnUpdate(pc);
             RaycastHit mouseHit;
             if (!Physics.Raycast(UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit))
                 return;
 
-            if(!IsDashing)
+            if(!IsDashing && _particleSystem.isPlaying)
                 StopDashing(pc);
 
             if (IsDashing)
@@ -71,7 +74,7 @@ namespace SpectralDaze.Player
             }
             _lastPos = pc.transform.position;
 
-            if (!IsDashing && Input.GetMouseButtonDown(0))
+            if (!IsDashing && Control.JustPressed)
             {
                 pc.transform.rotation = Quaternion.LookRotation(mouseHit.point - pc.transform.position);
                 pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
