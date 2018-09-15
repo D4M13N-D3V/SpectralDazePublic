@@ -67,7 +67,11 @@ namespace SpectralDaze.Player
                     Vector3.Distance(pc.transform.position, tgt)))
                     pc.transform.position = tgt;
                 else
+                {
+                    if (hit.collider.tag == "Movable")
+                        hit.collider.gameObject.GetComponent<Movable>().Hit(pc.transform);
                     StopDashing(pc);
+                }
             }
 
             _lastPos = pc.transform.position;

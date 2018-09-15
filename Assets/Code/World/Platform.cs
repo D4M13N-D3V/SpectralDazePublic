@@ -22,6 +22,8 @@ public class Platform : MonoBehaviour
         _surface.collectObjects = CollectObjects.Children;
         _surface.defaultArea = NavMesh.GetAreaFromName("Platform");
         _surface.BuildNavMesh();
+        _currentWaypoint = StartingWaypoint;
+        transform.position = Waypoints[_currentWaypoint].position;
     }
 
     private void Update()
