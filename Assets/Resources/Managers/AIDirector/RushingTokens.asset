@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55cc67d8045b86040876a894af713140, type: 3}
   m_Name: RushingTokens
   m_EditorClassIdentifier: 
+  Amount: 1
   Tokens:
-  - {fileID: 11400000, guid: d5462f200e5c0994fa6e693352867221, type: 2}
+  - {fileID: 0}

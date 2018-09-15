@@ -11,5 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55cc67d8045b86040876a894af713140, type: 3}
   m_Name: ShootingTokens
   m_EditorClassIdentifier: 
+  Amount: 2
   Tokens:
-  - {fileID: 11400000, guid: f839416b5950a8142825b10fc8017fb6, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
