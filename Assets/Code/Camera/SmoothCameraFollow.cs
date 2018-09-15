@@ -4,37 +4,77 @@ using UnityEngine;
 
 namespace SpectralDaze.Camera
 {
-    public class SmoothCameraFollow : MonoBehaviour
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+
+    namespace SpectralDaze.Camera
     {
-
-        public Transform Target;
-        public float Smoothness = 0.2f;
-        public Vector3 MaxPadding = new Vector3(1,1,1);
-        public Vector3 MinPadding = new Vector3(-1,-1,-1);
-        public Vector3 Offset = Vector3.zero;
-        private Vector3 InputOffset = Vector3.zero;
-        void LateUpdate()
+        public class SmoothCameraFollow : MonoBehaviour
         {
-            if (Target)
+
+            public Transform Target;
+            public float Smoothness = 0.2f;
+            public Vector2 MaxPadding = new Vector2(1, 1);
+            public Vector2 MinPadding = new Vector2(-1, -1);
+            public Vector3 Offset = Vector3.zero;
+            private Vector3 InputOffset = Vector3.zero;
+            void LateUpdate()
             {
-                InputOffset += new Vector3(Input.GetAxis("Mouse X"), 0, Input.GetAxis("Mouse Y"));
+                if (Target)
+                {
+                    float mouseRatioX = Input.mousePosition.x / Screen.width;
+                    float mouseRatioY = Input.mousePosition.y / Screen.height;
 
-                if (InputOffset.x > MaxPadding.x)
-                    InputOffset.x = MaxPadding.x;
+                    if (mouseRatioX < 0.2)
+                    {
+                        InputOffset.x -= Smoothness;
 
-                if (InputOffset.z > MaxPadding.z)
-                    InputOffset.z = MaxPadding.z;
+                        if (InputOffset.x < MinPadding.x)
+                            InputOffset.x = MinPadding.x;
+                    }
+                    else if (mouseRatioX > 0.8)
+                    {
+                        InputOffset.x += Smoothness;
 
-                if (InputOffset.x < MinPadding.x)
-                    InputOffset.x = MinPadding.x;
+                        if (InputOffset.x > MaxPadding.x)
+                            InputOffset.x = MaxPadding.x;
+                    }
+                    else
+                    {
+                        if (InputOffset.x > 0)
+                            InputOffset.x -= Smoothness;
+                        else if (InputOffset.x < 0)
+                            InputOffset.x += Smoothness;
+                    }
 
-                if (InputOffset.z < MinPadding.z)
-                    InputOffset.z = MinPadding.z;
+                    if (mouseRatioY < 0.2)
+                    {
+                        InputOffset.z -= Smoothness;
 
-                var tempVec = Target.position + Offset + InputOffset;
-                transform.position = Vector3.Lerp(transform.position, tempVec, Smoothness);
+                        if (InputOffset.z < MinPadding.y)
+                            InputOffset.z = MinPadding.y;
+                    }
+                    else if (mouseRatioY > 0.8)
+                    {
+                        InputOffset.z += Smoothness;
+
+                        if (InputOffset.z > MaxPadding.y)
+                            InputOffset.z = MaxPadding.y;
+                    }
+                    else
+                    {
+                        if (InputOffset.z > 0)
+                            InputOffset.z -= Smoothness;
+                        else if (InputOffset.z < 0)
+                            InputOffset.z += Smoothness;
+                    }
+
+                    var tempVec = Target.position + Offset + InputOffset;
+                    transform.position = Vector3.Lerp(transform.position, tempVec, Smoothness);
+                }
             }
         }
-    }
 
+    }
 }
