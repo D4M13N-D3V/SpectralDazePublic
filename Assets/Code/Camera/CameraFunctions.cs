@@ -11,7 +11,7 @@ namespace SpectralDaze.Camera
         private void Start()
         {
             _originalFOV = UnityEngine.Camera.main.fieldOfView;
-        }
+        }           
 
         private void Update()
         {

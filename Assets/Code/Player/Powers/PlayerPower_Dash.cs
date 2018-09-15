@@ -85,14 +85,26 @@ namespace SpectralDaze.Player
                 pc.transform.rotation = _inputRotation.Value;
                 RaycastHit hit;
                 NavMeshHit navHit;
-                if (NavMesh.SamplePosition(pc.transform.position + pc.transform.forward * MaximumDashDistance, out navHit, 10.0f, NavMesh.AllAreas) &&
-                    !Physics.Raycast(pc.transform.position, pc.transform.forward, out hit, Vector3.Distance(pc.transform.position, pc.transform.position + pc.transform.forward * MaximumDashDistance))
-                    && navHit.distance < 1f)
+                var navSamplePos = NavMesh.SamplePosition(pc.transform.position + pc.transform.forward * MaximumDashDistance, out navHit, 10.0f, NavMesh.AllAreas);
+                var raycast = Physics.Raycast(pc.transform.position, pc.transform.forward, out hit, Vector3.Distance(pc.transform.position, pc.transform.position + pc.transform.forward * MaximumDashDistance));
+                if (navSamplePos && !raycast && navHit.distance < 1f)
                 {
                     _realMaxDistance = MaximumDashDistance;
                 }
                 else
                 {
+                    if (hit.collider.gameObject.tag == "BreakableWall")
+                    {
+                        hit.collider.transform.GetChild(0).gameObject.SetActive(false);
+                        hit.collider.transform.GetChild(1).gameObject.SetActive(true);
+                        foreach (var rbody in hit.collider.transform.GetChild(1).GetComponentsInChildren<Rigidbody>())
+                        {
+                            rbody.velocity = pc.transform.forward;  
+                        }
+                        _realMaxDistance = MaximumDashDistance;
+                        hit.collider.enabled = false;
+                    }
+                    else
                     _realMaxDistance = MaximumDashDistance - navHit.distance;
                 }
                 _particleSystem.Play();

@@ -12,6 +12,7 @@ TagManager:
   - Wall
   - Projectile
   - Obstacle
+  - BreakableWall
   layers:
   - Default
   - TransparentFX
