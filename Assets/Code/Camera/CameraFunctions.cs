@@ -6,7 +6,13 @@ namespace SpectralDaze.Camera
 {
     public class CameraFunctions : MonoBehaviour
     {
-        readonly float _originalFOV = UnityEngine.Camera.main.fieldOfView;
+        private float _originalFOV;
+
+        private void Start()
+        {
+            _originalFOV = UnityEngine.Camera.main.fieldOfView;
+        }
+
         private void Update()
         {
             /*
