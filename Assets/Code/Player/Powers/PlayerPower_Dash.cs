@@ -1,5 +1,6 @@
 ﻿using SpectralDaze.Camera;
 using SpectralDaze.Managers;
+using SpectralDaze.ScriptableObjects;
 using SpectralDaze.ScriptableObjects.Managers.Audio;
 using SpectralDaze.ScriptableObjects.Managers.InputManager;
 using SpectralDaze.ScriptableObjects.Stats;
@@ -27,11 +28,14 @@ namespace SpectralDaze.Player
         public AudioQueue AudioQueue;
         private PlayerInfo _playerInfo;
 
+        private ScriptableObjectQuartenion _inputRotation;
+
         private bool _clearPath = false;
         private float _realMaxDistance = 0;
 
         public override void Init(PlayerController pc)
         {
+            _inputRotation = Resources.Load<ScriptableObjectQuartenion>("Player/InputRotation");
             AudioQueue = Resources.Load<AudioQueue>("Managers/Audio/AudioQueue");
             _playerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
             _particleSystem = Instantiate(ParticleSystem, pc.transform).GetComponent<ParticleSystem>();
@@ -78,7 +82,7 @@ namespace SpectralDaze.Player
                 //If you want it to be based on posistion of mouse use this if not keep it commented
                 //pc.transform.rotation = Quaternion.LookRotation(mouseHit.point - pc.transform.position);
                 //pc.transform.eulerAngles = new Vector3(0, pc.transform.eulerAngles.y, 0);
-
+                pc.transform.rotation = _inputRotation.Value;
                 RaycastHit hit;
                 NavMeshHit navHit;
                 if (NavMesh.SamplePosition(pc.transform.position + pc.transform.forward * MaximumDashDistance, out navHit, 10.0f, NavMesh.AllAreas) &&

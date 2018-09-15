@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SpectralDaze.ScriptableObjects;
 using SpectralDaze.ScriptableObjects.Time;
 using SpectralDaze.Time;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace SpectralDaze.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public ScriptableObjectQuartenion InputRotation;
         public PlayerInfo PlayerInfo;
         public Conversation TestConversation;
         public Animator Animator;
@@ -81,6 +83,7 @@ namespace SpectralDaze.Player
             dialogueMan = FindObjectOfType<DialogueManager>();
             Agent = GetComponent<NavMeshAgent>();
             PlayerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
+            InputRotation = Resources.Load<ScriptableObjectQuartenion>("Player/InputRotation");
         }
 
         private void Update()
@@ -124,8 +127,8 @@ namespace SpectralDaze.Player
             // We dont want the player Rotating if we have no motion as it defaults to 0,0,0
             if (computedInput != Vector2.zero)
             {
-                Quaternion goalRotation = Quaternion.LookRotation(new Vector3(input.x, 0, input.y), Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, goalRotation, localDeltaTime * 9f);
+                InputRotation.Value = Quaternion.LookRotation(new Vector3(input.x, 0, input.y), Vector3.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, InputRotation.Value, localDeltaTime * 9f);
             }
         }
     }
