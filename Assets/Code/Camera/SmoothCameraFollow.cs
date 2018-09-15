@@ -17,8 +17,6 @@ namespace SpectralDaze.Camera
         {
             if (Target)
             {
-                Debug.Log(Input.GetAxis("Mouse X"));
-                Debug.Log(Input.GetAxis("Mouse Y"));
                 InputOffset += new Vector3(Input.GetAxis("Mouse X"), 0, Input.GetAxis("Mouse Y"));
 
                 if (InputOffset.x > MaxPadding.x)
