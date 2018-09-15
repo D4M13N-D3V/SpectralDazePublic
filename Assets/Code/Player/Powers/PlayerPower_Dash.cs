@@ -93,20 +93,25 @@ namespace SpectralDaze.Player
                 }
                 else
                 {
-                    if (hit.collider.gameObject.tag == "BreakableWall")
-                    {
-                        hit.collider.transform.GetChild(0).gameObject.SetActive(false);
-                        hit.collider.transform.GetChild(1).gameObject.SetActive(true);
-                        foreach (var rbody in hit.collider.transform.GetChild(1).GetComponentsInChildren<Rigidbody>())
-                        {
-                            rbody.velocity = pc.transform.forward;  
-                        }
-                        _realMaxDistance = MaximumDashDistance;
-                        hit.collider.enabled = false;
-                    }
-                    else
-                    _realMaxDistance = MaximumDashDistance - navHit.distance;
+                        _realMaxDistance = MaximumDashDistance - navHit.distance;
                 }
+
+                /*
+                 * Breakable wall Code
+                 */
+                if (raycast && hit.collider.gameObject.tag == "BreakableWall")
+                {
+                    hit.collider.transform.GetChild(0).gameObject.SetActive(false);
+                    hit.collider.transform.GetChild(1).gameObject.SetActive(true);
+                    foreach (var rbody in hit.collider.transform.GetChild(1).GetComponentsInChildren<Rigidbody>())
+                    {
+                        rbody.velocity = pc.transform.forward*20;
+                    }
+                    _realMaxDistance = MaximumDashDistance;
+                    hit.collider.enabled = false;
+                }
+
+
                 _particleSystem.Play();
                 _originalPos = pc.transform.position;
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
