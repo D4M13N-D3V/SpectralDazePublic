@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4150419079368214}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Bone_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4301006133679562}
   - component: {fileID: 137394336929717044}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4990626040913280}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4754008386221250}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4994440840850326}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Bone_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 65720413960625834}
   - component: {fileID: 114632121736428162}
   - component: {fileID: 114472684073409646}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: ShootingAI
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -261,6 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AudioQueue: {fileID: 0}
   DeathSound: {fileID: 0}
+  CurrentToken: {fileID: 0}
   Renderer: {fileID: 137394336929717044}
   _localTimeScale: 1
   Options: {fileID: 11400000, guid: 903a3a6031a4ee94393bdada9171faa1, type: 2}

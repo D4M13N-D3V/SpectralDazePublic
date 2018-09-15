@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 195884587696786580}
   - component: {fileID: 54151853815383742}
   - component: {fileID: 65957661283849612}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: QuestNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4961543056992994}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Bone_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055459506437820}
   - component: {fileID: 137080425756660228}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4202845196957788}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Bone_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4689280530120452}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4800823127885464}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,6 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b713fb4f9fe724a8827505e1d63e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioQueue: {fileID: 0}
+  DeathSound: {fileID: 0}
+  CurrentToken: {fileID: 0}
   Options: {fileID: 11400000, guid: 95207ff4bbd05db43b9355d1f2e9391f, type: 2}
   TimeInfo: {fileID: 11400000, guid: 13517c1a443ca6847a435657540e6214, type: 2}
 --- !u!137 &137080425756660228

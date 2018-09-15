@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4569902356952516}
   - component: {fileID: 137225500725347038}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4453128263046348}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4916652162038662}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Bone_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 65568420147705644}
   - component: {fileID: 114580604575213490}
   - component: {fileID: 114368806482287404}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: ChaseAI
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4303904969889510}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Bone_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4551867495348884}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9af044d3b0e32c4293d55eb1d4872a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KillEnemys: 1
 --- !u!114 &114580604575213490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,6 +259,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6725f62a7c799a044a48967ab5ab6575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioQueue: {fileID: 0}
+  DeathSound: {fileID: 0}
+  CurrentToken: {fileID: 0}
   _localTimeScale: 1
   Options: {fileID: 11400000, guid: b3f1700d3b1b548478e367e0bf5fafb2, type: 2}
   TimeInfo: {fileID: 11400000, guid: 13517c1a443ca6847a435657540e6214, type: 2}
