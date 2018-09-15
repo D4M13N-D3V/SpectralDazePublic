@@ -88,20 +88,22 @@ namespace SpectralDaze.Player
 
         private void Update()
         {
+            NavMeshHit hit;
+            NavMesh.SamplePosition(Agent.transform.position, out hit, 0.1f, NavMesh.AllAreas);
 
-           /* // this is debug / example on how to use the dialogue manager
-            // replace the TestConversation with some external conversation for conversations started by npcs
-            // or signs.
-            if (Input.GetButtonDown("Jump"))
-            {
-                // this checks if we are in a dialogue if we aren't we start a new dialogue
-                // else we cycle though the current conversations queue untill its over
-                if (dialogueMan.IsQueueEmpty && dialogueMan.DialogueParentObj.activeSelf == false)
-                    dialogueMan.StartDialogue(TestConversation);
-                else
-                    dialogueMan.CycleDialogue();
+            /* // this is debug / example on how to use the dialogue manager
+             // replace the TestConversation with some external conversation for conversations started by npcs
+             // or signs.
+             if (Input.GetButtonDown("Jump"))
+             {
+                 // this checks if we are in a dialogue if we aren't we start a new dialogue
+                 // else we cycle though the current conversations queue untill its over
+                 if (dialogueMan.IsQueueEmpty && dialogueMan.DialogueParentObj.activeSelf == false)
+                     dialogueMan.StartDialogue(TestConversation);
+                 else
+                     dialogueMan.CycleDialogue();
 
-            }*/
+             }*/
 
             // Get our input
             Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshSurface))]
 public class Platform : MonoBehaviour
 {
     public List<Transform> Waypoints;
@@ -11,6 +13,17 @@ public class Platform : MonoBehaviour
     public int _currentWaypoint = 0;
     public bool _currentlyMoving = false;
     public bool _loopingBack = false;
+
+    private NavMeshSurface _surface;
+
+    private void Start()
+    {
+        _surface = GetComponent<NavMeshSurface>();
+        _surface.collectObjects = CollectObjects.Children;
+        _surface.defaultArea = NavMesh.GetAreaFromName("Platform");
+        _surface.BuildNavMesh();
+    }
+
     private void Update()
     {
         if (!_currentlyMoving)
@@ -39,6 +52,25 @@ public class Platform : MonoBehaviour
             {
                 _currentlyMoving=false;
             });
+        }
+    }
+
+    private Transform oldParent;
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "Player")
+        {
+            oldParent = collider.transform.parent;
+            collider.transform.parent = transform;
+        }
+    }
+
+    void OnTriggerExit(Collider collider)
+    {
+        if (collider.tag == "Player")
+        {
+            collider.transform.parent = oldParent;
         }
     }
 }
