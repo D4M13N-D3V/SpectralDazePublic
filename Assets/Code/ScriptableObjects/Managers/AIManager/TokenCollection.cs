@@ -12,6 +12,7 @@ namespace SpectralDaze.ScriptableObjects.AIManager
     public class TokenCollection : ScriptableObject
     {
         public int Amount;
+        [HideInInspector]
         public List<Token> Tokens = new List<Token>();
         public void GenerateTokens()
         {
