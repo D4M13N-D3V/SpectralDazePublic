@@ -6,6 +6,7 @@ namespace SpectralDaze.Camera
 {
     public class CameraFunctions : MonoBehaviour
     {
+        readonly float _originalFOV = UnityEngine.Camera.main.fieldOfView;
         private void Update()
         {
             /*
@@ -44,7 +45,6 @@ namespace SpectralDaze.Camera
 
         IEnumerator fovKick(float fovOffset, float time)
         {
-            float originalFOV = UnityEngine.Camera.main.fieldOfView;
 
             var t = 0.0f;
             var t2 = 0.0f;
@@ -61,13 +61,13 @@ namespace SpectralDaze.Camera
             while (t < time / 2)
             {
                 UnityEngine.Camera.main.fieldOfView = Mathf.Lerp(UnityEngine.Camera.main.fieldOfView,
-                    originalFOV, t2);
+                    _originalFOV, t2);
                 t += UnityEngine.Time.deltaTime;
                 t2 += UnityEngine.Time.deltaTime / time;
                 yield return new WaitForEndOfFrame();
             }
 
-            UnityEngine.Camera.main.fieldOfView = originalFOV;
+            UnityEngine.Camera.main.fieldOfView = _originalFOV;
         }
     }
 }
