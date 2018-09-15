@@ -37,7 +37,12 @@ namespace SpectralDaze.Camera
             transform.localPosition = orignalPosistion;
         }
 
-        public IEnumerator FOVKick(float fovOffset, float time)
+        public void FOVKick(float fovOffset, float time)
+        {
+            StartCoroutine(fovKick(fovOffset, time));
+        }
+
+        IEnumerator fovKick(float fovOffset, float time)
         {
             float originalFOV = UnityEngine.Camera.main.fieldOfView;
 

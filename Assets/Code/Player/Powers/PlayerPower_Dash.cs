@@ -94,6 +94,7 @@ namespace SpectralDaze.Player
                 _particleSystem.Play();
                 _originalPos = pc.transform.position;
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
+                UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().FOVKick(2.0f, 0.2f);
                 IsDashing = true;
                 _playerInfo.CanMove = false;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), true);
