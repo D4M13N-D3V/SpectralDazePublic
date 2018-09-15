@@ -18,6 +18,7 @@ namespace Managers
             foreach(var value in Enum.GetValues(typeof(TokenTypes)).Cast<TokenTypes>())
             {
                 TokenCollections.Add(value, Resources.Load<TokenCollection>("Managers/AIDirector/" + value.ToString() + "Tokens"));
+                TokenCollections[value].GenerateTokens();
             }
 
             foreach (var tokenCollection in TokenCollections.Values)
