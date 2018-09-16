@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee7e5d504dc4f34a96e8d119f5e06aa, type: 3}
   m_Name: DashPower
   m_EditorClassIdentifier: 
-  Power: {fileID: 0}
+  Power: {fileID: 11400000, guid: 14e5665cadd11474da9c62883e68c0a9, type: 2}
