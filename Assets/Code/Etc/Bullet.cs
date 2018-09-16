@@ -87,6 +87,10 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Reflective"))
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x,-transform.eulerAngles.y, transform.eulerAngles.z);
+        }
 
     }
 }
