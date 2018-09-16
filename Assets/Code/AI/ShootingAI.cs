@@ -13,7 +13,6 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI
 {
-    [RequireComponent(typeof(KillOnTouch))]
     public class ShootingAI : BaseAI
     {
         public Renderer Renderer;
@@ -61,7 +60,6 @@ namespace SpectralDaze.AI
             Setup();
             DeathSound = Options.DeathSound;
             GetAudioQueue();
-            GetComponent<KillOnTouch>().KillEnemys = false;
             paramsInstance = new ShootingAIParams()
             {
                 NpcTransform = transform,
