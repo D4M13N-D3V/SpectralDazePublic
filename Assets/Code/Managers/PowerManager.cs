@@ -37,6 +37,9 @@ namespace SpectralDaze.Managers.PowerManager
 	        Power2Control = Resources.Load<Control>("Managers/InputManager/Power2");
 	        DashControl = Resources.Load<Control>("Managers/InputManager/Dash");
 
+	        Power1.Power = null;
+	        Power2.Power = null;
+	        DashPower.Power = null;
 
 	        if (Power1 != null && Power1.Power != null)
 	        {
@@ -69,7 +72,6 @@ namespace SpectralDaze.Managers.PowerManager
 	        if (DashPower.Power != _power1Cache)
 	            DashPower.Power.Init(pc);
             */
-            _dashCache = DashPower.Power;
 
 	        if (Power1.Power != null)
 	        {
@@ -81,7 +83,7 @@ namespace SpectralDaze.Managers.PowerManager
 
 	        if (Power2.Power != null)
 	        {
-	            if (Power2.Power != _power1Cache)
+	            if (Power2.Power != _power2Cache)
 	                Power2.Power.Init(pc);
                 _power2Cache = Power2.Power;
 	            Power2.Power.OnUpdate(pc);
@@ -89,7 +91,7 @@ namespace SpectralDaze.Managers.PowerManager
 
 	        if (DashPower.Power != null)
 	        {
-	            if (DashPower.Power != _power1Cache)
+	            if (DashPower.Power != _dashCache)
 	                DashPower.Power.Init(pc);
                 _dashCache = DashPower.Power;
 	            DashPower.Power.OnUpdate(pc);

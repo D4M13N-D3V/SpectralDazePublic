@@ -69,6 +69,7 @@ namespace SpectralDaze.Player
                 {
                     if (hit.collider.tag == "Movable")
                         hit.collider.gameObject.GetComponent<Movable>().Hit(pc.transform);
+
                     StopDashing(pc);
                 }
             }
@@ -114,7 +115,6 @@ namespace SpectralDaze.Player
                     hit.collider.enabled = false;
                 }
 
-
                 _particleSystem.Play();
                 _originalPos = pc.transform.position;
                 UnityEngine.Camera.main.gameObject.GetComponent<CameraFunctions>().Shake(0.05f, 0.2f);
@@ -134,6 +134,17 @@ namespace SpectralDaze.Player
             _playerInfo.CanMove = true;
             Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dashable"), LayerMask.NameToLayer("Dasher"), false);
             pc.Agent.enabled = true;
+
+
+            var navmeshObstacles = GameObject.FindObjectsOfType<NavMeshObstacle>();
+
+            foreach (var obstacle in navmeshObstacles)
+            {
+                if (obstacle.gameObject.layer == LayerMask.NameToLayer("Dashable"))
+                {
+                    obstacle.enabled = true;
+                }
+            }
         }
     }
 }

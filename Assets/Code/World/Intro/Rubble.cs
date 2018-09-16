@@ -17,6 +17,7 @@ namespace SpectralDaze.World
         public void Fall()
         {
             _animator.SetTrigger("RubbleFall");
+            GetComponent<Collider>().enabled=false;
         }
     }
 }
