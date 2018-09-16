@@ -9,8 +9,11 @@ public class IntroBulletWarner : MonoBehaviour
 {
     public Control DashControl;
     private TextMeshProUGUI _tutorialText;
+    private bool waitingForButton = false;
+    private float _lastTime;
     private void Start()
     {
+        _lastTime = Time.realtimeSinceStartup;
         _tutorialText = GameObject.FindGameObjectWithTag("TutorialText").GetComponent<TextMeshProUGUI>();
         DashControl = Resources.Load<Control>("Managers/InputManager/Dash");
     }
@@ -19,7 +22,7 @@ public class IntroBulletWarner : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            UnityEngine.Time.timeScale = 0.01f;
+            UnityEngine.Time.timeScale = 0.5f;
             _tutorialText.enabled = true;
             if (DashControl.IsMouseButton)
             {
@@ -29,6 +32,8 @@ public class IntroBulletWarner : MonoBehaviour
             {
                 _tutorialText.text = "Press " + DashControl.KeyCode + " to dash!";
             }
+
+            waitingForButton = true;
             StartCoroutine(WaitForDash());
         }
     }
@@ -38,8 +43,14 @@ public class IntroBulletWarner : MonoBehaviour
         Debug.Log("TEST");
         while (!DashControl.JustPressed)
         {
+            /*
+             * rduce time scale
+             */
+            var myDeltaTime = UnityEngine.Time.realtimeSinceStartup - _lastTime;
+            UnityEngine.Time.timeScale = Mathf.Lerp(Time.timeScale, 0, 0.05f*myDeltaTime);
             yield return new WaitForEndOfFrame();
         }
+        waitingForButton = false;
         UnityEngine.Time.timeScale = 1;
         _tutorialText.enabled = false;
         Destroy(gameObject);
