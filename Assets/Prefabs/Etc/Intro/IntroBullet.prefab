@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 96410377132231202}
   - component: {fileID: 54477321955634716}
   - component: {fileID: 114005233759010494}
+  - component: {fileID: 114782432435115132}
   m_Layer: 10
   m_Name: IntroBullet
   m_TagString: Projectile
@@ -271,6 +272,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DashControl: {fileID: 0}
+--- !u!114 &114782432435115132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1978859934169336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791fa1df0b86daf47b9327fff3c2989e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelfDestructTime: 15
 --- !u!135 &135060894995404514
 SphereCollider:
   m_ObjectHideFlags: 1

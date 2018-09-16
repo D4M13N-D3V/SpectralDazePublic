@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791fa1df0b86daf47b9327fff3c2989e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelfDestructTime: 1.5
+  SelfDestructTime: 4
 --- !u!137 &137753952108216840
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
