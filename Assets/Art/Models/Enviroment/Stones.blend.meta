@@ -10,6 +10,15 @@ ModelImporter:
     100008: Plane_001
     100010: Plane_002
     100012: //RootNode
+    100014: Rock00
+    100016: Wall00
+    100018: Wall01
+    100020: Wall02
+    100022: Wall03
+    100024: Wall04
+    100026: Wall05
+    100028: WallConer00
+    100030: WallCorner01
     400000: Cube
     400002: Cube_001
     400004: Cube_002
@@ -17,6 +26,15 @@ ModelImporter:
     400008: Plane_001
     400010: Plane_002
     400012: //RootNode
+    400014: Rock00
+    400016: Wall00
+    400018: Wall01
+    400020: Wall02
+    400022: Wall03
+    400024: Wall04
+    400026: Wall05
+    400028: WallConer00
+    400030: WallCorner01
     2100000: Material_001__GradientAtlas00_psd
     2100002: Material_001
     2300000: Cube
@@ -25,18 +43,45 @@ ModelImporter:
     2300006: Plane
     2300008: Plane_001
     2300010: Plane_002
+    2300012: Rock00
+    2300014: Wall00
+    2300016: Wall01
+    2300018: Wall02
+    2300020: Wall03
+    2300022: Wall04
+    2300024: Wall05
+    2300026: WallConer00
+    2300028: WallCorner01
     3300000: Cube
     3300002: Cube_001
     3300004: Cube_002
     3300006: Plane
     3300008: Plane_001
     3300010: Plane_002
+    3300012: Rock00
+    3300014: Wall00
+    3300016: Wall01
+    3300018: Wall02
+    3300020: Wall03
+    3300022: Wall04
+    3300024: Wall05
+    3300026: WallConer00
+    3300028: WallCorner01
     4300000: Plane_002
     4300002: Cube_002
     4300004: Cube_001
     4300006: Plane_001
     4300008: Plane
     4300010: Cube
+    4300012: WallCorner01
+    4300014: WallConer00
+    4300016: Wall05
+    4300018: Wall04
+    4300020: Wall01
+    4300022: Wall00
+    4300024: Wall03
+    4300026: Wall02
+    4300028: Rock00
     7400000: Default Take
     9500000: //RootNode
   externalObjects: {}
