@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using SpectralDaze.ScriptableObjects.Managers.SceneManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using SpectralDaze.Managers.SceneManager;
 public class SceneTrigger : MonoBehaviour
 {
     public string SceneFolder;

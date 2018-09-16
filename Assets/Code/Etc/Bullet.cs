@@ -4,7 +4,6 @@ using System.Linq;
 using Assets.Code.AI;
 using UnityEngine;
 using SpectralDaze.Player;
-using SpectralDaze.ScriptableObjects.Time;
 using SpectralDaze.Time;
 
 public class Bullet : MonoBehaviour
@@ -37,7 +36,7 @@ public class Bullet : MonoBehaviour
 
     public GameObject Source;
 
-    public Information TimeInfo;
+    public TimeInfo TimeInfo;
     private bool _timeBeingManipulated;
     private Manipulations _manipulationType;
 

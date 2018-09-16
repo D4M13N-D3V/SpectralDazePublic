@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
  using Assets.Code.AI;
+ using SpectralDaze.Characters;
  using SpectralDaze.Managers;
  using SpectralDaze.Player;
- using SpectralDaze.ScriptableObjects.AI;
- using SpectralDaze.ScriptableObjects.Conversations;
- using SpectralDaze.ScriptableObjects.Time;
 using SpectralDaze.Time;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,7 +18,7 @@ namespace SpectralDaze.AI.QuestNPC
         private QuestNpcParams paramsInstance;
 
 
-        public Information TimeInfo;
+        public TimeInfo TimeInfo;
         //private Animator _animator;
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;

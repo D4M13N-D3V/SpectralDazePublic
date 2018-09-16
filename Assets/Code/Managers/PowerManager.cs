@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using SpectralDaze.Player;
-using SpectralDaze.ScriptableObjects.Managers.InputManager;
-using SpectralDaze.ScriptableObjects.Managers.PowerManager;
+using SpectralDaze.Managers;
+using SpectralDaze.Managers.InputManager;
 using UnityEngine;
 
-namespace SpectralDaze.Managers
+namespace SpectralDaze.Managers.PowerManager
 {
     public class PowerManager : MonoBehaviour
 	{

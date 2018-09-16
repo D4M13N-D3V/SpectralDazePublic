@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using SpectralDaze.Player;
-using SpectralDaze.ScriptableObjects.Managers.SceneManager;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
-namespace SpectralDaze.Managers
+namespace SpectralDaze.Managers.SceneManager
 {
     public class SceneManager : MonoBehaviour
     {

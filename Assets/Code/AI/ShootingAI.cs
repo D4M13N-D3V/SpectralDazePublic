@@ -5,10 +5,8 @@ using Assets.Code.AI;
 using Managers;
 using SpectralDaze.Etc;
 using SpectralDaze.Managers;
+using SpectralDaze.Managers.AudioManager;
 using SpectralDaze.Player;
-using SpectralDaze.ScriptableObjects.AI;
-using SpectralDaze.ScriptableObjects.Managers.Audio;
-using SpectralDaze.ScriptableObjects.Time;
 using SpectralDaze.Time;
 using UnityEngine;
 using UnityEngine.AI;
@@ -54,7 +52,7 @@ namespace SpectralDaze.AI
         private UStateMachine<ShootingAIParams> stateMachine;
         private ShootingAIParams paramsInstance;
 
-        public Information TimeInfo;
+        public TimeInfo TimeInfo;
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;
 
