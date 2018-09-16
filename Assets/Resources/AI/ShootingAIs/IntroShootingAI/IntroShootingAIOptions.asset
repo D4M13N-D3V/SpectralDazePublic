@@ -13,17 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementType: 0
   WanderDistance: 0
-  IdleTime: 2
+  IdleTime: 0
   StartingPatorlPoint: 0
   PatrolPoints: []
   AggroDistance: 8
   LoseAggroDistance: 12
-  TimeBetweenAttacks: 0.75
+  TimeBetweenAttacks: 0.2
   MovementSpeed: 3
   BulletPrefab: {fileID: 1978859934169336, guid: bf925dcf356e8934a8fa54f2fcaa21a6,
     type: 2}
   ShootDelay: 0
-  AttackChargeAmount: 0.25
+  AttackChargeAmount: 0
   Chase: 1
   ChaseDistance: 20
   ShootingSound: {fileID: 11400000, guid: 981857727d728e24e911a354b9476b4c, type: 2}
