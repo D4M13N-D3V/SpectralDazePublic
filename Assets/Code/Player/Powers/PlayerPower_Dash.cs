@@ -33,6 +33,7 @@ namespace SpectralDaze.Player
 
         public override void Init(PlayerController pc)
         {
+            Type = PowerTypes.Dash;
             _inputRotation = Resources.Load<ScriptableObjectQuartenion>("Player/InputRotation");
             AudioQueue = Resources.Load<AudioQueue>("Managers/Audio/AudioQueue");
             _playerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");

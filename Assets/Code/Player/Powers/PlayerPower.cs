@@ -5,11 +5,15 @@ using UnityEngine;
 
 namespace SpectralDaze.Player
 {
+    public enum PowerTypes { Dash, Power }
+
 	public class PlayerPower : ScriptableObject
 	{
 		public Texture2D Icon;
 		public string Name;
-        
+
+	    public PowerTypes Type;
+
         public Control Control;
 		public virtual void Init(PlayerController pc) { }
 		public virtual void OnUpdate(PlayerController pc) { }

@@ -13,6 +13,11 @@ namespace SpectralDaze.Managers.PowerManager
 	    public Power1 Power1;
 	    public Power2 Power2;
         public DashPower DashPower;
+
+	    private PlayerPower _power1Cache;
+	    private PlayerPower _power2Cache;
+	    private PlayerPower_Dash _dashCache;
+
 	    public PowerInventory PowerInventory;
 	    private PlayerController pc;
 
@@ -54,12 +59,41 @@ namespace SpectralDaze.Managers.PowerManager
 
 	    private void Update()
 	    {
+            /*
+	        if (Power1.Power != _power1Cache)
+	            Power1.Power.Init(pc);
+
+	        if (Power2.Power != _power1Cache)
+	            Power2.Power.Init(pc);
+
+	        if (DashPower.Power != _power1Cache)
+	            DashPower.Power.Init(pc);
+            */
+            _dashCache = DashPower.Power;
+
 	        if (Power1.Power != null)
-                Power1.Power.OnUpdate(pc);
+	        {
+	            if (Power1.Power != _power1Cache)
+	                Power1.Power.Init(pc);
+                _power1Cache = Power1.Power;
+	            Power1.Power.OnUpdate(pc);
+            }
+
 	        if (Power2.Power != null)
-                Power2.Power.OnUpdate(pc);
+	        {
+	            if (Power2.Power != _power1Cache)
+	                Power2.Power.Init(pc);
+                _power2Cache = Power2.Power;
+	            Power2.Power.OnUpdate(pc);
+            }
+
 	        if (DashPower.Power != null)
-                DashPower.Power.OnUpdate(pc);
+	        {
+	            if (DashPower.Power != _power1Cache)
+	                DashPower.Power.Init(pc);
+                _dashCache = DashPower.Power;
+	            DashPower.Power.OnUpdate(pc);
+            }
         }
 
 	    private void OnGUI()

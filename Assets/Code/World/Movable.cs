@@ -27,9 +27,9 @@ public class Movable : MonoBehaviour
         Debug.Log(xoffset);
 
         if (xoffset > GetComponent<Collider>().bounds.size.x / 2 - transformHitting.GetComponent<Collider>().bounds.size.x)
-            hittingDir = MovablePosistion.Directions.Right;
-        else if (xoffset < -GetComponent<Collider>().bounds.size.x/ 2 + transformHitting.GetComponent<Collider>().bounds.size.x)
             hittingDir = MovablePosistion.Directions.Left;
+        else if (xoffset < -GetComponent<Collider>().bounds.size.x/ 2 + transformHitting.GetComponent<Collider>().bounds.size.x)
+            hittingDir = MovablePosistion.Directions.Right;
         else if(zoffset > GetComponent<Collider>().bounds.size.z / 2 - transformHitting.GetComponent<Collider>().bounds.size.z)
             hittingDir = MovablePosistion.Directions.Down;
         else if (zoffset < -GetComponent<Collider>().bounds.size.z / 2 + transformHitting.GetComponent<Collider>().bounds.size.z)

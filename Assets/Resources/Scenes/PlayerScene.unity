@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -112,7 +112,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 4ea057bce0f59e9419791d56f3bba595, type: 2}
 --- !u!4 &6332080 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4265383131560228, guid: 2732f28250425874c8bbc5a18de7f2ee,
@@ -385,15 +385,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4840458705261148, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.2880573
+      value: 99.7
       objectReference: {fileID: 0}
     - target: {fileID: 4840458705261148, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 7.963415
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4840458705261148, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 34.07689
+      value: 43.5
       objectReference: {fileID: 0}
     - target: {fileID: 4840458705261148, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
       propertyPath: m_LocalRotation.x
