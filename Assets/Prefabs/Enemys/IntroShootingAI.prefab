@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 54751170638530168}
   - component: {fileID: 65155566155091286}
   - component: {fileID: 114637096062261122}
+  - component: {fileID: 114695836713701396}
   m_Layer: 10
   m_Name: IntroShootingAI
   m_TagString: Enemy
@@ -253,6 +254,18 @@ MonoBehaviour:
   _localTimeScale: 1
   Options: {fileID: 11400000, guid: 76b1d535a26013a499da0a9852d68966, type: 2}
   TimeInfo: {fileID: 11400000, guid: 13517c1a443ca6847a435657540e6214, type: 2}
+--- !u!114 &114695836713701396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1808132529814824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791fa1df0b86daf47b9327fff3c2989e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelfDestructTime: 1.5
 --- !u!137 &137753952108216840
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
