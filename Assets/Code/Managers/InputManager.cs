@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using SpectralDaze.ScriptableObjects.Managers.InputManager;
 using UnityEngine;
 
-namespace SpectralDaze.Managers
+namespace SpectralDaze.Managers.InputManager
 {
     public enum InputTypes
     {

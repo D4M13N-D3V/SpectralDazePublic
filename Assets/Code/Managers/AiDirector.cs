@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Code.AI;
-using SpectralDaze.ScriptableObjects.AIManager;
+using SpectralDaze.Managers.AIManager;
 using UnityEngine;
 
 namespace Managers

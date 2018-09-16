@@ -1,12 +1,10 @@
-﻿using SpectralDaze.ScriptableObjects.Conversations;
-using SpectralDaze.ScriptableObjects.Stats;
-using SpectralDaze.Managers;
+﻿using SpectralDaze.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using SpectralDaze.ScriptableObjects;
-using SpectralDaze.ScriptableObjects.Time;
+using SpectralDaze.Characters;
+using SpectralDaze.DataTypes;
 using SpectralDaze.Time;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,7 +20,7 @@ namespace SpectralDaze.Player
         public Animator Animator;
         private DialogueManager dialogueMan;
         public Rigidbody Rbody;
-        public Information TimeInfo;
+        public TimeInfo TimeInfo;
         public NavMeshAgent Agent;
         private bool _timeBeingManipulated;
         private Manipulations _manipulationType;

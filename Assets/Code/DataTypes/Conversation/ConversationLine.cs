@@ -1,5 +1,5 @@
-﻿using SpectralDaze.ScriptableObjects.Characters;
-using System;
+﻿using System;
+using SpectralDaze.Characters;
 using UnityEngine;
 
 namespace SpectralDaze.DataTypes.Conversations

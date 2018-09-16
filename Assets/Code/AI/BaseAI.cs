@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Managers;
 using SpectralDaze.Camera;
 using SpectralDaze.Etc;
-using SpectralDaze.ScriptableObjects.AIManager;
-using SpectralDaze.ScriptableObjects.Managers.Audio;
+using SpectralDaze.Managers.AIManager;
+using SpectralDaze.Managers.AudioManager;
 using UnityEngine;
 
 namespace Assets.Code.AI

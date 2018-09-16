@@ -1,9 +1,7 @@
 ﻿using SpectralDaze.Camera;
+using SpectralDaze.DataTypes;
 using SpectralDaze.Managers;
-using SpectralDaze.ScriptableObjects;
-using SpectralDaze.ScriptableObjects.Managers.Audio;
-using SpectralDaze.ScriptableObjects.Managers.InputManager;
-using SpectralDaze.ScriptableObjects.Stats;
+using SpectralDaze.Managers.AudioManager;
 using UnityEngine;
 using UnityEngine.AI;
 

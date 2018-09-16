@@ -1,10 +1,9 @@
 ﻿using SpectralDaze.DataTypes.Conversations;
-using SpectralDaze.ScriptableObjects.Characters;
-using SpectralDaze.ScriptableObjects.Conversations;
-using SpectralDaze.ScriptableObjects.Stats;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SpectralDaze.Characters;
+using SpectralDaze.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
