@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Event = SpectralDaze.Events.Event;
 
-public class RubbleTrigger : MonoBehaviour
+public class TriggerThatTriggersEvent : MonoBehaviour
 {
     public Event RubbleEvent;
     private void OnTriggerEnter(Collider col)
     {
         if (RubbleEvent == null)
         {
-            Debug.LogError("No Event Provided To Rubble Trigger");
+            Debug.LogError("No Event Provided To Trigger");
             return;
         }
 

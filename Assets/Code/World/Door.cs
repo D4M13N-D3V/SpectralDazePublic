@@ -13,6 +13,8 @@ namespace SpectralDaze.World
         private void Start()
         {
             _animator = GetComponent<Animator>();
+            if(OpenByDefault)
+                Open();
         }
 
         public void Close()
