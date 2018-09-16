@@ -19,17 +19,21 @@ public class Movable : MonoBehaviour
 
     public void Hit(Transform transformHitting) 
     {
-        var xoffset = transform.position.x - transformHitting.position.x;
-        var zoffset = transform.position.z - transformHitting.position.z;
+        var xoffset = transform.position.x - transformHitting.position.x + 0.5f;
+        var zoffset = transform.position.z - transformHitting.position.z + 0.5f;
         MovablePosistion.Directions hittingDir = MovablePosistion.Directions.Unknown;
-        if (xoffset+1.5f < transformHitting.GetComponent<Collider>().bounds.size.x / 2 + transformHitting.GetComponent<Collider>().bounds.size.x)
+
+        Debug.Log(GetComponent<Collider>().bounds.size.x / 2 + transformHitting.GetComponent<Collider>().bounds.size.x);
+        Debug.Log(xoffset);
+
+        if (xoffset > GetComponent<Collider>().bounds.size.x / 2 - transformHitting.GetComponent<Collider>().bounds.size.x)
             hittingDir = MovablePosistion.Directions.Right;
-        else if (xoffset- 1.5f > -GetComponent<Collider>().bounds.size.x / 2 + transformHitting.GetComponent<Collider>().bounds.size.x)
+        else if (xoffset < -GetComponent<Collider>().bounds.size.x/ 2 + transformHitting.GetComponent<Collider>().bounds.size.x)
             hittingDir = MovablePosistion.Directions.Left;
-        else if(zoffset + 1.5f < transformHitting.GetComponent<Collider>().bounds.size.z / 2 + transformHitting.GetComponent<Collider>().bounds.size.z)
-            hittingDir = MovablePosistion.Directions.Up;
-        else if (zoffset - 1.5f > -GetComponent<Collider>().bounds.size.z / 2 + transformHitting.GetComponent<Collider>().bounds.size.z)
+        else if(zoffset > GetComponent<Collider>().bounds.size.z / 2 - transformHitting.GetComponent<Collider>().bounds.size.z)
             hittingDir = MovablePosistion.Directions.Down;
+        else if (zoffset < -GetComponent<Collider>().bounds.size.z / 2 + transformHitting.GetComponent<Collider>().bounds.size.z)
+            hittingDir = MovablePosistion.Directions.Up;
 
         if (hittingDir == MovablePosistion.Directions.Unknown)      
         {

@@ -3482,12 +3482,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Posistions:
   - Posistion: {fileID: 1164602289}
-    DirectionForward: 0
-    DirectionBackward: 0
+    DirectionForward: 2
+    DirectionBackward: 3
     TimeToMove: 1
   - Posistion: {fileID: 605978324}
-    DirectionForward: 0
-    DirectionBackward: 0
+    DirectionForward: 3
+    DirectionBackward: 2
     TimeToMove: 0.5
   StartingPosistion: 0
 --- !u!208 &711144826
