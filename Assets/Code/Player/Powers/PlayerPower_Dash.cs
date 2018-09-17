@@ -61,19 +61,21 @@ namespace SpectralDaze.Player
             {
                 var tgt = pc.transform.position + pc.transform.forward * DashSpeed * UnityEngine.Time.deltaTime;
                 RaycastHit hit;
+                NavMeshHit navHit;
+                var nav = NavMesh.SamplePosition(tgt, out navHit, 1, NavMesh.AllAreas);
+                var ray = Physics.Raycast(pc.transform.position, pc.transform.forward, out hit,
+                    Vector3.Distance(pc.transform.position, tgt));
 
-                if (!Physics.Raycast(pc.transform.position, pc.transform.forward, out hit,
-                    Vector3.Distance(pc.transform.position, tgt)))
+                if(ray && hit.collider.gameObject.layer == LayerMask.NameToLayer("Dashable"))
                     pc.transform.position = tgt;
-                else if (hit.collider.gameObject.layer==LayerMask.NameToLayer("Dashable"))
-                {
+                else if (ray &&  hit.collider.gameObject.tag =="BreakableWall")
                     pc.transform.position = tgt;
-                }
+                else if (!ray)
+                    pc.transform.position = tgt;
                 else
                 {
                     if (hit.collider.tag == "Movable")
                         hit.collider.gameObject.GetComponent<Movable>().Hit(pc.transform);
-
                     StopDashing(pc);
                 }
             }
@@ -93,7 +95,7 @@ namespace SpectralDaze.Player
                 pc.transform.rotation = _inputRotation.Value;
                 RaycastHit hit;
                 NavMeshHit navHit;
-                var navSamplePos = NavMesh.SamplePosition(pc.transform.position + pc.transform.forward * MaximumDashDistance, out navHit, 10.0f, NavMesh.AllAreas);
+                var navSamplePos = NavMesh.SamplePosition(pc.transform.position + pc.transform.forward * MaximumDashDistance, out navHit, 1, NavMesh.AllAreas);
                 var raycast = Physics.Raycast(pc.transform.position, pc.transform.forward, out hit, Vector3.Distance(pc.transform.position, pc.transform.position + pc.transform.forward * MaximumDashDistance));
                 if (navSamplePos && !raycast && navHit.distance < 1f)
                 {
@@ -101,8 +103,10 @@ namespace SpectralDaze.Player
                 }
                 else
                 {
-                        _realMaxDistance = MaximumDashDistance - navHit.distance;
+                    _realMaxDistance = MaximumDashDistance - navHit.distance;
                 }
+
+                Debug.DrawLine(pc.transform.position, pc.transform.position + pc.transform.forward * MaximumDashDistance, Color.red);
 
                 /*
                  * Breakable wall Code

@@ -39,7 +39,7 @@ namespace SpectralDaze.Managers.PowerManager
 
 	        Power1.Power = null;
 	        Power2.Power = null;
-	        DashPower.Power = null;
+	        //DashPower.Power = null;
 
 	        if (Power1 != null && Power1.Power != null)
 	        {
