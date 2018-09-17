@@ -63,8 +63,12 @@ namespace SpectralDaze.Player
                 RaycastHit hit;
 
                 if (!Physics.Raycast(pc.transform.position, pc.transform.forward, out hit,
-                    Vector3.Distance(pc.transform.position, tgt), LayerMask.NameToLayer("Dashable")))
+                    Vector3.Distance(pc.transform.position, tgt)))
                     pc.transform.position = tgt;
+                else if (hit.collider.gameObject.layer==LayerMask.NameToLayer("Dashable"))
+                {
+                    pc.transform.position = tgt;
+                }
                 else
                 {
                     if (hit.collider.tag == "Movable")
@@ -90,7 +94,7 @@ namespace SpectralDaze.Player
                 RaycastHit hit;
                 NavMeshHit navHit;
                 var navSamplePos = NavMesh.SamplePosition(pc.transform.position + pc.transform.forward * MaximumDashDistance, out navHit, 10.0f, NavMesh.AllAreas);
-                var raycast = Physics.Raycast(pc.transform.position, pc.transform.forward, out hit, Vector3.Distance(pc.transform.position, pc.transform.position + pc.transform.forward * MaximumDashDistance), LayerMask.NameToLayer("Dashable"));
+                var raycast = Physics.Raycast(pc.transform.position, pc.transform.forward, out hit, Vector3.Distance(pc.transform.position, pc.transform.position + pc.transform.forward * MaximumDashDistance));
                 if (navSamplePos && !raycast && navHit.distance < 1f)
                 {
                     _realMaxDistance = MaximumDashDistance;
