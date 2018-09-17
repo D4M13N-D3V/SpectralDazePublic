@@ -3078,7 +3078,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh18874
+  m_Name: pb_Mesh19078
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -13828,7 +13828,7 @@ Transform:
   m_GameObject: {fileID: 1859769083}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -31.262192, y: 30.919748, z: 29.986387}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 3.5486, z: 1}
   m_Children: []
   m_Father: {fileID: 960945201}
   m_RootOrder: 1
@@ -15377,7 +15377,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
