@@ -29,7 +29,7 @@ namespace SpectralDaze.Managers.InputManager
             set { _value = value; }
         }
 
-        private float _rawValue;
+        private float _rawValue;    
         public float RawValue
         {
 

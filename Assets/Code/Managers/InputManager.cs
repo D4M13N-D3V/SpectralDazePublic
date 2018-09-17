@@ -61,11 +61,15 @@ namespace SpectralDaze.Managers.InputManager
     public class InputManager : MonoBehaviour
     {
         public ControllerType GamepadType = ControllerType.Keyboard;
-        public List<GamepadAxis> InvertedAxis = new List<GamepadAxis>()
+        public List<GamepadAxis> InvertedGamepadeAxis = new List<GamepadAxis>()
         {
             GamepadAxis.LeftThumbStickY,
             GamepadAxis.RightThumbStickY,
             GamepadAxis.DPadStickY
+        };
+        public List<KeyboardAxis> InvertedKeyboardAxis = new List<KeyboardAxis>()
+        {
+            KeyboardAxis.Y
         };
 
         public Dictionary<KeyboardAxis, string> KeyboardAxisReference = new Dictionary<KeyboardAxis, string>()
@@ -142,7 +146,7 @@ namespace SpectralDaze.Managers.InputManager
 
             foreach (var axis in Controls.AxisControls)
             {
-                axis.Inverted = InvertedAxis.Contains(axis.GamepadAxis);
+                axis.Inverted = InvertedGamepadeAxis.Contains(axis.GamepadAxis);
             }
         }
 
@@ -189,8 +193,16 @@ namespace SpectralDaze.Managers.InputManager
             {
                 if (GamepadType == ControllerType.Keyboard)
                 {
-                    control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]);
-                    control.Value = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]);
+                    if (control.Inverted)
+                    {
+                        control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]) * -1;
+                        control.Value = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]) * -1;
+                    }
+                    else
+                    {
+                        control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]);
+                        control.Value = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]);
+                    }
                 }
                 else if (GamepadType == ControllerType.DS4)
                 {
