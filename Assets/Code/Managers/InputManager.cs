@@ -80,36 +80,31 @@ namespace SpectralDaze.Managers.InputManager
             [KeyboardAxis.Y] = "Axis2",
         };
 
-        /*
-         * XBOX SETUP FOR WINDOWS
-         */
-        public Dictionary<GamepadCode,string> XboxButtonReference = new Dictionary<GamepadCode, string>()
+#if (UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX)
+        public Dictionary<GamepadCode, string> XboxButtonReference = new Dictionary<GamepadCode, string>()
         {
-            [GamepadCode.A] = "joystick button 0",
-            [GamepadCode.B] = "joystick button 1",
-            [GamepadCode.X] = "joystick button 2",
-            [GamepadCode.Y] = "joystick button 3",
-            [GamepadCode.LeftBumper] = "joystick button 4",
-            [GamepadCode.RightBumper] = "joystick button 5",
-            [GamepadCode.Back] = "joystick button 6",
-            [GamepadCode.Start] = "joystick button 7",
-            [GamepadCode.LeftThumbstick] = "joystick button 8",
-            [GamepadCode.RightThumbstick] = "joystick button 9",
+            [GamepadCode.A] = "joystick button 16",
+            [GamepadCode.B] = "joystick button 17",
+            [GamepadCode.X] = "joystick button 18",
+            [GamepadCode.Y] = "joystick button 19",
+            [GamepadCode.LeftBumper] = "joystick button 13",
+            [GamepadCode.RightBumper] = "joystick button 14",
+            [GamepadCode.Back] = "joystick button 10",
+            [GamepadCode.Start] = "joystick button 9",
+            [GamepadCode.LeftThumbstick] = "joystick button 11",
+            [GamepadCode.RightThumbstick] = "joystick button 12",
         };
-        public Dictionary<GamepadAxis,string> XboxAxisReference = new Dictionary<GamepadAxis, string>()
+        public Dictionary<GamepadAxis, string> XboxAxisReference = new Dictionary<GamepadAxis, string>()
         {
             [GamepadAxis.LeftThumbStickX] = "Axis1",
             [GamepadAxis.LeftThumbStickY] = "Axis2",
-            [GamepadAxis.RightThumbStickX] = "Axis4",
-            [GamepadAxis.RightThumbStickY] = "Axis5",
-            [GamepadAxis.DPadStickX] = "Axis6",
-            [GamepadAxis.DPadStickY] = "Axis7",
-            [GamepadAxis.LeftTrigger] = "Axis9",
-            [GamepadAxis.RightTrigger] = "Axis10",
+            [GamepadAxis.RightThumbStickX] = "Axis3",
+            [GamepadAxis.RightThumbStickY] = "Axis4",
+            [GamepadAxis.DPadStickX] = "Axis12",
+            [GamepadAxis.DPadStickY] = "Axis13",
+            [GamepadAxis.LeftTrigger] = "Axis5",
+            [GamepadAxis.RightTrigger] = "Axis6",
         };
-        /*
-         * DS4 SETUP FOR WINDOWS
-         */
         public Dictionary<GamepadCode, string> DS4ButtonReference = new Dictionary<GamepadCode, string>()
         {
             [GamepadCode.A] = "joystick button 1",
@@ -134,8 +129,105 @@ namespace SpectralDaze.Managers.InputManager
             [GamepadAxis.LeftTrigger] = "Axis5",
             [GamepadAxis.RightTrigger] = "Axis6",
         };
-
-
+#elif (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN)
+        public Dictionary<GamepadCode, string> XboxButtonReference = new Dictionary<GamepadCode, string>()
+        {
+            [GamepadCode.A] = "joystick button 0",
+            [GamepadCode.B] = "joystick button 1",
+            [GamepadCode.X] = "joystick button 2",
+            [GamepadCode.Y] = "joystick button 3",
+            [GamepadCode.LeftBumper] = "joystick button 4",
+            [GamepadCode.RightBumper] = "joystick button 5",
+            [GamepadCode.Back] = "joystick button 6",
+            [GamepadCode.Start] = "joystick button 7",
+            [GamepadCode.LeftThumbstick] = "joystick button 8",
+            [GamepadCode.RightThumbstick] = "joystick button 9",
+        };
+        public Dictionary<GamepadAxis, string> XboxAxisReference = new Dictionary<GamepadAxis, string>()
+        {
+            [GamepadAxis.LeftThumbStickX] = "Axis1",
+            [GamepadAxis.LeftThumbStickY] = "Axis2",
+            [GamepadAxis.RightThumbStickX] = "Axis4",
+            [GamepadAxis.RightThumbStickY] = "Axis5",
+            [GamepadAxis.DPadStickX] = "Axis6",
+            [GamepadAxis.DPadStickY] = "Axis7",
+            [GamepadAxis.LeftTrigger] = "Axis9",
+            [GamepadAxis.RightTrigger] = "Axis10",
+        };
+        public Dictionary<GamepadCode, string> DS4ButtonReference = new Dictionary<GamepadCode, string>()
+        {
+            [GamepadCode.A] = "joystick button 1",
+            [GamepadCode.B] = "joystick button 2",
+            [GamepadCode.X] = "joystick button 0",
+            [GamepadCode.Y] = "joystick button 3",
+            [GamepadCode.LeftBumper] = "joystick button 4",
+            [GamepadCode.RightBumper] = "joystick button 5",
+            [GamepadCode.Back] = "joystick button 8",
+            [GamepadCode.Start] = "joystick button 9",
+            [GamepadCode.LeftThumbstick] = "joystick button 10",
+            [GamepadCode.RightThumbstick] = "joystick button 11",
+        };
+        public Dictionary<GamepadAxis, string> DS4AxisReference = new Dictionary<GamepadAxis, string>()
+        {
+            [GamepadAxis.LeftThumbStickX] = "Axis1",
+            [GamepadAxis.LeftThumbStickY] = "Axis2",
+            [GamepadAxis.RightThumbStickX] = "Axis3",
+            [GamepadAxis.RightThumbStickY] = "Axis4",
+            [GamepadAxis.DPadStickX] = "Axis7",
+            [GamepadAxis.DPadStickY] = "Axis8",
+            [GamepadAxis.LeftTrigger] = "Axis5",
+            [GamepadAxis.RightTrigger] = "Axis6",
+        };
+#elif UNITY_STANDALONE_LINUX
+        public Dictionary<GamepadCode, string> XboxButtonReference = new Dictionary<GamepadCode, string>()
+        {
+            [GamepadCode.A] = "joystick button 0",
+            [GamepadCode.B] = "joystick button 1",
+            [GamepadCode.X] = "joystick button 2",
+            [GamepadCode.Y] = "joystick button 3",
+            [GamepadCode.LeftBumper] = "joystick button 4",
+            [GamepadCode.RightBumper] = "joystick button 5",
+            [GamepadCode.Back] = "joystick button 6",
+            [GamepadCode.Start] = "joystick button 7",
+            [GamepadCode.LeftThumbstick] = "joystick button 9",
+            [GamepadCode.RightThumbstick] = "joystick button 10",
+        };
+        public Dictionary<GamepadAxis, string> XboxAxisReference = new Dictionary<GamepadAxis, string>()
+        {
+            [GamepadAxis.LeftThumbStickX] = "Axis1",
+            [GamepadAxis.LeftThumbStickY] = "Axis2",
+            [GamepadAxis.RightThumbStickX] = "Axis4",
+            [GamepadAxis.RightThumbStickY] = "Axis5",
+            [GamepadAxis.DPadStickX] = "Axis7,
+            [GamepadAxis.DPadStickY] = "Axis8",
+            [GamepadAxis.LeftTrigger] = "Axis3",
+            [GamepadAxis.RightTrigger] = "Axis6",
+        };
+        public Dictionary<GamepadCode, string> DS4ButtonReference = new Dictionary<GamepadCode, string>()
+        {
+            [GamepadCode.A] = "joystick button 1",
+            [GamepadCode.B] = "joystick button 2",
+            [GamepadCode.X] = "joystick button 0",
+            [GamepadCode.Y] = "joystick button 3",
+            [GamepadCode.LeftBumper] = "joystick button 4",
+            [GamepadCode.RightBumper] = "joystick button 5",
+            [GamepadCode.Back] = "joystick button 8",
+            [GamepadCode.Start] = "joystick button 9",
+            [GamepadCode.LeftThumbstick] = "joystick button 10",
+            [GamepadCode.RightThumbstick] = "joystick button 11",
+        };
+        public Dictionary<GamepadAxis, string> DS4AxisReference = new Dictionary<GamepadAxis, string>()
+        {
+            [GamepadAxis.LeftThumbStickX] = "Axis1",
+            [GamepadAxis.LeftThumbStickY] = "Axis2",
+            [GamepadAxis.RightThumbStickX] = "Axis3",
+            [GamepadAxis.RightThumbStickY] = "Axis4",
+            [GamepadAxis.DPadStickX] = "Axis7",
+            [GamepadAxis.DPadStickY] = "Axis8",
+            [GamepadAxis.LeftTrigger] = "Axis5",
+            [GamepadAxis.RightTrigger] = "Axis6",
+        };
+#endif
         public Controls Controls;
 
         private void Start()
