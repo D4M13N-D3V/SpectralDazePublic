@@ -37,6 +37,9 @@ namespace SpectralDaze.Managers.PowerManager
 	        Power2Control = Resources.Load<Control>("Managers/InputManager/Power2");
 	        DashControl = Resources.Load<Control>("Managers/InputManager/Dash");
 
+            /*
+             * Disable these during testing by commenting them out
+             */
 	        Power1.Power = null;
 	        Power2.Power = null;
 	        //DashPower.Power = null;
