@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SpectralDaze.Characters;
 using SpectralDaze.DataTypes;
+using SpectralDaze.Managers.InputManager;
 using SpectralDaze.Time;
 using UnityEngine;
 using UnityEngine.AI;
@@ -26,7 +27,9 @@ namespace SpectralDaze.Player
         private Manipulations _manipulationType;
         [HideInInspector]
         public float _localTimeScale = 1.0f;
-        [HideInInspector]
+        public AxisControl XMovementControl;
+        public AxisControl YMovementControl;
+
         public float localTimeScale
         {
             get
@@ -75,7 +78,9 @@ namespace SpectralDaze.Player
         }
 
         private void Start()
-        {   
+        {
+            XMovementControl = Resources.Load<AxisControl>("Managers/InputManager/XMovement");
+            YMovementControl = Resources.Load<AxisControl>("Managers/InputManager/YMovement");
             Rbody = GetComponent<Rigidbody>();
             Animator = GetComponentInChildren<Animator>();
             dialogueMan = FindObjectOfType<DialogueManager>();
@@ -104,7 +109,7 @@ namespace SpectralDaze.Player
              }*/
 
             // Get our input
-            Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Vector2 input = new Vector2(XMovementControl.Value, YMovementControl.Value);
 
             // if we are not allowed to move set input to 0,0
             if (!PlayerInfo.CanMove)

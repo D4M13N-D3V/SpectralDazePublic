@@ -11,5 +11,6 @@ namespace SpectralDaze.Managers.InputManager
     public class Controls : ScriptableObject
     {
         public List<Control> ControlList;
+        public List<AxisControl> AxisControls;
     }
 }

@@ -10,9 +10,14 @@ namespace SpectralDaze.Managers.InputManager
     public class Control : ScriptableObject
     {
         public string ControlName;
+
         public bool IsMouseButton = false;
         public MouseButtons MouseButton;
+
         public KeyCode KeyCode;
+        public GamepadCode GamepadCode;
+
+
         public bool JustPressed = false;
         public bool BeingPressed = false;
         public bool JustReleased = false;
