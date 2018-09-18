@@ -13,11 +13,11 @@ namespace SpectralDaze.Managers.InputManager
         public KeyboardAxis KeyboardAxis;
         public GamepadAxis GamepadAxis;
 
-        [HideInInspector]
+        //[HideInInspector]
         public bool Inverted;
 
 
-        private float _value;
+        public float _value;
         public float Value
         {
             get

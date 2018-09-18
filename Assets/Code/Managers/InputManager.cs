@@ -65,11 +65,7 @@ namespace SpectralDaze.Managers.InputManager
         {
             GamepadAxis.LeftThumbStickY,
             GamepadAxis.RightThumbStickY,
-            GamepadAxis.DPadStickY
-        };
-        public List<KeyboardAxis> InvertedKeyboardAxis = new List<KeyboardAxis>()
-        {
-            KeyboardAxis.Y
+            //GamepadAxis.DPadStickY
         };
 
         public Dictionary<KeyboardAxis, string> KeyboardAxisReference = new Dictionary<KeyboardAxis, string>()
@@ -229,10 +225,12 @@ namespace SpectralDaze.Managers.InputManager
         };
 #endif
         public Controls Controls;
+        public CurrentControlType CurrentControlType;
 
         private void Start()
         {
-            Controls = Resources.Load<Controls>("Managers/InputManager/Controls");     
+            Controls = Resources.Load<Controls>("Managers/InputManager/Controls");
+            CurrentControlType = Resources.Load<CurrentControlType>("Managers/InputManager/CurrentControlType");     
 
             //make sure the ones that need to be inverted are set
 
@@ -248,33 +246,33 @@ namespace SpectralDaze.Managers.InputManager
             for (int x = 0; x < names.Length; x++)
             {
                 if (names[x].Length == 19)
-                    GamepadType = ControllerType.DS4;
+                    CurrentControlType.ControllerType = ControllerType.DS4;
                 else if (names[x].Length == 33)
-                    GamepadType = ControllerType.XBOX;
+                    CurrentControlType.ControllerType = ControllerType.XBOX;
                 else
-                    GamepadType = ControllerType.Keyboard;
+                    CurrentControlType.ControllerType = ControllerType.Keyboard;
             }
             foreach (var control in Controls.ControlList)
             {
-                if (GamepadType == ControllerType.Keyboard && control.IsMouseButton)
+                if (CurrentControlType.ControllerType == ControllerType.Keyboard && control.IsMouseButton)
                 {
                     control.JustPressed = Input.GetMouseButton((int)control.MouseButton);
                     control.BeingPressed = Input.GetMouseButtonDown((int)control.MouseButton);
                     control.JustReleased = Input.GetMouseButtonUp((int)control.MouseButton);
                 }
-                else if (GamepadType == ControllerType.Keyboard && !control.IsMouseButton)
+                else if (CurrentControlType.ControllerType == ControllerType.Keyboard && !control.IsMouseButton)
                 {
                     control.JustPressed = Input.GetKeyDown(control.KeyCode);
                     control.BeingPressed = Input.GetKey(control.KeyCode);
                     control.JustReleased = Input.GetKeyUp(control.KeyCode);
                 }
-                else if (GamepadType == ControllerType.DS4)
+                else if (CurrentControlType.ControllerType == ControllerType.DS4)
                 {
                     control.JustPressed = Input.GetKeyDown(DS4ButtonReference[control.GamepadCode]);
                     control.BeingPressed = Input.GetKey(DS4ButtonReference[control.GamepadCode]);
                     control.JustReleased = Input.GetKeyUp(DS4ButtonReference[control.GamepadCode]);
                 }
-                else if (GamepadType == ControllerType.XBOX)
+                else if (CurrentControlType.ControllerType == ControllerType.XBOX)
                 {
                     control.JustPressed = Input.GetKeyDown(XboxButtonReference[control.GamepadCode]);
                     control.BeingPressed = Input.GetKey(XboxButtonReference[control.GamepadCode]);
@@ -283,28 +281,28 @@ namespace SpectralDaze.Managers.InputManager
             }
             foreach (var control in Controls.AxisControls)
             {
-                if (GamepadType == ControllerType.Keyboard)
+                if (CurrentControlType.ControllerType == ControllerType.Keyboard)
                 {
                     if (control.Inverted)
                     {
                         control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]) * -1;
-                        control.Value = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]) * -1;
+                        control.RawValue = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]) * -1; 
                     }
                     else
                     {
                         control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]);
-                        control.Value = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]);
+                        control.RawValue = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]);
                     }
                 }
-                else if (GamepadType == ControllerType.DS4)
+                else if (CurrentControlType.ControllerType == ControllerType.DS4)
                 {
                     control.Value = Input.GetAxis(DS4AxisReference[control.GamepadAxis]);
-                    control.Value = Input.GetAxisRaw(DS4AxisReference[control.GamepadAxis]);
+                    control.RawValue = Input.GetAxisRaw(DS4AxisReference[control.GamepadAxis]);
                 }
-                else if (GamepadType == ControllerType.XBOX)
+                else if (CurrentControlType.ControllerType == ControllerType.XBOX)
                 {
                     control.Value = Input.GetAxis(XboxAxisReference[control.GamepadAxis]);
-                    control.Value = Input.GetAxisRaw(XboxAxisReference[control.GamepadAxis]);
+                    control.RawValue = Input.GetAxisRaw(XboxAxisReference[control.GamepadAxis]);
                 }
             }
         }
