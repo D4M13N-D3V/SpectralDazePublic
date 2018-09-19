@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de06f2a7eea1ec48833930d0bce06de, type: 3}
   m_Name: CameraControlY
   m_EditorClassIdentifier: 
-  ControlName: 
-  KeyboardAxis: 0
-  GamepadAxis: 0
+  ControlName: Camera Control Vertical
+  KeyboardAxis: 3
+  GamepadAxis: 5
   Inverted: 0
   _value: 0

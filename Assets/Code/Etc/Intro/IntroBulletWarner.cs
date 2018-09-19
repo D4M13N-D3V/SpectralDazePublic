@@ -38,9 +38,19 @@ public class IntroBulletWarner : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider col)
+    {
+
+        if (col.tag == "Player")
+        {
+            waitingForButton = false;
+            UnityEngine.Time.timeScale = 1;
+            _tutorialText.enabled = false;
+        }
+    }
+
     IEnumerator WaitForDash()
     {
-        Debug.Log("TEST");
         while (!DashControl.JustPressed)
         {
             /*

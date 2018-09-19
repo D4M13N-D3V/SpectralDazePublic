@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Managers;
+using Sirenix.OdinInspector;
 using SpectralDaze.Camera;
 using SpectralDaze.Etc;
 using SpectralDaze.Managers.AIManager;
@@ -16,6 +17,7 @@ namespace Assets.Code.AI
     {
         public AudioQueue AudioQueue;
         public AudioClipInfo DeathSound;
+
 
         public Token CurrentToken;
 

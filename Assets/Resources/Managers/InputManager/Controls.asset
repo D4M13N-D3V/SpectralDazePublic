@@ -18,3 +18,5 @@ MonoBehaviour:
   AxisControls:
   - {fileID: 11400000, guid: a5e26599b3ca8474e83304d752198931, type: 2}
   - {fileID: 11400000, guid: 9e7ce86d312a98142aa425f82e753a9f, type: 2}
+  - {fileID: 11400000, guid: 1e02d432067f9e8409493f99225543dc, type: 2}
+  - {fileID: 11400000, guid: 88553a02bbcfb4644ade57d2e6698c27, type: 2}

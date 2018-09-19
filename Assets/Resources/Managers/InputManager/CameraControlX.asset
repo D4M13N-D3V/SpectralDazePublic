@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de06f2a7eea1ec48833930d0bce06de, type: 3}
   m_Name: CameraControlX
   m_EditorClassIdentifier: 
-  ControlName: 
-  KeyboardAxis: 0
-  GamepadAxis: 0
+  ControlName: Camera Control Horizontal
+  KeyboardAxis: 2
+  GamepadAxis: 4
   Inverted: 0
   _value: 0
