@@ -10,7 +10,7 @@ namespace SpectralDaze.Managers.PowerManager
 {
     public class PowerManager : MonoBehaviour
 	{
-	    public Power1 Power1;
+	    public PlayerPower Power1;
 	    public Power2 Power2;
         public DashPower DashPower;
 
@@ -28,7 +28,7 @@ namespace SpectralDaze.Managers.PowerManager
 	    private void Start()
 	    {
 	        pc = GetComponent<PlayerController>();
-	        Power1 = Resources.Load<Power1>("Managers/PowerManager/Power1");
+	        //Power1 = Resources.Load<Power1>("Managers/PowerManager/Power1");
 	        Power2 = Resources.Load<Power2>("Managers/PowerManager/Power2");
 	        DashPower = Resources.Load<DashPower>("Managers/PowerManager/DashPower");
 
@@ -40,14 +40,14 @@ namespace SpectralDaze.Managers.PowerManager
             /*
              * Disable these during testing by commenting them out
              */
-	        Power1.Power = null;
+	        //Power1.Power = null;
 	        Power2.Power = null;
 	        //DashPower.Power = null;
 
-	        if (Power1 != null && Power1.Power != null)
+	        if (Power1 != null)
 	        {
-	            Power1.Power.Init(pc);
-	            Power1.Power.Control = Power1Control;
+	            Power1.Init(pc);
+	            Power1.Control = Power1Control;
 	        }
 
 	        if (Power2 != null && Power2.Power !=null)
@@ -76,12 +76,12 @@ namespace SpectralDaze.Managers.PowerManager
 	            DashPower.Power.Init(pc);
             */
 
-	        if (Power1.Power != null)
+	        if (Power1 != null)
 	        {
-	            if (Power1.Power != _power1Cache)
-	                Power1.Power.Init(pc);
-                _power1Cache = Power1.Power;
-	            Power1.Power.OnUpdate(pc);
+	            if (Power1 != _power1Cache)
+	                Power1.Init(pc);
+                _power1Cache = Power1;
+	            Power1.OnUpdate(pc);
             }
 
 	        if (Power2.Power != null)
@@ -103,13 +103,21 @@ namespace SpectralDaze.Managers.PowerManager
 
 	    private void OnGUI()
 	    {
-	        if (Power1.Power != null)
-                Power1.Power.OnGUI();
+	        if (Power1 != null)
+                Power1.OnGUI();
 	        if (Power2.Power != null)
                 Power2.Power.OnGUI();
 	        if (DashPower.Power != null)
                 DashPower.Power.OnGUI();
         }
+
+		private void OnDrawGizmos()
+		{
+			if (pc == null)
+				return;
+			if (Power1 != null)
+				Power1.OnGizmos(pc);
+		}
 
         /*
 		public void AnimationTrigger(string param)

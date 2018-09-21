@@ -3,6 +3,8 @@
     "com.unity.mathematics": "0.0.12-preview.13",
     "com.unity.postprocessing": "0.1.8",
     "com.unity.progrids": "3.0.3-preview.0",
-    "com.unity.probuilder": "3.0.9"
+    "com.unity.probuilder": "3.0.9",
+    "com.unity.jobs": "0.0.7-preview.3",
+    "com.unity.collections": "0.0.9-preview.5"
   }
 }
