@@ -1,10 +1,7 @@
-﻿ using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
- using Assets.Code.AI;
- using SpectralDaze.Characters;
- using SpectralDaze.Managers;
- using SpectralDaze.Player;
+using Assets.Code.AI;
+using SpectralDaze.Player;
 using SpectralDaze.Time;
 using UnityEngine;
 using UnityEngine.AI;
@@ -39,7 +36,6 @@ namespace SpectralDaze.AI.QuestNPC
                 TimeLeftIdle = Options.IdleTime,
                 PatrolPoints = Options.PatrolPoints,
                 CurrentPatrolPoint = Options.StartingPatorlPoint,
-                Conversation = Options.Conversation,
                 Player = FindObjectOfType<PlayerController>()
         };
             stateMachine = new UStateMachine<QuestNpcParams>(paramsInstance, new Conversing(), new Idle(), new Move());
@@ -83,7 +79,7 @@ namespace SpectralDaze.AI.QuestNPC
 
         private class Conversing : UState<QuestNpcParams>
         {
-            DialogueManager _dialogueManager;
+            //DialogueManager _dialogueManager;
 
             public override void Enter(QuestNpcParams p)
             {
@@ -96,14 +92,14 @@ namespace SpectralDaze.AI.QuestNPC
                 p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
                 if (Input.GetButtonDown("Interact"))
                 {
-                    if(_dialogueManager.IsQueueEmpty && _dialogueManager.DialogueParentObj.activeSelf == false)
+                    /*if(_dialogueManager.IsQueueEmpty && _dialogueManager.DialogueParentObj.activeSelf == false)
                     {
                         _dialogueManager.StartDialogue(p.Conversation);
                     }
                     else
                     {
                         //GameManager.Instance.DialogueManager.CycleDialogue();
-                    }
+                    }*/
                 }
             }
 
@@ -240,8 +236,7 @@ namespace SpectralDaze.AI.QuestNPC
             public float IdleTime;
             public float TimeLeftIdle;
             public int CurrentPatrolPoint;
-            public List<Vector3> PatrolPoints;
-            public Conversation Conversation;
+            public List<Vector3> PatrolPoints; 
             public PlayerController Player;
             public float MovementModifier;
             public float MovementSpeed;

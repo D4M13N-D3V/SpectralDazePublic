@@ -40,7 +40,6 @@ public class IntroBulletWarner : MonoBehaviour
 
     private void OnTriggerExit(Collider col)
     {
-
         if (col.tag == "Player")
         {
             waitingForButton = false;
