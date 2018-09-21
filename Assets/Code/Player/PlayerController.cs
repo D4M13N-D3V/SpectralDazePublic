@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using SpectralDaze.Characters;
 using SpectralDaze.DataTypes;
 using SpectralDaze.Managers.InputManager;
 using SpectralDaze.Time;
@@ -17,9 +16,8 @@ namespace SpectralDaze.Player
     {
         public ScriptableObjectQuartenion InputRotation;
         public PlayerInfo PlayerInfo;
-        public Conversation TestConversation;
         public Animator Animator;
-        private DialogueManager dialogueMan;
+        //private DialogueManager dialogueMan;
         public Rigidbody Rbody;
         public TimeInfo TimeInfo;
         public NavMeshAgent Agent;
@@ -83,7 +81,6 @@ namespace SpectralDaze.Player
             YMovementControl = Resources.Load<AxisControl>("Managers/InputManager/YMovement");
             Rbody = GetComponent<Rigidbody>();
             Animator = GetComponentInChildren<Animator>();
-            dialogueMan = FindObjectOfType<DialogueManager>();
             Agent = GetComponent<NavMeshAgent>();
             PlayerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
             InputRotation = Resources.Load<ScriptableObjectQuartenion>("Player/InputRotation");
@@ -93,20 +90,6 @@ namespace SpectralDaze.Player
         {
             NavMeshHit hit;
             NavMesh.SamplePosition(Agent.transform.position, out hit, 0.1f, NavMesh.AllAreas);
-
-            /* // this is debug / example on how to use the dialogue manager
-             // replace the TestConversation with some external conversation for conversations started by npcs
-             // or signs.
-             if (Input.GetButtonDown("Jump"))
-             {
-                 // this checks if we are in a dialogue if we aren't we start a new dialogue
-                 // else we cycle though the current conversations queue untill its over
-                 if (dialogueMan.IsQueueEmpty && dialogueMan.DialogueParentObj.activeSelf == false)
-                     dialogueMan.StartDialogue(TestConversation);
-                 else
-                     dialogueMan.CycleDialogue();
-
-             }*/
 
             // Get our input
             Vector2 input = new Vector2(XMovementControl.Value, YMovementControl.Value);
