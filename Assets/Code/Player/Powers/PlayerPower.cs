@@ -18,6 +18,7 @@ namespace SpectralDaze.Player
 		public virtual void Init(PlayerController pc) { }
 		public virtual void OnUpdate(PlayerController pc) { }
 		public virtual void OnGUI() { }
+		public virtual void OnGizmos(PlayerController pc) { }
 		public virtual void Reset() { }
 
 		public virtual void AnimationTrigger(string param) { }

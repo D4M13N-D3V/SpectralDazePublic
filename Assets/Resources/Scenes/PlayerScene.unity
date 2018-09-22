@@ -240,6 +240,11 @@ Prefab:
       propertyPath: Target
       value: 
       objectReference: {fileID: 189204225}
+    - target: {fileID: 20876021635908494, guid: c9e494ba1cec32a4d9db959e9e894700,
+        type: 2}
+      propertyPath: m_Depth
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9e494ba1cec32a4d9db959e9e894700, type: 2}
   m_IsPrefabAsset: 0
@@ -751,6 +756,12 @@ Prefab:
       propertyPath: m_Constraints
       value: 126
       objectReference: {fileID: 0}
+    - target: {fileID: 114741920044455998, guid: 3038cf763cf66c141be3c5e8297b1773,
+        type: 2}
+      propertyPath: Power1
+      value: 
+      objectReference: {fileID: 11400000, guid: 2942e069025f11b4c8192b100f07b956,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
   m_IsPrefabAsset: 0
@@ -954,6 +965,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4968853190831944, guid: 9ef98f5a6c95d1940b792279217b8013,
     type: 2}
   m_PrefabInternal: {fileID: 39479342}
+--- !u!1 &1416996994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1170973093745372, guid: c9e494ba1cec32a4d9db959e9e894700,
+    type: 2}
+  m_PrefabInternal: {fileID: 136746531}
+--- !u!114 &1416996996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1416996994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3946b567e5af1c045a3641c8cbba3ad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EffectMaterial: {fileID: 2100000, guid: 26b21030cbd9666419f7ac6931057ea2, type: 2}
 --- !u!1001 &1441270515
 Prefab:
   m_ObjectHideFlags: 0
@@ -1064,6 +1092,14 @@ Prefab:
     - target: {fileID: 1513919548982396, guid: 6cd4efe217d9ea945bcc327a5095dbcc, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539477340851270, guid: 6cd4efe217d9ea945bcc327a5095dbcc, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513919548982396, guid: 6cd4efe217d9ea945bcc327a5095dbcc, type: 2}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cd4efe217d9ea945bcc327a5095dbcc, type: 2}
