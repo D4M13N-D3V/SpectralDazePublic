@@ -25,7 +25,6 @@ namespace SpectralDaze.Player
 
 		public override void OnUpdate(PlayerController pc)
 		{
-			Debug.Log(sphereScale + " " + t);
 			if (Input.GetMouseButton(0))
 			{
 				t += UnityEngine.Time.deltaTime;

@@ -43,7 +43,7 @@ namespace SpectralDaze.DialogueSystem
 
         private void Update()
         {
-            if (CurrentDialogue.Dialogue!=null && !_dialogueOpen)
+            if (CurrentDialogue.Dialogue != null && !_dialogueOpen)
             {
                 StartDialogue(CurrentDialogue.Dialogue);
             }
@@ -101,16 +101,13 @@ namespace SpectralDaze.DialogueSystem
 
         public void CycleDialogue()
         {
-            if (_optionsOpen)
+            if (Messages.Values.Where(x => x.Last).ToList().Contains(Messages[CurrentMessage]))
             {
+                StopDialogue();
+                return;
             }
-            else
+            if (!_optionsOpen)
             {
-                if (Messages.Values.Where(x => x.Last).ToList().Contains(Messages[CurrentMessage]))
-                {
-                    StopDialogue();
-                    return;
-                }
                 Options();
             }
         }

@@ -18,4 +18,4 @@ MonoBehaviour:
   PatrolPoints: []
   MovementModifier: 0
   MovementSpeed: 3
-  Dialogue: {fileID: 4900000, guid: 56d065560249d00418b3d6ea203be538, type: 3}
+  Dialogue: {fileID: 4900000, guid: 3690f26526d37a34aa044f94489d1779, type: 3}
