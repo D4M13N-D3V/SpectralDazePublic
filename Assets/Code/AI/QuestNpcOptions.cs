@@ -19,5 +19,6 @@ namespace SpectralDaze.AI
         //public Conversation Conversation;
         public float MovementModifier;
         public float MovementSpeed=3;
+        public TextAsset Dialogue;
     }
 }

@@ -9,5 +9,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 493e7f359e18de249b4c65f979fa207a, type: 3}
-  m_Name: DialogueQueue
+  m_Name: CurrentDialogue
   m_EditorClassIdentifier: 
+  Dialogue: {fileID: 0}

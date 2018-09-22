@@ -5,8 +5,8 @@ using UnityEngine;
 namespace SpectralDaze.DialogueSystem
 {
     [CreateAssetMenu(menuName = "Spectral Daze/Dialogue/DialogueQueue")]
-    public class DialogueQueue : ScriptableObject
+    public class CurrentDialogue : ScriptableObject
     {
-        public Queue<TextAsset> Dialogues = new Queue<TextAsset>(); 
+        public TextAsset Dialogue;
     }
 }

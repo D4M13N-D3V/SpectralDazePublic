@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Code.AI;
+using SpectralDaze.DialogueSystem;
+using SpectralDaze.Managers.InputManager;
 using SpectralDaze.Player;
 using SpectralDaze.Time;
 using UnityEngine;
@@ -14,6 +16,8 @@ namespace SpectralDaze.AI.QuestNPC
         private UStateMachine<QuestNpcParams> stateMachine;
         private QuestNpcParams paramsInstance;
 
+        public CurrentDialogue CurrentDialogueReference;
+        public Control InteractControl;
 
         public TimeInfo TimeInfo;
         //private Animator _animator;
@@ -22,6 +26,8 @@ namespace SpectralDaze.AI.QuestNPC
 
         private void Start()
         {
+            InteractControl = Resources.Load<Control>("Managers/InputManager/Interact");
+            CurrentDialogueReference = Resources.Load<CurrentDialogue>("DialogueSystem/CurrentDialogue");
             paramsInstance = new QuestNpcParams()
             {
                 NpcTransform = transform,
@@ -36,7 +42,8 @@ namespace SpectralDaze.AI.QuestNPC
                 TimeLeftIdle = Options.IdleTime,
                 PatrolPoints = Options.PatrolPoints,
                 CurrentPatrolPoint = Options.StartingPatorlPoint,
-                Player = FindObjectOfType<PlayerController>()
+                Player = FindObjectOfType<PlayerController>(),
+                Dialogue = Options.Dialogue
         };
             stateMachine = new UStateMachine<QuestNpcParams>(paramsInstance, new Conversing(), new Idle(), new Move());
             stateMachine.SetState(typeof(Idle), paramsInstance);
@@ -90,16 +97,9 @@ namespace SpectralDaze.AI.QuestNPC
             {
                 p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
                 p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
-                if (Input.GetButtonDown("Interact"))
+                if (p.Npc.InteractControl.JustPressed && p.Npc.CurrentDialogueReference.Dialogue==null)
                 {
-                    /*if(_dialogueManager.IsQueueEmpty && _dialogueManager.DialogueParentObj.activeSelf == false)
-                    {
-                        _dialogueManager.StartDialogue(p.Conversation);
-                    }
-                    else
-                    {
-                        //GameManager.Instance.DialogueManager.CycleDialogue();
-                    }*/
+                    p.Npc.CurrentDialogueReference.Dialogue = p.Dialogue;
                 }
             }
 
@@ -240,6 +240,7 @@ namespace SpectralDaze.AI.QuestNPC
             public PlayerController Player;
             public float MovementModifier;
             public float MovementSpeed;
+            public TextAsset Dialogue;
         }
     }
 

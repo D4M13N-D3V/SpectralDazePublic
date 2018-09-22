@@ -11,12 +11,10 @@ namespace SpectralDaze.DialogueSystem
     public class DialogueManager : MonoBehaviour
     {
         public DialogueUI UI;
-        public TextAsset CurrentDialogue;
+
         public Dictionary<int, Message> Messages = new Dictionary<int, Message>();
 
         public List<Message> MessagesList;
-
-        public DialogueQueue DialogueQueue;
 
         public int CurrentMessage = 0;
 
@@ -25,9 +23,10 @@ namespace SpectralDaze.DialogueSystem
             
         private List<Button> _optionButtons = new List<Button>();
 
-        public TextAsset TestASset;
-
         public Control InteractControl;
+
+        public CurrentDialogue CurrentDialogue;
+        
 
         private void Start()
         {
@@ -38,24 +37,21 @@ namespace SpectralDaze.DialogueSystem
             UI = obj.GetComponent<DialogueUI>();
             UI.gameObject.transform.parent = GameObject.FindGameObjectWithTag("UIRoot").transform;
 
-            DialogueQueue = Resources.Load<DialogueQueue>("DialogueSystem/DialogueQueue");
+            CurrentDialogue = Resources.Load<CurrentDialogue>("DialogueSystem/CurrentDialogue");
             StopDialogue();
-            LoadDialogue();
         }
 
         private void Update()
         {
-            if (CurrentDialogue == null && DialogueQueue.Dialogues.Any())
+            if (CurrentDialogue.Dialogue!=null && !_dialogueOpen)
             {
-                StartDialogue(DialogueQueue.Dialogues.Dequeue());
+                StartDialogue(CurrentDialogue.Dialogue);
             }
 
             if (InteractControl.JustPressed)
             {
                 if (_dialogueOpen)
                     CycleDialogue();
-                else
-                    StartDialogue(TestASset);
             }
         }
 
@@ -67,7 +63,7 @@ namespace SpectralDaze.DialogueSystem
                 Debug.LogError("No Dialogue File Currently Set, Can Not Load");
                 return;
             }
-            var data = JsonConvert.DeserializeObject<DialogueEditor.DialogueSave>(CurrentDialogue.text);
+            var data = JsonConvert.DeserializeObject<DialogueEditor.DialogueSave>(CurrentDialogue.Dialogue.text);
             var messages = data.Messages;
             MessagesList = messages;
             foreach (var message in messages)
@@ -79,9 +75,9 @@ namespace SpectralDaze.DialogueSystem
 
         public void StartDialogue(TextAsset newDialogue)
         {
+            LoadDialogue();
             UnityEngine.Time.timeScale = 0;
             UI.Parent.SetActive(true);
-            CurrentDialogue = newDialogue;
             LoadDialogue();
             UI.MessageText.text = Messages[CurrentMessage].Content;
             UI.CharacterImage.texture = Messages[CurrentMessage].Character.Portiate;    
@@ -93,6 +89,14 @@ namespace SpectralDaze.DialogueSystem
         {
             UnityEngine.Time.timeScale = 1;
             UI.Parent.SetActive(false);
+            StartCoroutine(Reset());
+        }
+
+        IEnumerator Reset()
+        {
+            yield return new WaitForSecondsRealtime(2);
+            CurrentDialogue.Dialogue = null;
+            _dialogueOpen = false;
         }
 
         public void CycleDialogue()
@@ -102,13 +106,9 @@ namespace SpectralDaze.DialogueSystem
             }
             else
             {
-                
-            }
-            {
                 if (Messages.Values.Where(x => x.Last).ToList().Contains(Messages[CurrentMessage]))
                 {
                     StopDialogue();
-                    CurrentDialogue = null;
                     return;
                 }
                 Options();
