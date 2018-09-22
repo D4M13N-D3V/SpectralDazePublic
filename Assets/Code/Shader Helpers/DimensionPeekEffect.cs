@@ -1,33 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Rendering;
 
+[ExecuteInEditMode, ImageEffectAllowedInSceneView]
 public class DimensionPeekEffect : MonoBehaviour
 {
-	[SerializeField]
-	private Material peekMaterial;
+	public Material EffectMaterial;
 
-	[SerializeField] private Camera dimensionBCam, dimensionCutCam;
+	[ShowInInspector]
+	public static Matrix4x4 Mtx;
+	[ShowInInspector]
+	public static Mesh DrawMesh;
+	[ShowInInspector]
+	public static Material DrawMaterial;
 
-	private RenderTexture peekVisualRT, peekMaskRT;
+	public static float Intensity = 0f;
 
-	private void Start()
-	{
-		GetComponent<Camera>().depthTextureMode = DepthTextureMode.DepthNormals;
-		peekVisualRT = new RenderTexture(Screen.width, Screen.height, 0);
-		peekMaskRT = new RenderTexture(Screen.width, Screen.height, 1);
+	private const string MASK_NAME = "_PeekMask";
+	private const string INTENSITY_NAME = "_PeekIntensity";
 
-		dimensionBCam.targetTexture = peekVisualRT;
-		dimensionCutCam.targetTexture = peekMaskRT;
-
-		peekMaterial.SetTexture("_DimensionB", peekVisualRT);
-		peekMaterial.SetTexture("_DimensionCut", peekMaskRT);
-	}
+	private CommandBuffer cmdBuffer;
 
 	private void OnRenderImage(RenderTexture src, RenderTexture dest)
 	{
-		if (peekMaterial == null)
+		if (EffectMaterial == null || DrawMesh == null || DrawMaterial == null)
 			return;
-		Graphics.Blit(src, dest, peekMaterial);
+
+		RenderTextureDescriptor rtd = new RenderTextureDescriptor(Screen.width, Screen.height);
+		int id = Shader.PropertyToID(MASK_NAME);
+
+		cmdBuffer = new CommandBuffer();
+		cmdBuffer.GetTemporaryRT(id, rtd, FilterMode.Trilinear);
+		cmdBuffer.SetRenderTarget(id);
+		cmdBuffer.ClearRenderTarget(true, true, Color.clear);
+		cmdBuffer.DrawMesh(DrawMesh, Mtx, DrawMaterial);
+		cmdBuffer.SetGlobalTexture(id, id);
+		cmdBuffer.SetGlobalFloat(Shader.PropertyToID(INTENSITY_NAME), Intensity);
+		cmdBuffer.Blit(src, dest, EffectMaterial);
+		cmdBuffer.ReleaseTemporaryRT(id);
+
+		Graphics.ExecuteCommandBuffer(cmdBuffer);
 	}
 }

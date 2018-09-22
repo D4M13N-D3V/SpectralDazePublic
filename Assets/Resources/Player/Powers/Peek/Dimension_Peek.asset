@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: 
   Type: 0
   Control: {fileID: 11400000, guid: c75c2802fe5518e4bbd7d6662e02d05c, type: 2}
-  GrowthCurve:
+  Curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -32,30 +32,6 @@ MonoBehaviour:
       value: 1
       inSlope: 2
       outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  DecayCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334

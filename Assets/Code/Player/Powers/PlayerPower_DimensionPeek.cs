@@ -12,9 +12,7 @@ namespace SpectralDaze.Player
 	[CreateAssetMenu(fileName = "Dimension_Peek", menuName = "Spectral Daze/PlayerPower/Dimension Peek")]
 	public class PlayerPower_DimensionPeek : PlayerPower
 	{
-		[TabGroup("Test")]
-		public AnimationCurve GrowthCurve;
-		public AnimationCurve DecayCurve;
+		public AnimationCurve Curve;
 
 		public float MaxSphereScale = 6f;
 
@@ -31,12 +29,12 @@ namespace SpectralDaze.Player
 			if (Input.GetMouseButton(0))
 			{
 				t += UnityEngine.Time.deltaTime;
-				sphereScale = GrowthCurve.Evaluate(t) * MaxSphereScale;
+				sphereScale = Curve.Evaluate(t) * MaxSphereScale;
 			}
 			else
 			{
 				t -= UnityEngine.Time.deltaTime;
-				sphereScale = DecayCurve.Evaluate(t) * MaxSphereScale;
+				sphereScale = Curve.Evaluate(t) * MaxSphereScale;
 			}
 
 			t = math.clamp(t, 0, 1);
@@ -48,7 +46,9 @@ namespace SpectralDaze.Player
 
 			Matrix4x4 meshMtx = Matrix4x4.TRS(spherePos, Quaternion.identity, Vector3.one * sphereScale);
 			Graphics.DrawMesh(drawMesh, meshMtx, drawMaterial, 0);
-			//Graphics.DrawMeshNow(drawMesh, meshMtx);
+
+			DimensionPeekEffect.Mtx = meshMtx;
+			DimensionPeekEffect.Intensity = Curve.Evaluate(t);
 		}
 
 		public override void OnGizmos(PlayerController pc)
@@ -70,6 +70,9 @@ namespace SpectralDaze.Player
 			GameObject newSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 			drawMesh = newSphere.GetComponent<MeshFilter>().sharedMesh;
 			Destroy(newSphere);
+
+			DimensionPeekEffect.DrawMaterial = drawMaterial;
+			DimensionPeekEffect.DrawMesh = drawMesh;
 		}
 	}
 }
