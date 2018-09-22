@@ -15,6 +15,7 @@ TagManager:
   - BreakableWall
   - Movable
   - TutorialText
+  - UIRoot
   layers:
   - Default
   - TransparentFX

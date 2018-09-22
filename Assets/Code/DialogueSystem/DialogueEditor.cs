@@ -16,6 +16,7 @@ namespace SpectralDaze.DialogueSystem
         {
             public List<Node> Nodes = new List<Node>();
             public List<Connection> Connections = new List<Connection>();
+            public List<Message> Messages = new List<Message>();
         }
 
         private int NodeCount = 0;
@@ -85,6 +86,7 @@ namespace SpectralDaze.DialogueSystem
                     if (e.button == 1)
                     {
                         ProcessContextMenu(e.mousePosition);
+                        e.Use();
                     }
                     break;
                 case EventType.KeyDown:
@@ -108,8 +110,7 @@ namespace SpectralDaze.DialogueSystem
             genericMenu.AddItem(new GUIContent("Add node"), false, () =>
             {
                 NodeCount++;
-                Nodes.Add(new Node(NodeCount, mousePosition.x, mousePosition.y, 200, 100, OnNodeConnectorClicked));
-
+                Nodes.Add(new Node(NodeCount, mousePosition.x, mousePosition.y, 200, 100, OnNodeConnectorClicked, RemoveNode, SetStartingNode, SetEndingNode));
                 Repaint();
             });
             genericMenu.ShowAsContext();
@@ -156,7 +157,7 @@ namespace SpectralDaze.DialogueSystem
             var save = new DialogueSave()
             {
                 Connections = Connections,
-                Nodes = Nodes,
+                Nodes = Nodes
             };
            var path = EditorUtility.SaveFilePanel(
                 "Save Dialogue",
@@ -165,6 +166,81 @@ namespace SpectralDaze.DialogueSystem
                 "json");
             if (path == "")
                 return;
+            List<Message> tmpMessages = new List<Message>();
+
+            var firstNode = save.Nodes.SingleOrDefault(x => x.First);
+            List<Option> firstOptions = new List<Option>();
+            for (int i = 0; i < firstNode.Options.Count; i++)
+            {
+                firstOptions.Add(new Option()
+                {
+                    Content = firstNode.Options[i],
+                    RedirectionMessageID = firstNode.Outputs[i].AttachedNode.Id
+                });
+            }
+            tmpMessages.Add(new Message()
+            {
+                CharacterPath = firstNode.CharacterPath,
+                Content = firstNode.Message,
+                Id = firstNode.Id,
+                Options = firstOptions,
+                Last = firstNode.Last,
+                First = firstNode.First
+            });
+
+            var lastNodes = Nodes.Where(x => x.Last).ToList();
+
+            foreach (var node in save.Nodes)
+            {
+                if(node==firstNode)
+                    continue;
+                if (lastNodes.Contains(node))
+                    continue;
+
+                List<Option> options = new List<Option>();
+                for(int i=0; i< node.Options.Count; i++)
+                {
+                    options.Add(new Option()
+                    {
+                        Content = node.Options[i],
+                        RedirectionMessageID = node.Outputs[i].AttachedNode.Id
+                    });
+                }
+                tmpMessages.Add(new Message()
+                {
+                    CharacterPath = node.CharacterPath,
+                    Content = node.Message,
+                    Id = node.Id,
+                    Options = options,
+                    Last = node.Last,
+                    First = node.First
+                });
+            }
+
+            foreach (var node in lastNodes)
+            {
+
+                List<Option> lastOption = new List<Option>();
+                for (int i = 0; i < node.Options.Count; i++)
+                {
+                    lastOption.Add(new Option()
+                    {
+                        Content = node.Options[i],
+                        RedirectionMessageID = node.Outputs[i].AttachedNode.Id
+                    });
+                }
+                tmpMessages.Add(new Message()
+                {
+                    CharacterPath = node.CharacterPath,
+                    Content = node.Message,
+                    Id = node.Id,
+                    Options = lastOption,
+                    Last = node.Last,
+                    First = node.First
+                });
+            }
+
+            save.Messages = tmpMessages;
             var json = JsonConvert.SerializeObject(save);
             File.WriteAllText(path, json);
         }
@@ -187,9 +263,15 @@ namespace SpectralDaze.DialogueSystem
                     node.Rect.position.y,
                     node.Rect.width,
                     node.Rect.height,
-                    OnNodeConnectorClicked
+                    OnNodeConnectorClicked,
+                    RemoveNode,
+                    SetStartingNode,
+                    SetEndingNode
                 );
-                tmpNode.Character = node.Character;
+                tmpNode.First = node.First;
+                tmpNode.Last = node.Last;
+                tmpNode.Message = node.Message;
+                tmpNode.Character = Resources.Load<CharacterInformation>(node.CharacterPath.Replace(".asset","").Replace("Assets/Resources/", ""));
                 tmpNode.Options = node.Options;
                 tmpNode.Outputs = node.Outputs;
                 tmpNode.Input = node.Input;
@@ -217,7 +299,7 @@ namespace SpectralDaze.DialogueSystem
                 }
             }
 
-            NodeCount = Nodes.Last().Id;
+            NodeCount = Nodes.Last().Id;        
             _loading = false;
         }
 
@@ -292,6 +374,24 @@ namespace SpectralDaze.DialogueSystem
                 Connections.Remove(connectionToRemove);
 
             Repaint();
+        }
+
+        public void SetStartingNode(Node node)
+        {
+            foreach (var n in Nodes)
+            {
+                if (n.First)
+                {
+                    n.First = false;
+                    break;
+                }
+            }
+            node.First = true;
+        }
+
+        public void SetEndingNode(Node node)
+        {
+            node.Last = true;
         }
 
         public void OnNodeConnectorClicked(ConnectionPoint point)

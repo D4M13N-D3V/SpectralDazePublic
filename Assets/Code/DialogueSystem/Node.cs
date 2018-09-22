@@ -13,11 +13,18 @@ namespace SpectralDaze.DialogueSystem
     {
         public int Id;
         public Rect Rect;
-        public CharacterInformation Character;
+
+        public string CharacterPath;
+
+        [JsonIgnore] public CharacterInformation Character;
+        
         public string Message;
         public List<string> Options = new List<string>();
         public List<ConnectionPoint> Outputs = new List<ConnectionPoint>();
         public ConnectionPoint Input;
+
+        public bool First;
+        public bool Last;
 
         [JsonIgnore]
         public bool Selected;
@@ -27,14 +34,22 @@ namespace SpectralDaze.DialogueSystem
         public Action<ConnectionPoint> OnClickConnector;
         [JsonIgnore]
         public Action<Node> DestroyNode;
+        [JsonIgnore]
+        public Action<Node> SetStartingNode;
+        [JsonIgnore]
+        public Action<Node> SetEndingNode;
 
         public Node()
         {
 
         }
 
-        public Node(int id, float x, float y, float width, float height, Action<ConnectionPoint> onClickConnector)
+        public Node(int id, float x, float y, float width, float height, Action<ConnectionPoint> onClickConnector,
+            Action<Node> removeNode, Action<Node> setStartingNode, Action<Node> setEndingNode)
         {
+            SetStartingNode = setStartingNode;
+            SetEndingNode = setEndingNode;
+            DestroyNode = removeNode;
             Id = id;
             Rect = new Rect(x, y, width, height);
             OnClickConnector = onClickConnector;
@@ -60,6 +75,14 @@ namespace SpectralDaze.DialogueSystem
         {
             //EditorGUILayout.LabelField("Unique Identifier");
             //Uid = GUILayout.TextField(Uid);
+            if(First)
+                EditorGUILayout.LabelField("STARTING NODE");
+            if(Last)
+                EditorGUILayout.LabelField("ENDING NODE");
+
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
             EditorGUILayout.LabelField("Character");
             Character = (CharacterInformation)EditorGUILayout.ObjectField(Character, typeof(CharacterInformation), false, GUILayout.Width(220), GUILayout.Height(15));
             EditorGUILayout.Space();
@@ -82,6 +105,7 @@ namespace SpectralDaze.DialogueSystem
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Message");
             Message = GUILayout.TextArea(Message);
+            CharacterPath = AssetDatabase.GetAssetPath(Character);
         }
 
         public void ProcessEvents(Event e)
@@ -95,6 +119,11 @@ namespace SpectralDaze.DialogueSystem
                         {
                             Selected = true;
                             GUI.changed = true;
+                        }
+                        else if (e.button == 1)
+                        {
+                            ProcessContextMenu();
+                            e.Use();
                         }
                     }
                     else
@@ -117,6 +146,15 @@ namespace SpectralDaze.DialogueSystem
                         Dragged = false;
                     break;
             }
+        }
+
+        public void ProcessContextMenu()
+        {
+            GenericMenu genericMenu = new GenericMenu();
+            genericMenu.AddItem(new GUIContent("Delete Node"), false, () => { DestroyNode(this); });
+            genericMenu.AddItem(new GUIContent("Set Node As Start"), false, () => { SetStartingNode(this); });
+            genericMenu.AddItem(new GUIContent("Set Node As End"), false, () => { SetEndingNode(this); });
+            genericMenu.ShowAsContext();
         }
     }
 }

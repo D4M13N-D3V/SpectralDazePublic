@@ -15,6 +15,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06cc19b1eccd18347ba075a2a7b7dcb8, type: 2}
   - {fileID: 11400000, guid: c75c2802fe5518e4bbd7d6662e02d05c, type: 2}
   - {fileID: 11400000, guid: c0b844e7c54863048a80bac46635fae1, type: 2}
+  - {fileID: 11400000, guid: 229969452a73d544faa0880be2b9bf1b, type: 2}
   AxisControls:
   - {fileID: 11400000, guid: a5e26599b3ca8474e83304d752198931, type: 2}
   - {fileID: 11400000, guid: 9e7ce86d312a98142aa425f82e753a9f, type: 2}

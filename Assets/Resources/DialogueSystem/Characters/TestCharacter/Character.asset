@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4cdefaaf4651d2488a974934cd31eb0, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  Name: Bluu
+  Portiate: {fileID: 2800000, guid: a981f4c8c1c019c4c83098afcc9d5f4c, type: 3}
+  Audio:
+  - {fileID: 8300000, guid: 3619cfcbbba4b5f438852771a3c1cbf3, type: 3}
+  - {fileID: 8300000, guid: 2937aad0499e83e4da8751d57eea1f80, type: 3}
+  - {fileID: 8300000, guid: 01da94d757287c44382ae559a0d3b184, type: 3}

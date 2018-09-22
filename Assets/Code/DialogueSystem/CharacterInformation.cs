@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterInformation : ScriptableObject
+namespace SpectralDaze.DialogueSystem
 {
-    public string Name;
-    public Texture2D Portiate;
-    public List<AudioClip> Audio;
+    [CreateAssetMenu(menuName = "Spectral Daze/Dialogue/Character")]
+    public class CharacterInformation : ScriptableObject
+    {
+        public string Name;
+        public Texture2D Portiate;
+        public List<AudioClip> Audio;
+    }
 }
