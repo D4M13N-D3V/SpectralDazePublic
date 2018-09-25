@@ -6,6 +6,9 @@ namespace SpectralDaze.Camera
 {
     public class CameraFunctions : MonoBehaviour
     {
+        /// <summary>
+        /// The original fov
+        /// </summary>
         private float _originalFOV;
 
         private void Start()
@@ -23,6 +26,11 @@ namespace SpectralDaze.Camera
             */
         }
 
+        /// <summary>
+        /// Shakes the camera for specified duration and magnitude.
+        /// </summary>
+        /// <param name="duration">The duration.</param>
+        /// <param name="magnitude">The magnitude.</param>
         public void Shake(float duration, float magnitude)
         {
             StartCoroutine(shake(duration,magnitude));
@@ -44,6 +52,11 @@ namespace SpectralDaze.Camera
             transform.localPosition = orignalPosistion;
         }
 
+        /// <summary>
+        /// Kicks the FOV for a camera effect.
+        /// </summary>
+        /// <param name="fovOffset">The fov offset.</param>
+        /// <param name="time">The time it lasts.</param>
         public void FOVKick(float fovOffset, float time)
         {
             StartCoroutine(fovKick(fovOffset, time));

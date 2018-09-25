@@ -14,15 +14,43 @@ namespace SpectralDaze.Camera
         public class SmoothCameraFollow : MonoBehaviour
         {
 
+            /// <summary>
+            /// The target to follow
+            /// </summary>
             public Transform Target;
+            /// <summary>
+            /// The smoothness of movement when following
+            /// </summary>
             public float Smoothness = 0.2f;
+            /// <summary>
+            /// The maximum padding for x & z for the slight movement when moving mouse to edges of screen
+            /// </summary>
             public Vector2 MaxPadding = new Vector2(1, 1);
+            /// <summary>
+            /// The minimum padding for x & z for the slight movement when moving mouse to edges of screen
+            /// </summary>
             public Vector2 MinPadding = new Vector2(-1, -1);
+            /// <summary>
+            /// The current offset
+            /// </summary>
             public Vector3 Offset = Vector3.zero;
+            /// <summary>
+            /// The input offset
+            /// </summary>
             private Vector3 InputOffset = Vector3.zero;
 
+            /// <summary>
+            /// The camera control x axis
+            /// </summary>
             public AxisControl CameraControlX;
+            /// <summary>
+            /// The camera control y axis
+            /// </summary>
             public AxisControl CameraControlY;
+
+            /// <summary>
+            /// The current control type
+            /// </summary>
             private CurrentControlType CurrentControlType;
 
             void Start()
