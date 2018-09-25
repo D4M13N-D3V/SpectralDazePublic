@@ -12,9 +12,11 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI
 {
+
     /// <summary>
     /// Chase AI Mono Behaviour
     /// </summary>
+    /// <seealso cref="Assets.Code.AI.BaseAI" />
     public class ChaseAI : BaseAI
     {
         /// <summary>

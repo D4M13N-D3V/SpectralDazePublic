@@ -13,9 +13,11 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI
 {
+
     /// <summary>
-    /// Shooting AI Mono Behaviour.
+    /// Shooting AI Mono Behaviour
     /// </summary>
+    /// <seealso cref="Assets.Code.AI.BaseAI" />
     public class ShootingAI : BaseAI
     {
         /// <summary>
@@ -169,6 +171,7 @@ namespace SpectralDaze.AI
         /// <summary>
         /// The Attacking state for the state machine.
         /// </summary>
+        /// <seealso cref="UState{SpectralDaze.AI.ShootingAI.ShootingAIParams}" />
         private class Attacking : UState<ShootingAIParams>
         {
             /// <summary>
@@ -295,6 +298,7 @@ namespace SpectralDaze.AI
         /// <summary>
         /// The Chase state for the state machine.
         /// </summary>
+        /// <seealso cref="UState{SpectralDaze.AI.ShootingAI.ShootingAIParams}" />
         private class Chase : UState<ShootingAIParams>
         {
             /// <summary>
@@ -353,6 +357,7 @@ namespace SpectralDaze.AI
         /// <summary>
         /// The idle state for the state machine.
         /// </summary>
+        /// <seealso cref="UState{SpectralDaze.AI.ShootingAI.ShootingAIParams}" />
         private class Idle : UState<ShootingAIParams>
         {
             /// <summary>
@@ -398,6 +403,7 @@ namespace SpectralDaze.AI
         /// <summary>
         /// The move state for the State Machine.
         /// </summary>
+        /// <seealso cref="UState{SpectralDaze.AI.ShootingAI.ShootingAIParams}" />
         private class Move : UState<ShootingAIParams>
         {
             /// <inheritdoc />

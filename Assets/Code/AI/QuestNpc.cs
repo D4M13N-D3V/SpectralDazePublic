@@ -10,18 +10,45 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI.QuestNPC
 {
+    /// <summary>
+    /// The Quest NPC mono behaviour
+    /// </summary>
+    /// <seealso cref="Assets.Code.AI.BaseAI" />
     public class QuestNpc : BaseAI
     {
+        /// <summary>
+        /// The options for the Quest NPC
+        /// </summary>
         public QuestNPCOptions Options;
+        /// <summary>
+        /// The state machine
+        /// </summary>
         private UStateMachine<QuestNpcParams> stateMachine;
+        /// <summary>
+        /// The parameters instance for the state machine
+        /// </summary>
         private QuestNpcParams paramsInstance;
 
+        /// <summary>
+        /// The current dialogue scriptable objcet reference
+        /// </summary>
         public CurrentDialogue CurrentDialogueReference;
+        /// <summary>
+        /// The interaction control
+        /// </summary>
         public Control InteractControl;
 
+        /// <summary>
+        /// Information representing values to slow things down with based on waht kind of time manipulation
+        /// </summary>
         public TimeInfo TimeInfo;
-        //private Animator _animator;
+        /// <summary>
+        /// The time being manipulated
+        /// </summary>
         private bool _timeBeingManipulated;
+        /// <summary>
+        /// The time manipulation type
+        /// </summary>
         private Manipulations _manipulationType;
 
         private void Start()
@@ -34,14 +61,13 @@ namespace SpectralDaze.AI.QuestNPC
                 Npc = this,
                 NavAgent = GetComponent<NavMeshAgent>(),
                 Animator = GetComponent<Animator>(),
-                CachedTargetPos = Vector3.zero,
                 OriginPosistion = transform.position,
                 MovementType = Options.MovementType,
                 WanderDistance = Options.WanderDistance,
                 IdleTime = Options.IdleTime,
                 TimeLeftIdle = Options.IdleTime,
                 PatrolPoints = Options.PatrolPoints,
-                CurrentPatrolPoint = Options.StartingPatorlPoint,
+                CurrentPatrolPoint = Options.StartingPatrolPoint,
                 Player = FindObjectOfType<PlayerController>(),
                 Dialogue = Options.Dialogue
         };
@@ -63,9 +89,10 @@ namespace SpectralDaze.AI.QuestNPC
         }
 
 
-        /*
-         * Time Bubble/Manipulation Code
-         */
+        /// <summary>
+        /// Starts time manipulation on the gameobject.
+        /// </summary>
+        /// <param name="type">The integer index of the Manipulations enum that represents the type of manipulation.</param>
         public void StartTimeManipulation(int type)
         {
             _timeBeingManipulated = true;
@@ -75,6 +102,9 @@ namespace SpectralDaze.AI.QuestNPC
             //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
+        /// <summary>
+        /// Stops time manipulation on the gameobject.
+        /// </summary>
         public void StopTimeManipulation()
         {
             _timeBeingManipulated = false;
@@ -84,15 +114,19 @@ namespace SpectralDaze.AI.QuestNPC
             //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
+        /// <summary>
+        /// The conversing state in the state machine   
+        /// </summary>
+        /// <seealso cref="UState{SpectralDaze.AI.QuestNPC.QuestNpc.QuestNpcParams}" />
         private class Conversing : UState<QuestNpcParams>
         {
-            //DialogueManager _dialogueManager;
-
+            /// <inheritdoc />
             public override void Enter(QuestNpcParams p)
             {
                 //_dialogueManager = GameManager.Instance.DialogueManager;
             }
 
+            /// <inheritdoc />
             public override void Update(QuestNpcParams p)
             {
                 p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
@@ -103,6 +137,7 @@ namespace SpectralDaze.AI.QuestNPC
                 }
             }
 
+            /// <inheritdoc />
             public override void CheckForTransitions(QuestNpcParams p)
             {
                 if (Vector3.Distance(p.NpcTransform.position, p.Player.transform.position) >= 4)
@@ -110,19 +145,26 @@ namespace SpectralDaze.AI.QuestNPC
                     Parent.SetState(typeof(Move), p);
                 }
             }
-
-
         }
 
+        /// <summary>
+        /// The idle state in the state machine.
+        /// </summary>
+        /// <seealso cref="UState{SpectralDaze.AI.QuestNPC.QuestNpc.QuestNpcParams}" />
         private class Idle : UState<QuestNpcParams>
         {
+            /// <summary>
+            /// The time left in idle step.
+            /// </summary>
             private float _timeLeftIdle = 0;
 
+            /// <inheritdoc />
             public override void Enter(QuestNpcParams p)
             {
                 _timeLeftIdle = p.IdleTime;
             }
 
+            /// <inheritdoc />
             public override void FixedUpdate(QuestNpcParams p)
             {
                 if (!p.NavAgent.pathPending && p.NavAgent.remainingDistance <= p.NavAgent.stoppingDistance &&
@@ -138,6 +180,7 @@ namespace SpectralDaze.AI.QuestNPC
                 }
             }
 
+            /// <inheritdoc />
             public override void CheckForTransitions(QuestNpcParams p)
             {
                 if (Vector3.Distance(p.NpcTransform.position, p.Player.transform.position)<4)
@@ -150,8 +193,13 @@ namespace SpectralDaze.AI.QuestNPC
             }
         }
 
+        /// <summary>
+        /// The movement state in the state machine.
+        /// </summary>
+        /// <seealso cref="UState{SpectralDaze.AI.QuestNPC.QuestNpc.QuestNpcParams}" />
         private class Move : UState<QuestNpcParams>
         {
+            /// <inheritdoc />
             public override void Enter(QuestNpcParams p)
             {
                 p.NavAgent.isStopped = false;
@@ -167,7 +215,6 @@ namespace SpectralDaze.AI.QuestNPC
                         randomOffset = Random.insideUnitSphere * p.WanderDistance;
                         randomWanderPosistion = randomOffset += p.NpcTransform.position;
                     }
-                    p.CachedTargetPos = hit.position;
                     if (p.NavAgent.SetDestination(randomWanderPosistion))
                     {
                         Parent.SetState(typeof(Idle), p);
@@ -187,7 +234,6 @@ namespace SpectralDaze.AI.QuestNPC
                     NavMeshHit hit;
                     if (NavMesh.SamplePosition(p.PatrolPoints[p.CurrentPatrolPoint], out hit, p.WanderDistance, NavMesh.AllAreas))
                     {
-                        p.CachedTargetPos = hit.position;
                         if (p.NavAgent.SetDestination(p.PatrolPoints[p.CurrentPatrolPoint]))
                         {
                             Parent.SetState(typeof(Idle), p);
@@ -204,6 +250,7 @@ namespace SpectralDaze.AI.QuestNPC
                 }
             }
 
+            /// <inheritdoc />
             public override void CheckForTransitions(QuestNpcParams p)
             {
                 if (Vector3.Distance(p.NpcTransform.position, p.Player.transform.position) < 4)
@@ -216,6 +263,9 @@ namespace SpectralDaze.AI.QuestNPC
             }
         }
 
+        /// <summary>
+        /// The different types of movement
+        /// </summary>
         public enum MovementType
         {
             Patrol,
@@ -223,23 +273,66 @@ namespace SpectralDaze.AI.QuestNPC
             NoLimitsWander
         }
 
+        /// <summary>
+        /// Struct of parameters being passed to the state machine
+        /// </summary>
         private struct QuestNpcParams
         {
+            /// <summary>
+            /// The NPC transform
+            /// </summary>
             public Transform NpcTransform;
+            /// <summary>
+            /// The NPC
+            /// </summary>
             public QuestNpc Npc;
+            /// <summary>
+            /// The nav agent
+            /// </summary>
             public NavMeshAgent NavAgent;
+            /// <summary>
+            /// The animator
+            /// </summary>
             public Animator Animator;
-            public Vector3 CachedTargetPos;
+            /// <summary>
+            /// The origin posistion
+            /// </summary>
             public Vector3 OriginPosistion;
+            /// <summary>
+            /// The movement type
+            /// </summary>
             public MovementType MovementType;
+            /// <summary>
+            /// The distance that the AI can wander.
+            /// </summary>
             public float WanderDistance;
+            /// <summary>
+            /// The idle time
+            /// </summary>
             public float IdleTime;
+            /// <summary>
+            /// The time left in the idle step
+            /// </summary>
             public float TimeLeftIdle;
+            /// <summary>
+            /// The current patrol point
+            /// </summary>
             public int CurrentPatrolPoint;
-            public List<Vector3> PatrolPoints; 
+            /// <summary>
+            /// The patrol points
+            /// </summary>
+            public List<Vector3> PatrolPoints;
+            /// <summary>
+            /// The player controller
+            /// </summary>
             public PlayerController Player;
-            public float MovementModifier;
+            /// <summary>
+            /// The movement speed
+            /// </summary>
             public float MovementSpeed;
+            /// <summary>
+            /// The dialogue that is attached to this npc
+            /// </summary>
             public TextAsset Dialogue;
         }
     }
