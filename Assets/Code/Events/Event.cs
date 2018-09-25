@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace SpectralDaze.EventSystem
 {
+    /// <summary>
+    /// Event for Scriptable Object Architecture Event system.
+    /// </summary>
+    /// <seealso cref="UnityEngine.ScriptableObject" />
     [CreateAssetMenu(menuName = "Spectral Daze/Events/Event")]
     public class Event : ScriptableObject
     {
