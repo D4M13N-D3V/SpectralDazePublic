@@ -81,7 +81,6 @@ namespace SpectralDaze.AI
                 MovementSpeed = Options.MovementSpeed,
                 TimeBetweenAttacks = Options.TimeBetweenAttacks,
                 BulletPrefab = Options.BulletPrefab,
-                AttackChargeAmount = Options.AttackChargeAmount,
                 ShootDelay = Options.ShootDelay,
                 Renderer = Renderer,
                 Chase = Options.Chase,
@@ -416,7 +415,6 @@ namespace SpectralDaze.AI
             public float MovementSpeed;
             public GameObject BulletPrefab;
             public float TimeBetweenAttacks;
-            public float AttackChargeAmount;
             public Renderer Renderer;
             public bool Chase;
             public float ChaseDistance;
