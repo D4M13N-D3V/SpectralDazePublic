@@ -99,7 +99,6 @@ namespace SpectralDaze.AI
                 Npc = this,
                 NavAgent = GetComponent<NavMeshAgent>(),
                 Animator = GetComponent<Animator>(),
-                CachedTargetMoveToTargetPos = Vector3.zero,
                 OriginPosistion = transform.position,
                 MovementType = Options.MovementType,
                 WanderDistance = Options.WanderDistance,
@@ -126,7 +125,7 @@ namespace SpectralDaze.AI
             _manipulationType = Manipulations.Normal;
             paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed * TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
-            paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            //paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
         }
 
@@ -139,10 +138,7 @@ namespace SpectralDaze.AI
         {
             stateMachine.FixedUpdate(paramsInstance);
         }
-
-        /*
-         * Time Bubble/Manipulation Code
-         */
+        
         /// <summary>
         /// Starts time manipulation on the gameobject.
         /// </summary>
@@ -153,7 +149,7 @@ namespace SpectralDaze.AI
             _manipulationType = (Manipulations)type;
             paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed * TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
-            paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            //paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
         }
 
@@ -166,7 +162,7 @@ namespace SpectralDaze.AI
             _manipulationType = Manipulations.Normal;
             paramsInstance.NavAgent.speed = paramsInstance.MovementSpeed * TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
-            paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
+            //paramsInstance.MovementModifier = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
             _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
         }
 
@@ -332,7 +328,6 @@ namespace SpectralDaze.AI
                         randomOffset = Random.insideUnitSphere * p.AggroDistance/2;
                         randomWanderPosistion = randomOffset += p.NpcTransform.position;
                     }
-                    p.CachedTargetMoveToTargetPos = hit.position;
                     if (p.NavAgent.SetDestination(randomWanderPosistion))
                     {
                         _idleTimeLeft = p.IdleTime / 2;
@@ -430,7 +425,6 @@ namespace SpectralDaze.AI
                                 randomWanderPosistion = randomOffset += p.NpcTransform.position;
                             }
                     }
-                    p.CachedTargetMoveToTargetPos = hit.position;
                     if (p.NavAgent.SetDestination(randomWanderPosistion))
                     {
                         Parent.SetState(typeof(Idle), p);
@@ -450,7 +444,6 @@ namespace SpectralDaze.AI
                     NavMeshHit hit;
                     if (NavMesh.SamplePosition(p.PatrolPoints[p.CurrentPatrolPoint], out hit, p.WanderDistance, NavMesh.AllAreas))
                     {
-                        p.CachedTargetMoveToTargetPos = hit.position;
                         if (p.NavAgent.SetDestination(p.PatrolPoints[p.CurrentPatrolPoint]))
                         {
                             Parent.SetState(typeof(Idle), p);
@@ -492,32 +485,105 @@ namespace SpectralDaze.AI
         /// </summary>
         private struct ShootingAIParams
         {
+            /// <summary>
+            /// The NPC transform
+            /// </summary>
             public Transform NpcTransform;
+            /// <summary>
+            /// The NPC
+            /// </summary>
             public ShootingAI Npc;
+            /// <summary>
+            /// The nav agent
+            /// </summary>
             public NavMeshAgent NavAgent;
+            /// <summary>
+            /// The animator
+            /// </summary>
             public Animator Animator;
-            public Vector3 CachedTargetMoveToTargetPos;
+            /// <summary>
+            /// The origin posistion
+            /// </summary>
             public Vector3 OriginPosistion;
+            /// <summary>
+            /// The movement type
+            /// </summary>
             public MovementType MovementType;
+            /// <summary>
+            /// The distance that the AI can wander.
+            /// </summary>
             public float WanderDistance;
+            /// <summary>
+            /// The idle time
+            /// </summary>
             public float IdleTime;
+            /// <summary>
+            /// The time left in the idle step
+            /// </summary>
             public float TimeLeftIdle;
+            /// <summary>
+            /// The current patrol point
+            /// </summary>
             public int CurrentPatrolPoint;
+            /// <summary>
+            /// The patrol points
+            /// </summary>
             public List<Vector3> PatrolPoints;
+            /// <summary>
+            /// The cached target
+            /// </summary>
             public GameObject CachedTarget;
+            /// <summary>
+            /// The player controller
+            /// </summary>
             public PlayerController Player;
+            /// <summary>
+            /// The distance that the AI becomes aggressive.
+            /// </summary>
             public float AggroDistance;
+            /// <summary>
+            /// The distance which the AI looses aggression.
+            /// </summary>
             public float LoseAggroDistance;
-            public float MovementModifier;
+            /// <summary>
+            /// The rigid body
+            /// </summary>
             public Rigidbody RigidBody;
+            /// <summary>
+            /// The movement speed
+            /// </summary>
             public float MovementSpeed;
+            /// <summary>
+            /// The prefab for the projectile being fired.
+            /// </summary>
             public GameObject BulletPrefab;
+            /// <summary>
+            /// The time between attacks
+            /// </summary>
             public float TimeBetweenAttacks;
+            /// <summary>
+            /// The renderer for the AI
+            /// </summary>
             public Renderer Renderer;
+            /// <summary>
+            /// Represents if the AI is being chased
+            /// </summary>
             public bool Chase;
+            /// <summary>
+            /// The distance where the AI stops chasing
+            /// </summary>
             public float ChaseDistance;
+            /// <summary>
+            /// The delay between shots.
+            /// </summary>
             public float ShootDelay;
+            /// <summary>
+            /// The shooting sound
+            /// </summary>
             public AudioClipInfo ShootingSound;
+            /// <summary>
+            /// The death sound
+            /// </summary>
             public AudioClipInfo DeathSound;
         }
     }
