@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace SpectralDaze.Time
 {
+    /// <summary>
+    /// The types of manipulation.
+    /// </summary>
     public enum Manipulations { Normal, Slow, Fast }
 }

@@ -13,12 +13,24 @@ using UnityEngine.AI;
 
 namespace SpectralDaze.AI
 {
+    /// <summary>
+    /// Shooting AI Mono Behaviour.
+    /// </summary>
     public class ShootingAI : BaseAI
     {
+        /// <summary>
+        /// The renderer for the mesh of the AI
+        /// </summary>
         public Renderer Renderer;
 
+        /// <summary>
+        /// The local time scale for calculating local delta time.
+        /// </summary>
         [HideInInspector]
         public float _localTimeScale = 1.0f;
+        /// <summary>
+        /// The local time scale property.
+        /// </summary>
         [HideInInspector]
         public float localTimeScale
         {
@@ -38,6 +50,9 @@ namespace SpectralDaze.AI
                 _localTimeScale = value;
             }
         }
+        /// <summary>
+        /// The local delta time for the AI.
+        /// </summary>
         [HideInInspector]
         public float localDeltaTime
         {
@@ -47,12 +62,30 @@ namespace SpectralDaze.AI
             }
         }
 
+        /// <summary>
+        /// The options for the AI.
+        /// </summary>
         public ShootingAIOptions Options;
+        /// <summary>
+        /// The state machine for running the AI.
+        /// </summary>
         private UStateMachine<ShootingAIParams> stateMachine;
+        /// <summary>
+        /// The parameters passed to the state machine that holds information between states.
+        /// </summary>
         private ShootingAIParams paramsInstance;
 
+        /// <summary>
+        /// The information about how to change the time based on if its being slowe down or sped up.
+        /// </summary>
         public TimeInfo TimeInfo;
+        /// <summary>
+        /// Represents if time is being manipulated at this current moment or not.
+        /// </summary>
         private bool _timeBeingManipulated;
+        /// <summary>
+        /// If the time is being manipulated this tells you what type of manipulation.
+        /// </summary>
         private Manipulations _manipulationType;
 
         private void Start()
@@ -110,6 +143,10 @@ namespace SpectralDaze.AI
         /*
          * Time Bubble/Manipulation Code
          */
+        /// <summary>
+        /// Starts time manipulation on the gameobject.
+        /// </summary>
+        /// <param name="type">The integer index of the Manipulations enum that represents the type of manipulation.</param>
         public void StartTimeManipulation(int type)
         {
             _timeBeingManipulated = true;
@@ -120,6 +157,9 @@ namespace SpectralDaze.AI
             _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
         }
 
+        /// <summary>
+        /// Stops time manipulation on the gameobject.
+        /// </summary>
         public void StopTimeManipulation()
         {
             _timeBeingManipulated = false;
@@ -130,14 +170,37 @@ namespace SpectralDaze.AI
             _localTimeScale = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.PhysicsModifier;
         }
 
+        /// <summary>
+        /// The Attacking state for the state machine.
+        /// </summary>
         private class Attacking : UState<ShootingAIParams>
         {
+            /// <summary>
+            /// How long until the next attack occurs.
+            /// </summary>
             private float _timeLeftUntilAttack;
+            /// <summary>
+            /// Is a shot being charged?
+            /// </summary>
             private bool _chargingShotInProgress;
+            /// <summary>
+            /// The original color of the AI
+            /// </summary>
             private Color _originalColor;
+            /// <summary>
+            /// A variable used for calculations in how much time is left
+            /// </summary>
             private float t = 0;
+            /// <summary>
+            /// The project currently being used that was shot recently.
+            /// </summary>
             private GameObject _currentProjectile;
+            /// <summary>
+            /// The amount of time left in the shooting delay.
+            /// </summary>
             private float _shootDelayLeft;
+
+            /// <inheritdoc />
             public override void Enter(ShootingAIParams p)
             {
                 _shootDelayLeft = p.ShootDelay;
@@ -146,6 +209,7 @@ namespace SpectralDaze.AI
                 _timeLeftUntilAttack = p.TimeBetweenAttacks;
             }
 
+            /// <inheritdoc />
             public override void FixedUpdate(ShootingAIParams p)
             {
                 /*
@@ -209,6 +273,7 @@ namespace SpectralDaze.AI
                 }
             }
 
+            /// <inheritdoc />
             public override void CheckForTransitions(ShootingAIParams p)
             {
                 if (!p.Chase && p.LoseAggroDistance <= Vector3.Distance(p.NpcTransform.position, p.Player.transform.position))
@@ -217,6 +282,10 @@ namespace SpectralDaze.AI
                     Parent.SetState(typeof(Chase), p);
             }
 
+            /// <summary>
+            /// Create the projectile that is shot.
+            /// </summary>
+            /// <param name="p">The parameters from the state machine.</param>
             private void CreateProjectile(ShootingAIParams p)
             {
                 _currentProjectile = Instantiate(p.BulletPrefab, (p.NpcTransform.position + p.NpcTransform.forward), Quaternion.Euler(p.NpcTransform.eulerAngles));
@@ -227,16 +296,24 @@ namespace SpectralDaze.AI
             }
         }
 
+        /// <summary>
+        /// The Chase state for the state machine.
+        /// </summary>
         private class Chase : UState<ShootingAIParams>
         {
+            /// <summary>
+            /// The amount of idle time left before the next move.
+            /// </summary>
             private float _idleTimeLeft = 0;
 
+            /// <inheritdoc />
             public override void Enter(ShootingAIParams p)
             {
                 if (p.Npc.CurrentToken != null)
                     p.Npc.ReturnToken();
             }
 
+            /// <inheritdoc />
             public override void FixedUpdate(ShootingAIParams p)
             {
                 p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
@@ -267,6 +344,7 @@ namespace SpectralDaze.AI
                 }
             }
 
+            /// <inheritdoc />
             public override void CheckForTransitions(ShootingAIParams p)
             {
                 if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
@@ -277,10 +355,17 @@ namespace SpectralDaze.AI
             }
         }
 
+        /// <summary>
+        /// The idle state for the state machine.
+        /// </summary>
         private class Idle : UState<ShootingAIParams>
         {
+            /// <summary>
+            /// The amount of time before the next action.
+            /// </summary>
             private float _timeLeftIdle = 0;
 
+            /// <inheritdoc />
             public override void Enter(ShootingAIParams p)
             {
                 if (p.Npc.CurrentToken != null)
@@ -288,6 +373,7 @@ namespace SpectralDaze.AI
                 _timeLeftIdle = p.IdleTime;
             }
 
+            /// <inheritdoc />
             public override void FixedUpdate(ShootingAIParams p)
             {
                 if (!p.NavAgent.pathPending && p.NavAgent.remainingDistance <= p.NavAgent.stoppingDistance &&
@@ -304,6 +390,7 @@ namespace SpectralDaze.AI
                 }
             }
 
+            /// <inheritdoc />
             public override void CheckForTransitions(ShootingAIParams p)
             {
                 if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
@@ -313,8 +400,12 @@ namespace SpectralDaze.AI
             }
         }
 
+        /// <summary>
+        /// The move state for the State Machine.
+        /// </summary>
         private class Move : UState<ShootingAIParams>
         {
+            /// <inheritdoc />
             public override void Enter(ShootingAIParams p)
             {
                 if (p.Npc.CurrentToken != null)
@@ -376,6 +467,7 @@ namespace SpectralDaze.AI
                 }
             }
 
+            /// <inheritdoc />
             public override void CheckForTransitions(ShootingAIParams p)
             {
                 if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
@@ -385,6 +477,9 @@ namespace SpectralDaze.AI
             }
         }
 
+        /// <summary>
+        /// The different types of movement.
+        /// </summary>
         public enum MovementType
         {
             Patrol,
@@ -392,6 +487,9 @@ namespace SpectralDaze.AI
             NoLimitsWander
         }
 
+        /// <summary>
+        /// Struct for the parameters for the shooting AI state machine.
+        /// </summary>
         private struct ShootingAIParams
         {
             public Transform NpcTransform;
