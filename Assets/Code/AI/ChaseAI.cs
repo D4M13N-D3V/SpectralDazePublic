@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Managers;
+using Managers.AI;
 using SpectralDaze.Etc;
 using SpectralDaze.Managers;
 using SpectralDaze.Managers.AudioManager;
@@ -15,7 +16,7 @@ namespace SpectralDaze.AI
     /// <summary>
     /// Chase AI Mono Behaviour
     /// </summary>
-    /// <seealso cref="Assets.Code.AI.BaseAI" />
+    /// <seealso cref="BaseAI" />
     public class ChaseAI : BaseAI
     {
         /// <summary>
@@ -175,12 +176,16 @@ namespace SpectralDaze.AI
             /// <inheritdoc />
             public override void FixedUpdate(RushAIParams p)
             {
+                // Look at player
                 p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
                 p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
 
+                // count down from idle time
                 _idleTimeLeft -= p.Npc.localDeltaTime;
+                //check if idle time is less or equal to 0
                 if (_idleTimeLeft <= 0)
                 {
+                    //make sure that the navmesh agent isnt stopped
                     p.NavAgent.isStopped = false;
                     Vector3 randomOffset = Random.insideUnitSphere * p.AggroDistance / 2;
                     Vector3 randomWanderPosistion = randomOffset += p.Player.transform.position;
@@ -205,9 +210,10 @@ namespace SpectralDaze.AI
             /// <inheritdoc />
             public override void CheckForTransitions(RushAIParams p)
             {
+                //Attack if within attacking distance
                 if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) <= p.AggroDistance)
                     Parent.SetState(typeof(Attacking), p);
-
+                //Stop chasing if too far away.
                 if (Vector3.Distance(p.Player.transform.position, p.NpcTransform.position) >= p.ChaseDistance)
                     Parent.SetState(typeof(Move), p);
             }
@@ -242,7 +248,7 @@ namespace SpectralDaze.AI
             /// <inheritdoc />
             public override void Update(RushAIParams p)
             {
-
+                //gett token and look at player.
                 if (p.Npc.CurrentToken == null)
                 {
                     p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
@@ -253,6 +259,7 @@ namespace SpectralDaze.AI
                 _remainderChargeCooldown -= p.Npc.localDeltaTime;
                 if (_remainderChargeCooldown <= 0 && !_chargeInProgress)
                 {
+                    //launch the ai
                     p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
                     p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
                     _chargeInProgress = true;
@@ -260,12 +267,14 @@ namespace SpectralDaze.AI
                 }
                 else if (_remainderChargeCooldown > 0 && !_chargeInProgress)
                 {
+                    //stare at player
                     p.NpcTransform.rotation = Quaternion.LookRotation(p.Player.transform.position - p.NpcTransform.position);
                     p.NpcTransform.eulerAngles = new Vector3(0, p.NpcTransform.eulerAngles.y, 0);
                 }
 
                 if (_chargeInProgress)
                 {
+                    //propell forward
                     _remainderOfCurrentCharge -= p.Npc.localDeltaTime;
                     if (_remainderOfCurrentCharge <= 0)
                     {

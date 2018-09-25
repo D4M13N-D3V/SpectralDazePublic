@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Managers;
+using Managers.AI;
 using Sirenix.OdinInspector;
 using SpectralDaze.Camera;
 using SpectralDaze.Etc;
