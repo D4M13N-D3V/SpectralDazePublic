@@ -89,14 +89,13 @@ namespace SpectralDaze.AI
                 Npc = this,
                 NavAgent = GetComponent<NavMeshAgent>(),
                 Animator = GetComponent<Animator>(),
-                CachedTargetMoveToTargetPos = Vector3.zero,
                 OriginPosistion = transform.position,
                 MovementType = Options.MovementType,
                 WanderDistance = Options.WanderDistance,
                 IdleTime = Options.IdleTime,
                 TimeLeftIdle = Options.IdleTime,
                 PatrolPoints = Options.PatrolPoints,
-                CurrentPatrolPoint = Options.StartingPatorlPoint,
+                CurrentPatrolPoint = Options.StartingPatrolPoint,
                 Player = FindObjectOfType<PlayerController>(),
                 AggroDistance = Options.AggroDistance,
                 TimeBetweenCharges = Options.TimeBetweenCharges,
@@ -191,7 +190,6 @@ namespace SpectralDaze.AI
                         randomOffset = Random.insideUnitSphere * p.AggroDistance / 2;
                         randomWanderPosistion = randomOffset += p.NpcTransform.position;
                     }
-                    p.CachedTargetMoveToTargetPos = hit.position;
                     if (p.NavAgent.SetDestination(randomWanderPosistion))
                     {
                         _idleTimeLeft = p.IdleTime/2;
@@ -359,7 +357,6 @@ namespace SpectralDaze.AI
                         randomOffset = Random.insideUnitSphere * p.WanderDistance;
                         randomWanderPosistion = randomOffset += p.NpcTransform.position;
                     }
-                    p.CachedTargetMoveToTargetPos = hit.position;
                     if (p.NavAgent.SetDestination(randomWanderPosistion))
                     {
                         Parent.SetState(typeof(Idle), p);
@@ -379,7 +376,6 @@ namespace SpectralDaze.AI
                     NavMeshHit hit;
                     if (NavMesh.SamplePosition(p.PatrolPoints[p.CurrentPatrolPoint], out hit, p.WanderDistance, NavMesh.AllAreas))
                     {
-                        p.CachedTargetMoveToTargetPos = hit.position;
                         if (p.NavAgent.SetDestination(p.PatrolPoints[p.CurrentPatrolPoint]))
                         {
                             Parent.SetState(typeof(Idle), p);
@@ -421,28 +417,93 @@ namespace SpectralDaze.AI
         /// </summary>
         private struct RushAIParams
         {
+            /// <summary>
+            /// The NPC transform
+            /// </summary>
             public Transform NpcTransform;
+            /// <summary>
+            /// The NPC's class instance
+            /// </summary>
             public ChaseAI Npc;
+            /// <summary>
+            /// The nav agent
+            /// </summary>
             public NavMeshAgent NavAgent;
+            /// <summary>
+            /// The animator
+            /// </summary>
             public Animator Animator;
-            public Vector3 CachedTargetMoveToTargetPos;
+            /// <summary>
+            /// The origin posistion
+            /// </summary>
             public Vector3 OriginPosistion;
+            /// <summary>
+            /// The movement type
+            /// </summary>
             public MovementType MovementType;
+            /// <summary>
+            /// The distance that the AI can wander.
+            /// </summary>
             public float WanderDistance;
+            /// <summary>
+            /// The time for the AI to idle between actions
+            /// </summary>
             public float IdleTime;
+            /// <summary>
+            /// The time left in the idle
+            /// </summary>
             public float TimeLeftIdle;
+            /// <summary>
+            /// The current patrol point
+            /// </summary>
             public int CurrentPatrolPoint;
+            /// <summary>
+            /// The patrol points
+            /// </summary>
             public List<Vector3> PatrolPoints;
+            /// <summary>
+            /// The player controller for hte player
+            /// </summary>
             public PlayerController Player;
+            /// <summary>
+            /// The distance that the AI becomes aggressive
+            /// </summary>
             public float AggroDistance;
+            /// <summary>
+            /// The distance that the AI looses aggression.
+            /// </summary>
             public float LoseAggroDistance;
+            /// <summary>
+            /// The time between charges
+            /// </summary>
             public float TimeBetweenCharges;
+            /// <summary>
+            /// The movement speed modifier
+            /// </summary>
             public float MovementModifier;
+            /// <summary>
+            /// The rigid body
+            /// </summary>
             public Rigidbody RigidBody;
+            /// <summary>
+            /// The launch velocity
+            /// </summary>
             public float LaunchVelocity;
+            /// <summary>
+            /// The movement speed
+            /// </summary>
             public float MovementSpeed;
+            /// <summary>
+            /// Is the AI chasing.
+            /// </summary>
             public bool Chase;
+            /// <summary>
+            /// The distance the AI stops chasing.
+            /// </summary>
             public float ChaseDistance;
+            /// <summary>
+            /// The death sound
+            /// </summary>
             public AudioClipInfo DeathSound;
         }
     }
