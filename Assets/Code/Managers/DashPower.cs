@@ -6,9 +6,16 @@ using UnityEngine;
 
 namespace SpectralDaze.Managers.PowerManager
 {
+    /// <summary>
+    /// The dash power slot.
+    /// </summary>
+    /// <seealso cref="UnityEngine.ScriptableObject" />
     [CreateAssetMenu(menuName = "Spectral Daze/Managers/PowerManager/DashPower")]
     public class DashPower : ScriptableObject
     {
+        /// <summary>
+        /// The dash power
+        /// </summary>
         public PlayerPower_Dash Power;
     }
 }

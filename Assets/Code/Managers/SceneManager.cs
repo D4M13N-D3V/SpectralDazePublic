@@ -8,14 +8,38 @@ using UnityEngine.SceneManagement;
 
 namespace SpectralDaze.Managers.SceneManager
 {
+    /// <summary>
+    /// Manages the scenes for the game
+    /// </summary>
+    /// <seealso cref="UnityEngine.MonoBehaviour" />
     public class SceneManager : MonoBehaviour
     {
+        /// <summary>
+        /// The scenes currently loaded in the game
+        /// </summary>
         public List<SceneInfo> LoadedScenes = new List<SceneInfo>();
+        /// <summary>
+        /// The main current scene that is loaded
+        /// </summary>
         public CurrentScene CurrentScene;
+        /// <summary>
+        /// The default scene
+        /// </summary>
         public DefaultScene DefaultScene;
+        /// <summary>
+        /// The required scenes to be loaded
+        /// </summary>
         public RequiredScenes RequiredScenes;
-        private  NavMeshSurface _surface;
+        /// <summary>
+        /// The nav mesh surface to use to regenerate navmesh.
+        /// </summary>
+        private NavMeshSurface _surface;
+        /// <summary>
+        /// Has the nav mesh generated
+        /// </summary>
         private bool navMeshGenerated = false;
+
+        /// <inheritdoc />
         private void Start()
         {
             _surface = GetComponent<NavMeshSurface>();
@@ -29,6 +53,8 @@ namespace SpectralDaze.Managers.SceneManager
                 LoadedScenes.Add(scene);
             }   
         }
+
+        /// <inheritdoc />
         private void Update()
         {
             if (navMeshGenerated == false)
@@ -62,6 +88,10 @@ namespace SpectralDaze.Managers.SceneManager
             }
         }
 
+        /// <summary>
+        /// Loads the specified scene.
+        /// </summary>
+        /// <param name="loadingScene">The scene to be loaded.</param>
         public void LoadScene(SceneInfo loadingScene)
         {
             var scenesToRemove = new List<SceneInfo>();

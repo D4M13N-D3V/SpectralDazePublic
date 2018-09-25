@@ -5,11 +5,21 @@ using System.Linq;
 using SpectralDaze.Managers.AIManager;
 using UnityEngine;
 
-namespace Managers
+namespace Managers.AI
 {
+    /// <summary>
+    /// Directs and manages the AI
+    /// </summary>
+    /// <seealso cref="UnityEngine.MonoBehaviour" />
     public class AiDirector : MonoBehaviour
     {
+        /// <summary>
+        /// Types of tokens
+        /// </summary>
         public enum TokenTypes { Shooting, Rushing }
+        /// <summary>
+        /// The token collections in dictionary form where the key is the type enum and the value is a token collection of that type.
+        /// </summary>
         public Dictionary<TokenTypes, TokenCollection> TokenCollections = new Dictionary<TokenTypes, TokenCollection>();
 
         private void Start()

@@ -5,12 +5,25 @@ using System.Linq;
 
 namespace SpectralDaze.Managers.AudioManager
 {
+    /// <summary>
+    /// Manages the audio for the game
+    /// </summary>
+    /// <seealso cref="UnityEngine.MonoBehaviour" />
     public class AudioManager : MonoBehaviour
     {
+        /// <summary>
+        /// The maximum amount of sounds that can be played at the same tiem
+        /// </summary>
         public int MaximumAmountOfSounds = 40;
+        /// <summary>
+        /// The audio queue that is automatically loaded.
+        /// </summary>
         private AudioQueue _audioQueue;
         private AudioSource _music1;
         private AudioSource _music2;
+        /// <summary>
+        /// A pool of audio sourcse that can be used to play sounds.
+        /// </summary>
         private Queue<AudioSource> _audioPool = new Queue<AudioSource>();
 
 
@@ -36,6 +49,9 @@ namespace SpectralDaze.Managers.AudioManager
             }
         }
 
+        /// <summary>
+        /// Setups the pool of audio sources.
+        /// </summary>
         private void SetupPool()
         {
             for (int i = 0; i < MaximumAmountOfSounds; i++)
@@ -53,7 +69,14 @@ namespace SpectralDaze.Managers.AudioManager
         }
         #endregion
 
-        #region SFX
+        #region SFX        
+        /// <summary>
+        /// Plays the SFX.
+        /// </summary>
+        /// <param name="clip">The clip.</param>
+        /// <param name="loop">if set to <c>true</c> [loop].</param>
+        /// <param name="volume">The volume.</param>
+        /// <param name="duration">The duration.</param>
         public void PlaySfx(AudioClip clip, bool loop, float volume=1, float duration = 0)
         {
             if (duration == 0)
@@ -70,6 +93,12 @@ namespace SpectralDaze.Managers.AudioManager
                 StartCoroutine(DestroyAfterTime(audioComp, duration));
         }
 
+        /// <summary>
+        /// Destroys the after time.
+        /// </summary>
+        /// <param name="audioSrc">The audio source.</param>
+        /// <param name="time">The time.</param>
+        /// <returns></returns>
         IEnumerator DestroyAfterTime(AudioSource audioSrc,float time)
         {
             yield return new WaitForSeconds(time);

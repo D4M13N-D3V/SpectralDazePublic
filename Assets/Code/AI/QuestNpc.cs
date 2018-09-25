@@ -50,6 +50,7 @@ namespace SpectralDaze.AI.QuestNPC
         /// </summary>
         private Manipulations _manipulationType;
 
+        /// <inheritdoc />
         private void Start()
         {
             InteractControl = Resources.Load<Control>("Managers/InputManager/Interact");
@@ -77,11 +78,13 @@ namespace SpectralDaze.AI.QuestNPC
             paramsInstance.Animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
+        /// <inheritdoc />
         private void Update()
         {
             stateMachine.Update(paramsInstance);
         }
 
+        /// <inheritdoc />
         private void FixedUpdate()
         {
             stateMachine.FixedUpdate(paramsInstance);

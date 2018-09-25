@@ -4,12 +4,18 @@ using UnityEngine;
 
 namespace SpectralDaze.Managers.InputManager
 {
+    /// <summary>
+    /// The types of input
+    /// </summary>
     public enum InputTypes
     {
         Key,
         Mouse
     }
 
+    /// <summary>
+    /// The mouse buttons
+    /// </summary>
     public enum MouseButtons
     {
         Left,
@@ -17,7 +23,9 @@ namespace SpectralDaze.Managers.InputManager
         Middle
     }
 
-
+    /// <summary>
+    /// The control types
+    /// </summary>
     public enum ControllerType
     {
         Keyboard,
@@ -25,6 +33,9 @@ namespace SpectralDaze.Managers.InputManager
         XBOX
     }
 
+    /// <summary>
+    /// The keyboard axis
+    /// </summary>
     public enum KeyboardAxis
     {
         X,
@@ -32,6 +43,10 @@ namespace SpectralDaze.Managers.InputManager
         MouseX,
         MouseY
     }
+
+    /// <summary>
+    /// The gamepade codes
+    /// </summary>
     public enum GamepadCode
     {
         A,
@@ -45,6 +60,10 @@ namespace SpectralDaze.Managers.InputManager
         LeftThumbstick,
         RightThumbstick
     }
+
+    /// <summary>
+    /// The gamepad axis
+    /// </summary>
     public enum GamepadAxis
     {
         LeftTrigger,
@@ -56,11 +75,21 @@ namespace SpectralDaze.Managers.InputManager
         RightThumbStickX,
         RightThumbStickY,
     }
-    
 
+    /// <summary>
+    /// Manages the input for the game
+    /// </summary>
+    /// <seealso cref="UnityEngine.MonoBehaviour" />
     public class InputManager : MonoBehaviour
     {
+        /// <summary>
+        /// The types of controls being used.
+        /// </summary>
         public ControllerType GamepadType = ControllerType.Keyboard;
+
+        /// <summary>
+        /// The axis for gamepad that need to be inverted.
+        /// </summary>
         public List<GamepadAxis> InvertedGamepadeAxis = new List<GamepadAxis>()
         {
             GamepadAxis.LeftThumbStickY,
@@ -68,6 +97,9 @@ namespace SpectralDaze.Managers.InputManager
             //GamepadAxis.DPadStickY
         };
 
+        /// <summary>
+        /// Sets up the axis enums to actual axis's in the unit input managr.
+        /// </summary>
         public Dictionary<KeyboardAxis, string> KeyboardAxisReference = new Dictionary<KeyboardAxis, string>()
         {
             [KeyboardAxis.MouseX] = "Mouse X",
@@ -224,13 +256,21 @@ namespace SpectralDaze.Managers.InputManager
             [GamepadAxis.RightTrigger] = "Axis6",
         };
 #endif
+
+
+        /// <summary>
+        /// A scriptable objec thoilding information about all configured controls.
+        /// </summary>
         public Controls Controls;
+        /// <summary>
+        /// A scriptable object that holds information about what the current control type is.
+        /// </summary>
         public CurrentControlType CurrentControlType;
 
         private void Start()
         {
             Controls = Resources.Load<Controls>("Managers/InputManager/Controls");
-            CurrentControlType = Resources.Load<CurrentControlType>("Managers/InputManager/CurrentControlType");     
+            CurrentControlType = Resources.Load<CurrentControlType>("Managers/InputManager/CurrentControlType");
 
             //make sure the ones that need to be inverted are set
 
@@ -286,7 +326,7 @@ namespace SpectralDaze.Managers.InputManager
                     if (control.Inverted)
                     {
                         control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]) * -1;
-                        control.RawValue = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]) * -1; 
+                        control.RawValue = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]) * -1;
                     }
                     else
                     {
