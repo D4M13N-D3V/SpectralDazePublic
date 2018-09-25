@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Code.AI;
 using SpectralDaze.DialogueSystem;
 using SpectralDaze.Managers.InputManager;
 using SpectralDaze.Player;

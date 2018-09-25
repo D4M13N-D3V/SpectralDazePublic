@@ -2,6 +2,7 @@
 using SpectralDaze.DataTypes;
 using SpectralDaze.Managers;
 using SpectralDaze.Managers.AudioManager;
+using SpectralDaze.World;
 using UnityEngine;
 using UnityEngine.AI;
 
