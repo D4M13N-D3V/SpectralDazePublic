@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
+using Managers.AI;
 using SpectralDaze.Etc;
 using SpectralDaze.Managers;
 using SpectralDaze.Managers.AudioManager;
@@ -16,7 +17,7 @@ namespace SpectralDaze.AI
     /// <summary>
     /// Shooting AI Mono Behaviour
     /// </summary>
-    /// <seealso cref="Assets.Code.AI.BaseAI" />
+    /// <seealso cref="BaseAI" />
     public class ShootingAI : BaseAI
     {
         /// <summary>
@@ -170,7 +171,7 @@ namespace SpectralDaze.AI
         /// <summary>
         /// The Attacking state for the state machine.
         /// </summary>
-        /// <seealso cref="UState{SpectralDaze.AI.ShootingAI.ShootingAIParams}" />
+        /// <seealso cref="ShootingAI.ShootingAIParams}" />
         private class Attacking : UState<ShootingAIParams>
         {
             /// <summary>
@@ -297,7 +298,7 @@ namespace SpectralDaze.AI
         /// <summary>
         /// The Chase state for the state machine.
         /// </summary>
-        /// <seealso cref="UState{SpectralDaze.AI.ShootingAI.ShootingAIParams}" />
+        /// <seealso cref="ShootingAI.ShootingAIParams}" />
         private class Chase : UState<ShootingAIParams>
         {
             /// <summary>
@@ -356,7 +357,7 @@ namespace SpectralDaze.AI
         /// <summary>
         /// The idle state for the state machine.
         /// </summary>
-        /// <seealso cref="UState{SpectralDaze.AI.ShootingAI.ShootingAIParams}" />
+        /// <seealso cref="ShootingAI.ShootingAIParams}" />
         private class Idle : UState<ShootingAIParams>
         {
             /// <summary>
@@ -402,7 +403,7 @@ namespace SpectralDaze.AI
         /// <summary>
         /// The move state for the State Machine.
         /// </summary>
-        /// <seealso cref="UState{SpectralDaze.AI.ShootingAI.ShootingAIParams}" />
+        /// <seealso cref="ShootingAI.ShootingAIParams}" />
         private class Move : UState<ShootingAIParams>
         {
             /// <inheritdoc />
