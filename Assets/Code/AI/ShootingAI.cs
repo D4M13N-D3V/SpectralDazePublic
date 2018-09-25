@@ -139,10 +139,7 @@ namespace SpectralDaze.AI
         {
             stateMachine.FixedUpdate(paramsInstance);
         }
-
-        /*
-         * Time Bubble/Manipulation Code
-         */
+        
         /// <summary>
         /// Starts time manipulation on the gameobject.
         /// </summary>
