@@ -1,23 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Event = SpectralDaze.Events.Event;
+using Event = SpectralDaze.EventSystem.Event;
 
-public class TriggerThatTriggersEvent : MonoBehaviour
+namespace SpectralDaze.World
 {
-    public Event RubbleEvent;
-    private void OnTriggerEnter(Collider col)
+    /// <summary>
+    /// Raises a event system event upon trigger enter
+    /// </summary>
+    public class TriggerThatTriggersEvent : MonoBehaviour
     {
-        if (RubbleEvent == null)
+        /// <summary>
+        /// Event to raise.
+        /// </summary>
+        public Event Event;
+        private void OnTriggerEnter(Collider col)
         {
-            Debug.LogError("No Event Provided To Trigger");
-            return;
-        }
+            if (Event == null)
+            {
+                Debug.LogError("No Event Provided To Trigger");
+                return;
+            }
 
-        if (col.gameObject.tag == "Player")
-        {
-            RubbleEvent.Raise();
-            Destroy(gameObject);
+            if (col.gameObject.tag == "Player")
+            {
+                Event.Raise();
+                Destroy(gameObject);
+            }
         }
     }
 }
