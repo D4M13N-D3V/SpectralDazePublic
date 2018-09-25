@@ -13,25 +13,65 @@ using UnityEngine.AI;
  */
 namespace SpectralDaze.Player
 {
+    /// <summary>
+    /// The Dash playerp ower
+    /// </summary>
+    /// <seealso cref="SpectralDaze.Player.PlayerPower" />
     [CreateAssetMenu(fileName = "Power_Dash", menuName = "Spectral Daze/PlayerPower/Dash")]
     public class PlayerPower_Dash : PlayerPower
     {
+        /// <summary>
+        /// The dash speed
+        /// </summary>
         public float DashSpeed = 0.1f;
+        /// <summary>
+        /// The maximum dash distance
+        /// </summary>
         public float MaximumDashDistance;
+        /// <summary>
+        /// The particle system prefab
+        /// </summary>
         public GameObject ParticleSystem;
+        /// <summary>
+        /// Is the player dashing
+        /// </summary>
         public bool IsDashing = false;
+        /// <summary>
+        /// The particle system prefab
+        /// </summary>
         private ParticleSystem _particleSystem;
+        /// <summary>
+        /// The original position
+        /// </summary>
         private Vector3 _originalPos;
-        private Vector3 _lastPos;
+        /// <summary>
+        /// The dash sound
+        /// </summary>
         public AudioClipInfo DashSound;
+        /// <summary>
+        /// The audio queue
+        /// </summary>
         public AudioQueue AudioQueue;
+        /// <summary>
+        /// The player information
+        /// </summary>
         private PlayerInfo _playerInfo;
 
+        /// <summary>
+        /// The input rotation
+        /// </summary>
         private ScriptableObjectQuartenion _inputRotation;
 
+        /// <summary>
+        /// Is the path clear
+        /// </summary>
         private bool _clearPath = false;
+        /// <summary>
+        /// The real maximum distance after calculations
+        /// </summary>
         private float _realMaxDistance = 0;
 
+        /// <inheritdoc />
         public override void Init(PlayerController pc)
         {
             Type = PowerTypes.Dash;
@@ -43,7 +83,7 @@ namespace SpectralDaze.Player
             _particleSystem.Stop();
         }
 
-
+        /// <inheritdoc />
         public override void OnUpdate(PlayerController pc)
         {
             base.OnUpdate(pc);
@@ -80,8 +120,7 @@ namespace SpectralDaze.Player
                     StopDashing(pc);
                 }
             }
-
-            _lastPos = pc.transform.position;
+            
 
             if (IsDashing && Vector3.Distance(pc.transform.position, _originalPos) > _realMaxDistance)
             {
@@ -136,6 +175,10 @@ namespace SpectralDaze.Player
             }
         }
 
+        /// <summary>
+        /// Stops the dashing.
+        /// </summary>
+        /// <param name="pc">The player controller.</param>
         private void StopDashing(PlayerController pc)
         {
             _particleSystem.Stop();

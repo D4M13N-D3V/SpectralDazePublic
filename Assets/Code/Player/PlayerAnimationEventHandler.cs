@@ -1,35 +1,68 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SpectralDaze.Managers.AudioManager;
 
-public class PlayerAnimationEventHandler : MonoBehaviour
+namespace SpectralDaze.Player
 {
-    public AudioClip FootStep;
-    public float MaxPitch = 1f;
-    public float MinPitch = .5f;
-    private AudioSource myAudioSource;
-
-    public bool FinishedEmote;
-
-    private void Start()
+    /// <summary>
+    /// Handles the players animation events.
+    /// </summary>
+    /// <seealso cref="UnityEngine.MonoBehaviour" />
+    public class PlayerAnimationEventHandler : MonoBehaviour
     {
-        FinishedEmote = false;
-        myAudioSource = GetComponent<AudioSource>();
+        /// <summary>
+        /// The maximum pitch
+        /// </summary>
+        public float MaxPitch = 1f;
+        /// <summary>
+        /// The minimum pitch
+        /// </summary>
+        public float MinPitch = .5f;
+
+        /// <summary>
+        /// Is emote finished
+        /// </summary>
+        public bool FinishedEmote;
+
+        /// <summary>
+        /// The footstep clip information
+        /// </summary>
+        public AudioClipInfo FootstepClipInfo;
+        /// <summary>
+        /// The audio queue
+        /// </summary>
+        public AudioQueue AudioQueue;
+
+        private void Start()
+        {
+            AudioQueue = Resources.Load<AudioQueue>("Managers/Audio/AudioQueue");
+            FootstepClipInfo = Resources.Load<AudioClipInfo>("Player/FootstepSound");
+            FinishedEmote = false;
+        }
+
+        /// <summary>
+        /// Called when emote is finished
+        /// </summary>
+        public void FinishEmote()
+        {
+            FinishedEmote = true;
+        }
+
+        /// <summary>
+        /// Resets the state of the emote.
+        /// </summary>
+        public void ResetEmoteState()
+        {
+            FinishedEmote = false;
+        }
+
+        /// <summary>
+        /// Plays the foot step SFX.
+        /// </summary>
+        public void PlayFootStepSFX()
+        {
+            AudioQueue.Queue.Enqueue(FootstepClipInfo);
+        }
     }
 
-    public void FinishEmote()
-    {
-        FinishedEmote = true;
-    }
-
-    public void ResetEmoteState()
-    {
-        FinishedEmote = false;
-    }
-
-    public void PlayFootStepSFX()
-    {
-        myAudioSource.clip = FootStep;
-        myAudioSource.pitch = Random.Range(MinPitch, MaxPitch);
-        myAudioSource.Play();
-    }
 }

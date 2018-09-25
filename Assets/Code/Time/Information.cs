@@ -4,12 +4,19 @@ using UnityEngine;
 
 namespace SpectralDaze.Time.Information
 {
+    /// <summary>
+    /// List item holding informatin aout manipulation type and its corresponding modifiers.
+    /// </summary>
     [System.Serializable]
     public class InformationListItem
     {
         public Manipulations Type;
         public InformationStats Stats;
     }
+
+    /// <summary>
+    /// Time manipulation modifiers container.
+    /// </summary>
     [System.Serializable]
     public class InformationStats
     {

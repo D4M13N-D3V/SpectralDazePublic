@@ -12,22 +12,63 @@ using UnityEngine.SceneManagement;
 
 namespace SpectralDaze.Player
 {
+    /// <summary>
+    /// The player controller
+    /// </summary>
+    /// <seealso cref="UnityEngine.MonoBehaviour" />
     public class PlayerController : MonoBehaviour
     {
+        /// <summary>
+        /// The input rotation
+        /// </summary>
         public ScriptableObjectQuartenion InputRotation;
+        /// <summary>
+        /// The player information
+        /// </summary>
         public PlayerInfo PlayerInfo;
+        /// <summary>
+        /// The animator
+        /// </summary>
         public Animator Animator;
-        //private DialogueManager dialogueMan;
+        /// <summary>
+        /// The rigidbody of the player
+        /// </summary>
         public Rigidbody Rbody;
+        /// <summary>
+        /// The time information for manipulation of time
+        /// </summary>
         public TimeInfo TimeInfo;
+        /// <summary>
+        /// The nav mesh agent
+        /// </summary>
         public NavMeshAgent Agent;
+        /// <summary>
+        /// Is the time being manipulated
+        /// </summary>
         private bool _timeBeingManipulated;
+        /// <summary>
+        /// The manipulation type of time
+        /// </summary>
         private Manipulations _manipulationType;
+        /// <summary>
+        /// The x movement control
+        /// </summary>
+        public AxisControl XMovementControl;
+        /// <summary>
+        /// The y movement control
+        /// </summary>
+        public AxisControl YMovementControl;
+        /// <summary>
+        /// The local time scale
+        /// </summary>
         [HideInInspector]
         public float _localTimeScale = 1.0f;
-        public AxisControl XMovementControl;
-        public AxisControl YMovementControl;
-
+        /// <summary>
+        /// Gets or sets the local time scale.
+        /// </summary>
+        /// <value>
+        /// The local time scale.
+        /// </value>
         public float localTimeScale
         {
             get
@@ -40,6 +81,12 @@ namespace SpectralDaze.Player
                 _localTimeScale = value;
             }
         }
+        /// <summary>
+        /// Gets the local delta time.
+        /// </summary>
+        /// <value>
+        /// The local delta time.
+        /// </value>
         [HideInInspector]
         public float localDeltaTime
         {
@@ -49,9 +96,10 @@ namespace SpectralDaze.Player
             }
         }
 
-        /*
-         * Time Bubble/Manipulation Code
-         */
+        /// <summary>
+        /// Starts the time manipulation.
+        /// </summary>
+        /// <param name="type">The type.</param>
         public void StartTimeManipulation(int type)
         {
             _timeBeingManipulated = true;
@@ -61,6 +109,9 @@ namespace SpectralDaze.Player
             //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
+        /// <summary>
+        /// Stops the time manipulation.
+        /// </summary>
         public void StopTimeManipulation()
         {
             _timeBeingManipulated = false;
@@ -70,6 +121,9 @@ namespace SpectralDaze.Player
             //_animator.speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.AnimationModifier;
         }
 
+        /// <summary>
+        /// Ends the game.
+        /// </summary>
         public void EndGame()
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);

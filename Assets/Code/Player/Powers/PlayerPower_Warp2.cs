@@ -3,25 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using SpectralDaze.Time;
 using UnityEngine;
-/*
- *
- *   DAMIENS VERSION WORKING WITH HIS NEW TIME SYSTEM!!
- *
- */
+
 namespace SpectralDaze.Player
 {
+    /// <summary>
+    /// Warp power for players
+    /// </summary>
+    /// <seealso cref="SpectralDaze.Player.PlayerPower" />
     [CreateAssetMenu(fileName = "Power_Warp_2", menuName = "Spectral Daze/PlayerPower/Warp2")]
     public class PlayerPower_Warp2 : PlayerPower
     {
+        /// <summary>
+        /// The time bubble prefab
+        /// </summary>
         public GameObject TimeBubblePrefab;
+        /// <summary>
+        /// The size to put the time bubble up to.
+        /// </summary>
         public Vector3 BubbleScale = new Vector3(7,7,7);
 
+        /// <summary>
+        /// The time bubble that has been created 
+        /// </summary>
         private GameObject _timeBubble;
 
+        /// <inheritdoc />
         public override void Init(PlayerController pc)
         {
         }
 
+        /// <inheritdoc />
         public override void OnUpdate(PlayerController pc)
         {
             if (!Control.BeingPressed)
