@@ -1,14 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Code.AI;
+using SpectralDaze.AI;
 using UnityEngine;
 using SpectralDaze.Player;
 using SpectralDaze.Time;
 
+/// <summary>
+/// Manages the projectile attached to.
+/// </summary>
 public class Bullet : MonoBehaviour
 {
+    /// <summary>
+    /// The local time scale
+    /// </summary>
     public float _localTimeScale = 1.0f;
+    /// <summary>
+    /// Gets or sets the local time scale.
+    /// </summary>
+    /// <value>
+    /// The local time scale.
+    /// </value>
     public float localTimeScale
     {
         get
@@ -22,6 +34,12 @@ public class Bullet : MonoBehaviour
             _localTimeScale = value;
         }
     }
+    /// <summary>
+    /// Gets the local delta time.
+    /// </summary>
+    /// <value>
+    /// The local delta time.
+    /// </value>
     public float localDeltaTime
     {
         get
@@ -30,14 +48,35 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The speed
+    /// </summary>
     public float Speed = 4f;
+    /// <summary>
+    /// Is homing
+    /// </summary>
     public bool Homing = false;
+    /// <summary>
+    /// The cached position
+    /// </summary>
     private Vector3 cachedPosition;
 
+    /// <summary>
+    /// The source that fired the gameobject
+    /// </summary>
     public GameObject Source;
 
+    /// <summary>
+    /// The time information for time manipulation
+    /// </summary>
     public TimeInfo TimeInfo;
+    /// <summary>
+    /// Is the time being manipulated
+    /// </summary>
     private bool _timeBeingManipulated;
+    /// <summary>
+    /// The manipulation type
+    /// </summary>
     private Manipulations _manipulationType;
 
 
@@ -52,16 +91,19 @@ public class Bullet : MonoBehaviour
         transform.position += transform.forward * Time.deltaTime * Speed;
     }
 
-    /*
-     * Time Bubble/Manipulation Code
-     */
+    /// <summary>
+    /// Starts the time manipulation.
+    /// </summary>
+    /// <param name="type">The type.</param>
     public void StartTimeManipulation(int type)
     {
         _timeBeingManipulated = true;
         _manipulationType = (Manipulations)type;
         Speed = TimeInfo.Data.SingleOrDefault(x => x.Type == _manipulationType).Stats.MovementModifier;
     }
-
+    /// <summary>
+    /// Stops the time manipulation.
+    /// </summary>
     public void StopTimeManipulation()
     {
         _timeBeingManipulated = true;

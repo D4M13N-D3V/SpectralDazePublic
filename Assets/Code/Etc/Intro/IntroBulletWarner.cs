@@ -5,11 +5,26 @@ using SpectralDaze.Managers.PowerManager;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Warns the player when bullet get sclose.
+/// </summary>
 public class IntroBulletWarner : MonoBehaviour
 {
+    /// <summary>
+    /// The dash control
+    /// </summary>
     public Control DashControl;
+    /// <summary>
+    /// The tutorial text
+    /// </summary>
     private TextMeshProUGUI _tutorialText;
+    /// <summary>
+    /// Is this waiting for the button to continue?
+    /// </summary>
     private bool waitingForButton = false;
+    /// <summary>
+    /// Time since script is started up.
+    /// </summary>
     private float _lastTime;
     private void Start()
     {
@@ -48,6 +63,10 @@ public class IntroBulletWarner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Waits for the player to dash.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator WaitForDash()
     {
         while (!DashControl.JustPressed)

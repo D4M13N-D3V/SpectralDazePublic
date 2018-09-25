@@ -11,7 +11,7 @@ using SpectralDaze.Managers.AIManager;
 using SpectralDaze.Managers.AudioManager;
 using UnityEngine;
 
-namespace Assets.Code.AI
+namespace SpectralDaze.AI
 {
     public class BaseAI : MonoBehaviour
     {

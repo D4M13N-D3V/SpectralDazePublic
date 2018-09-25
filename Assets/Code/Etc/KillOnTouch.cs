@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Assets.Code.AI;
+using SpectralDaze.AI;
 using SpectralDaze.Player;
 using UnityEngine;
 
 namespace SpectralDaze.Etc
 {
+    /// <summary>
+    /// Kills the player or enemy on touch.
+    /// </summary>
+    /// <seealso cref="UnityEngine.MonoBehaviour" />
     public class KillOnTouch : MonoBehaviour
     {
+        /// <summary>
+        /// Should this also kill enemy npcs
+        /// </summary>
         public bool KillEnemys = true;
         void OnCollisionEnter(Collision collision)
         {
