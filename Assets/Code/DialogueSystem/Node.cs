@@ -9,41 +9,107 @@ using UnityEngine;
 
 namespace SpectralDaze.DialogueSystem
 {
+    /// <summary>
+    /// Node for the dialogue editor
+    /// </summary>
     public class Node
     {
+        /// <summary>
+        /// The identifier
+        /// </summary>
         public int Id;
+        /// <summary>
+        /// The rect
+        /// </summary>
         public Rect Rect;
 
+        /// <summary>
+        /// The character path
+        /// </summary>
         public string CharacterPath;
 
+        /// <summary>
+        /// The character information scriptable object
+        /// </summary>
         [JsonIgnore] public CharacterInformation Character;
-        
+
+        /// <summary>
+        /// The message for the node.
+        /// </summary>
         public string Message;
+        /// <summary>
+        /// The options for the dialogue node
+        /// </summary>
         public List<string> Options = new List<string>();
+        /// <summary>
+        /// The output connection points that are generated based on amount of options/
+        /// </summary>
         public List<ConnectionPoint> Outputs = new List<ConnectionPoint>();
+        /// <summary>
+        /// The input connection point
+        /// </summary>
         public ConnectionPoint Input;
 
+        /// <summary>
+        /// Is this a beggining node
+        /// </summary>
         public bool First;
+        /// <summary>
+        /// Is this a ending node.
+        /// </summary>
         public bool Last;
 
+        /// <summary>
+        /// Is selected
+        /// </summary>
         [JsonIgnore]
         public bool Selected;
+        /// <summary>
+        /// Is being dragged
+        /// </summary>
         [JsonIgnore]
         public bool Dragged;
+        /// <summary>
+        /// Method for when a connection point is clicked.
+        /// </summary>
         [JsonIgnore]
         public Action<ConnectionPoint> OnClickConnector;
+        /// <summary>
+        /// Method to destroy node
+        /// </summary>
         [JsonIgnore]
         public Action<Node> DestroyNode;
+        /// <summary>
+        /// Method to set starting node.
+        /// </summary>
         [JsonIgnore]
         public Action<Node> SetStartingNode;
+        /// <summary>
+        /// Method to set ending node.
+        /// </summary>
         [JsonIgnore]
         public Action<Node> SetEndingNode;
 
+        /// <summary>
+        /// This parameterless constructor is used for serialization. <see cref="Node"/>
+        /// </summary>
         public Node()
         {
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Node"/> class.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="x">The x posistion.</param>
+        /// <param name="y">The y posistion.</param>
+        /// <param name="width">The width.</param>
+        /// <param name="height">The height.</param>
+        /// <param name="onClickConnector">Method for when conncetion point is clicked.</param>
+        /// <param name="removeNode">Method for when node is removed.</param>
+        /// <param name="setStartingNode">Method for setting starting node.</param>
+        /// <param name="setEndingNode">Method for setting ending node.</param>
         public Node(int id, float x, float y, float width, float height, Action<ConnectionPoint> onClickConnector,
             Action<Node> removeNode, Action<Node> setStartingNode, Action<Node> setEndingNode)
         {
@@ -56,6 +122,9 @@ namespace SpectralDaze.DialogueSystem
             Input = new ConnectionPoint(Id+1000,this,ConnectionType.In, OnClickConnector);
         }
 
+        /// <summary>
+        /// Draws anything that the node needs drawn.
+        /// </summary>
         public void Draw()
         {
             Rect = GUILayout.Window(Id, Rect, WindowContents, "Dialogue Node (#" + Id + ")");
@@ -65,12 +134,20 @@ namespace SpectralDaze.DialogueSystem
                 output.Draw();
             }
         }
-            
+
+        /// <summary>
+        /// Drags the node using the specified delta.
+        /// </summary>
+        /// <param name="delta">The delta.</param>
         public void Drag(Vector2 delta)
         {
             Rect.position += delta;
         }
 
+        /// <summary>
+        /// Draws the windows contents.
+        /// </summary>
+        /// <param name="unusedWindowID">The unused window identifier.</param>
         void WindowContents(int unusedWindowID)
         {
             //EditorGUILayout.LabelField("Unique Identifier");
@@ -108,6 +185,10 @@ namespace SpectralDaze.DialogueSystem
             CharacterPath = AssetDatabase.GetAssetPath(Character);
         }
 
+        /// <summary>
+        /// Processes the events for node.
+        /// </summary>
+        /// <param name="e">The event data.</param>
         public void ProcessEvents(Event e)
         {
             switch (e.type)
@@ -148,6 +229,9 @@ namespace SpectralDaze.DialogueSystem
             }
         }
 
+        /// <summary>
+        /// Creates, Generates, & Opens the context menu.
+        /// </summary>
         public void ProcessContextMenu()
         {
             GenericMenu genericMenu = new GenericMenu();

@@ -8,23 +8,49 @@ using UnityEngine.UI;
 
 namespace SpectralDaze.DialogueSystem
 {
+    /// <summary>
+    /// A monbo behaviour that is modular and manages dialogue ingame
+    /// </summary>
+    /// <seealso cref="UnityEngine.MonoBehaviour" />
     public class DialogueManager : MonoBehaviour
     {
+        /// <summary>
+        /// The DialogueUI monobehaviour that holds all the information for the UI needed.
+        /// </summary>
         public DialogueUI UI;
 
+        /// <summary>
+        /// The messages that have been loaded from the current dialogue.
+        /// </summary>
         public Dictionary<int, Message> Messages = new Dictionary<int, Message>();
 
-        public List<Message> MessagesList;
-
+        /// <summary>
+        /// The current message ID
+        /// </summary>
         public int CurrentMessage = 0;
 
+        /// <summary>
+        /// Is the dialogue open
+        /// </summary>
         public bool _dialogueOpen = false;
+        /// <summary>
+        /// Are the options open.
+        /// </summary>
         public bool _optionsOpen = false;
-            
+
+        /// <summary>
+        /// The option buttons
+        /// </summary>
         private List<Button> _optionButtons = new List<Button>();
 
+        /// <summary>
+        /// The interact control
+        /// </summary>
         public Control InteractControl;
 
+        /// <summary>
+        /// The current dialogue
+        /// </summary>
         public CurrentDialogue CurrentDialogue;
         
 
@@ -55,6 +81,9 @@ namespace SpectralDaze.DialogueSystem
             }
         }
 
+        /// <summary>
+        /// Loads the dialogue that current dialogue is set to.
+        /// </summary>
         private void LoadDialogue() 
         {
             Messages.Clear();
@@ -65,7 +94,6 @@ namespace SpectralDaze.DialogueSystem
             }
             var data = JsonConvert.DeserializeObject<DialogueEditor.DialogueSave>(CurrentDialogue.Dialogue.text);
             var messages = data.Messages;
-            MessagesList = messages;
             foreach (var message in messages)
             {
                 Messages.Add(message.Id, message);
@@ -73,6 +101,10 @@ namespace SpectralDaze.DialogueSystem
             CurrentMessage = Messages.SingleOrDefault(x => x.Value.First).Value.Id;
         }
 
+        /// <summary>
+        /// Starts the dialogue.
+        /// </summary>
+        /// <param name="newDialogue">The new dialogue.</param>
         public void StartDialogue(TextAsset newDialogue)
         {
             LoadDialogue();
@@ -85,6 +117,9 @@ namespace SpectralDaze.DialogueSystem
             _dialogueOpen = true;
         }
 
+        /// <summary>
+        /// Stops the dialogue.
+        /// </summary>
         public void StopDialogue()
         {
             UnityEngine.Time.timeScale = 1;
@@ -92,6 +127,10 @@ namespace SpectralDaze.DialogueSystem
             StartCoroutine(Reset());
         }
 
+        /// <summary>
+        /// Resets the dialogue manager so you are able to open a dialogue again.
+        /// </summary>
+        /// <returns></returns>
         IEnumerator Reset()
         {
             yield return new WaitForSecondsRealtime(2);
@@ -99,6 +138,9 @@ namespace SpectralDaze.DialogueSystem
             _dialogueOpen = false;
         }
 
+        /// <summary>
+        /// Cycles the dialogue.
+        /// </summary>
         public void CycleDialogue()
         {
             if (Messages.Values.Where(x => x.Last).ToList().Contains(Messages[CurrentMessage]))
@@ -112,6 +154,9 @@ namespace SpectralDaze.DialogueSystem
             }
         }
 
+        /// <summary>
+        /// Loads all the option buttons.
+        /// </summary>
         public void Options()
         {
             if (!_optionsOpen)
@@ -133,6 +178,9 @@ namespace SpectralDaze.DialogueSystem
             UI.OptionsView.SetActive(true);
         }
 
+        /// <summary>
+        /// Called when a option button is pressed.
+        /// </summary>
         public void OptionsButton()
         {
             foreach (var button in _optionButtons)

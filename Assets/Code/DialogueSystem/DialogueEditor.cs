@@ -10,8 +10,15 @@ using UnityEngine;
 
 namespace SpectralDaze.DialogueSystem
 {
+    /// <summary>
+    /// The custom dialogue editor
+    /// </summary>
+    /// <seealso cref="UnityEditor.EditorWindow" />
     public class DialogueEditor : EditorWindow
     {
+        /// <summary>
+        /// A class to be serialized holding all the information that needs to be saved by editor.
+        /// </summary>
         public class DialogueSave
         {
             public List<Node> Nodes = new List<Node>();
@@ -19,23 +26,54 @@ namespace SpectralDaze.DialogueSystem
             public List<Message> Messages = new List<Message>();
         }
 
+        /// <summary>
+        /// The node count that is upped by one every time one is created.
+        /// </summary>
         private int NodeCount = 0;
 
+        /// <summary>
+        /// A list of nodes in the editor window currently.
+        /// </summary>
         public List<Node> Nodes = new List<Node>();
+        /// <summary>
+        /// A list of connections in the editor window currently.
+        /// </summary>
         public List<Connection> Connections = new List<Connection>();
+        /// <summary>
+        /// The input connection point that is selected.
+        /// </summary>
         public ConnectionPoint SelectedInPoint;
+        /// <summary>
+        /// The selected output point that is selected.
+        /// </summary>
         public ConnectionPoint SelectedOutputPoint;
 
+        /// <summary>
+        /// The drag delta
+        /// </summary>
         private Vector2 _drag;
+        /// <summary>
+        /// The offset
+        /// </summary>
         private Vector2 _offset;
 
+        /// <summary>
+        /// The menu bar height
+        /// </summary>
         private float menuBarHeight = 20f;
+        /// <summary>
+        /// The menu bar rect
+        /// </summary>
         private Rect menuBar;
 
+        /// <summary>
+        /// Is the editor loading a dialogue map.
+        /// </summary>
         private bool _loading;
-        private string _saveName;
 
-
+        /// <summary>
+        /// Opens the window.
+        /// </summary>
         [MenuItem("Window/Dialogue Editor")]
         private static void OpenWindow()
         {
@@ -72,6 +110,10 @@ namespace SpectralDaze.DialogueSystem
             if (GUI.changed) Repaint();
         }
 
+        /// <summary>
+        /// Processes the events.
+        /// </summary>
+        /// <param name="e">The event data.</param>
         private void ProcessEvents(Event e)
         {
             _drag = Vector2.zero;
@@ -103,7 +145,11 @@ namespace SpectralDaze.DialogueSystem
                     break;
             }
         }
-            
+
+        /// <summary>
+        /// Creates menu, generates menu, and opens menu.
+        /// </summary>
+        /// <param name="mousePosition">The mouse position.</param>
         public void ProcessContextMenu(Vector2 mousePosition)
         {
             GenericMenu genericMenu = new GenericMenu();
@@ -116,6 +162,10 @@ namespace SpectralDaze.DialogueSystem
             genericMenu.ShowAsContext();
         }
 
+        /// <summary>
+        /// Called when background is dragged.
+        /// </summary>
+        /// <param name="delta">The delta.</param>
         private void OnDrag(Vector2 delta)
         {
             _drag = delta;
@@ -126,6 +176,9 @@ namespace SpectralDaze.DialogueSystem
             Repaint();
         }
 
+        /// <summary>
+        /// Draws the menu bar.
+        /// </summary>
         private void DrawMenuBar()
         {
             menuBar = new Rect(0, 0, position.width, menuBarHeight);
@@ -152,6 +205,9 @@ namespace SpectralDaze.DialogueSystem
             GUILayout.EndArea();
         }
 
+        /// <summary>
+        /// Saves the editors current map.
+        /// </summary>
         private void Save()
         {
             var save = new DialogueSave()
@@ -245,6 +301,9 @@ namespace SpectralDaze.DialogueSystem
             File.WriteAllText(path, json);
         }
 
+        /// <summary>
+        /// Loads a dialogue map into the editor.
+        /// </summary>
         private void Load()
         {
             _loading = true;
@@ -303,6 +362,10 @@ namespace SpectralDaze.DialogueSystem
             _loading = false;
         }
 
+        /// <summary>
+        /// Draws the connection line if only one point is seleceted..
+        /// </summary>
+        /// <param name="e">The event data.</param>
         private void DrawConnectionLine(Event e)
         {
             if (SelectedInPoint != null && SelectedOutputPoint == null)
@@ -335,6 +398,13 @@ namespace SpectralDaze.DialogueSystem
                 GUI.changed = true;
             }
         }
+
+        /// <summary>
+        /// Draws a grid.
+        /// </summary>
+        /// <param name="gridSpacing">The grid spacing.</param>
+        /// <param name="gridOpacity">The grid opacity.</param>
+        /// <param name="gridColor">Color of the grid.</param>
         private void DrawGrid(float gridSpacing, float gridOpacity, Color gridColor)
         {
             int widthDivs = Mathf.CeilToInt(position.width / gridSpacing);
@@ -360,6 +430,10 @@ namespace SpectralDaze.DialogueSystem
             Handles.EndGUI();
         }
 
+        /// <summary>
+        /// Removes the specified node.
+        /// </summary>
+        /// <param name="node">The node.</param>
         private void RemoveNode(Node node)
         {
             Nodes.Remove(node);
@@ -376,6 +450,10 @@ namespace SpectralDaze.DialogueSystem
             Repaint();
         }
 
+        /// <summary>
+        /// Sets the starting node.
+        /// </summary>
+        /// <param name="node">The node.</param>
         public void SetStartingNode(Node node)
         {
             foreach (var n in Nodes)
@@ -389,11 +467,19 @@ namespace SpectralDaze.DialogueSystem
             node.First = true;
         }
 
+        /// <summary>
+        /// Sets the ending node.
+        /// </summary>
+        /// <param name="node">The node.</param>
         public void SetEndingNode(Node node)
         {
             node.Last = true;
         }
 
+        /// <summary>
+        /// Called when [node connector point clicked].
+        /// </summary>
+        /// <param name="point">The point.</param>
         public void OnNodeConnectorClicked(ConnectionPoint point)
         {
             switch (point.Type)
@@ -414,6 +500,9 @@ namespace SpectralDaze.DialogueSystem
             GUI.changed = true;
         }
 
+        /// <summary>
+        /// Creates a connection.
+        /// </summary>
         public void CreateConnection()
         {
             var connectionExists = false;
@@ -432,6 +521,10 @@ namespace SpectralDaze.DialogueSystem
             Repaint();
         }
 
+        /// <summary>
+        /// Called when [click remove connection].
+        /// </summary>
+        /// <param name="connection">The connection.</param>
         private void OnClickRemoveConnection(Connection connection)
         {
             Connections.Remove(connection);
