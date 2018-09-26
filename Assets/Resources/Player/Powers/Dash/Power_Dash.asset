@@ -13,7 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 0}
   Name: 
+  Type: 0
   Control: {fileID: 11400000, guid: 06cc19b1eccd18347ba075a2a7b7dcb8, type: 2}
+  IsUnlocked: 1
   DashSpeed: 40
   MaximumDashDistance: 6
   ParticleSystem: {fileID: 1013219641901000, guid: e0baa8b5c7bb8f34d8b622d3c8ad8dbc,

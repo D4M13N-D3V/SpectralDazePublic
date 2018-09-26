@@ -196,6 +196,26 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ef98f5a6c95d1940b792279217b8013, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &117908048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1539808773037366, guid: 3038cf763cf66c141be3c5e8297b1773,
+    type: 2}
+  m_PrefabInternal: {fileID: 269677050}
+--- !u!114 &117908056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 117908048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d29d60bf73e2364082f16b08bc6233c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powers:
+  - {fileID: 11400000, guid: 14e5665cadd11474da9c62883e68c0a9, type: 2}
+  - {fileID: 11400000, guid: 2942e069025f11b4c8192b100f07b956, type: 2}
+  playerController: {fileID: 0}
 --- !u!1001 &136746531
 Prefab:
   m_ObjectHideFlags: 0
@@ -243,6 +263,26 @@ Prefab:
     - target: {fileID: 20876021635908494, guid: c9e494ba1cec32a4d9db959e9e894700,
         type: 2}
       propertyPath: m_Depth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20876021635908494, guid: c9e494ba1cec32a4d9db959e9e894700,
+        type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20876021635908494, guid: c9e494ba1cec32a4d9db959e9e894700,
+        type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20876021635908494, guid: c9e494ba1cec32a4d9db959e9e894700,
+        type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20876021635908494, guid: c9e494ba1cec32a4d9db959e9e894700,
+        type: 2}
+      propertyPath: m_BackGroundColor.a
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -760,9 +800,14 @@ Prefab:
         type: 2}
       propertyPath: Power1
       value: 
-      objectReference: {fileID: 11400000, guid: 2942e069025f11b4c8192b100f07b956,
+      objectReference: {fileID: 0}
+    - target: {fileID: 114741920044455998, guid: 3038cf763cf66c141be3c5e8297b1773,
         type: 2}
-    m_RemovedComponents: []
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114741920044455998, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 3038cf763cf66c141be3c5e8297b1773, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1001 &357251045
