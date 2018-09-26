@@ -24,6 +24,9 @@ namespace SpectralDaze.Player
         public PowerTypes Type;
 
         public Control Control;
+
+		public bool IsUnlocked = false;
+
         /// <summary>
         /// Initializes the power.
         /// </summary>

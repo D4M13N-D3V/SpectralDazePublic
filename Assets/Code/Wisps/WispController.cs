@@ -14,7 +14,7 @@ public class WispController : MonoBehaviour
 	private NativeArray<Particle> particleOutputBuffer;
 	private JobHandle handle;
 
-	private const float NEIGHBOR_RADIUS = 4f;
+	private const float NEIGHBOR_RADIUS = 10f;
 
 	private void Start()
 	{
@@ -85,15 +85,15 @@ public class WispController : MonoBehaviour
 		[WriteOnly]
 		public NativeArray<Particle> ParticleOut;
 
-		public float3 BaseForward, BasePosition;
+		public Vector3 BaseForward, BasePosition;
 
 		public float DeltaTime;
 
 		public void Execute(int index)
 		{
-			float3 separation = float3.zero;
-			float3 alignment = BaseForward;
-			float3 cohesion = BasePosition;
+			Vector3 separation = Vector3.zero;
+			Vector3 alignment = Vector3.zero;
+			Vector3 cohesion = BasePosition;
 
 			Particle self = Particles[index];
 
@@ -111,8 +111,8 @@ public class WispController : MonoBehaviour
 
 				// Apply influence from this neighbor
 				separation += GetSeparationFloat3(self, neighbor);
-				alignment += (float3)(Quaternion.Euler(neighbor.rotation3D) * Vector3.forward);
-				cohesion += (float3)neighbor.position;
+				alignment += (Quaternion.Euler(neighbor.rotation3D) * Vector3.forward);
+				cohesion += neighbor.position;
 
 				neighborCount++;
 			}
@@ -120,13 +120,15 @@ public class WispController : MonoBehaviour
 			// Normalize
 			float div = 1f / (neighborCount + 1);
 			alignment *= div;
-			cohesion = math.normalize(cohesion * div - (float3)self.position);
+			cohesion = (cohesion * div - self.position).normalized;
+
+			cohesion += (BasePosition - self.position) / 2f;
 
 			// Calc target direction
-			float3 steering = separation + (alignment*0.666f) + cohesion;
-			float3 desiredVelocity = math.normalize(BasePosition - (float3)self.position);
+			Vector3 steering = separation + (alignment*0.666f) + cohesion;
+			Vector3 desiredVelocity = (BasePosition - self.position).normalized;
 			steering = steering + desiredVelocity;
-			Vector3 rotation = Quaternion.FromToRotation(Vector3.forward, math.normalize(steering)).eulerAngles;
+			Vector3 rotation = Quaternion.LookRotation(steering.normalized).eulerAngles;
 
 			if (self.rotation3D != rotation)
 			{
@@ -142,9 +144,9 @@ public class WispController : MonoBehaviour
 			ParticleOut[index] = self;
 		}
 
-		private float3 GetSeparationFloat3(Particle a, Particle b)
+		private Vector3 GetSeparationFloat3(Particle a, Particle b)
 		{
-			float3 diff = b.position - a.position;
+			Vector3 diff = b.position - a.position;
 			float diffLen = math.length(diff);
 			float scalar = Mathf.Clamp01(1 - diffLen / NEIGHBOR_RADIUS);
 			return diff * scalar / diffLen;
