@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b555c111fbf04db4b88396076876e5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RubbleEvent: {fileID: 11400000, guid: 9c5c36c0e8b12eb49b9512a789b29338, type: 2}
+  Event: {fileID: 11400000, guid: 9c5c36c0e8b12eb49b9512a789b29338, type: 2}
 --- !u!65 &93204179
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6999,7 +6999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b555c111fbf04db4b88396076876e5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RubbleEvent: {fileID: 11400000, guid: e01c51c310cf3344aabc2c9141b58bf0, type: 2}
+  Event: {fileID: 11400000, guid: e01c51c310cf3344aabc2c9141b58bf0, type: 2}
 --- !u!43 &1133853979
 Mesh:
   m_ObjectHideFlags: 0
@@ -15841,7 +15841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b555c111fbf04db4b88396076876e5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RubbleEvent: {fileID: 11400000, guid: 30672e37833515d42a6bd80c24c9d7f7, type: 2}
+  Event: {fileID: 11400000, guid: 30672e37833515d42a6bd80c24c9d7f7, type: 2}
 --- !u!65 &1718743905
 BoxCollider:
   m_ObjectHideFlags: 0

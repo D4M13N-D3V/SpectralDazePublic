@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Name: Power_Warp_2
   m_EditorClassIdentifier: 
   Icon: {fileID: 0}
-  Name: New Teleport
+  Name: Warp
+  Type: 0
+  Control: {fileID: 0}
+  IsUnlocked: 0
   TimeBubblePrefab: {fileID: 1330729616256330, guid: 74c6978e05d928f43aaf9534a07e63d8,
     type: 2}
   BubbleScale: {x: 7, y: 7, z: 7}

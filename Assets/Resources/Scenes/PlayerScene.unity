@@ -212,10 +212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d29d60bf73e2364082f16b08bc6233c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powers:
-  - {fileID: 11400000, guid: 14e5665cadd11474da9c62883e68c0a9, type: 2}
+  _powers:
   - {fileID: 11400000, guid: 2942e069025f11b4c8192b100f07b956, type: 2}
-  playerController: {fileID: 0}
+  - {fileID: 11400000, guid: 14e5665cadd11474da9c62883e68c0a9, type: 2}
+  - {fileID: 11400000, guid: 0eddbd3eae9dd0748874a796cd89a05f, type: 2}
 --- !u!1001 &136746531
 Prefab:
   m_ObjectHideFlags: 0
