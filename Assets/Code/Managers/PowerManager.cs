@@ -8,26 +8,35 @@ namespace SpectralDaze.Managers
 	[RequireComponent(typeof(PlayerController))]
 	public class PowerManager : MonoBehaviour
 	{
+	    public static PowerManager Instance;
+
 		[SerializeField]
-		private PlayerPower[] powers;
+		private List<PlayerPower> _powers;
 
 		private PlayerController playerController;
 
 		private void Start()
 		{
+
 			playerController = GetComponent<PlayerController>();
 
-			foreach (var power in powers)
+			foreach (var power in _powers)
 				power.Init(playerController);
 		}
 
 		private void Update()
 		{
-			foreach (var power in powers)
+			foreach (var power in _powers)
 			{
 				if (power.IsUnlocked)
 					power.OnUpdate(playerController);
 			}
 		}
+
+	    public void AddPower(PlayerPower powerToAdd, bool unlockedByDefault)
+	    {
+	        powerToAdd.IsUnlocked = unlockedByDefault;
+            _powers.Add(powerToAdd);
+	    }
 	}
 }
