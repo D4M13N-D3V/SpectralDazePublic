@@ -1,5 +1,4 @@
 ﻿using SpectralDaze.Camera;
-using SpectralDaze.Managers.PowerManager;
 using SpectralDaze.Player;
 using UnityEngine;
 
@@ -12,6 +11,7 @@ namespace SpectralDaze.World
     [RequireComponent(typeof(BoxCollider))]
     public class PowerPickup : MonoBehaviour
     {
+		/*
         /// <summary>
         /// The power to pickup
         /// </summary>
@@ -66,6 +66,7 @@ namespace SpectralDaze.World
             UnityEngine.Camera.main.GetComponent<CameraFunctions>().Shake(0.2f,0.1f);
             Destroy(gameObject);
         }
+		*/
     }
 }
 

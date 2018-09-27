@@ -4,7 +4,7 @@ using SpectralDaze.Player;
 using UnityEngine;
 
 
-namespace SpectralDaze.Managers.PowerManager
+namespace SpectralDaze.Managers
 {
     /// <summary>
     /// Power slot 1

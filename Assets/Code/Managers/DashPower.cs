@@ -4,7 +4,7 @@ using SpectralDaze.Player;
 using UnityEngine;
 
 
-namespace SpectralDaze.Managers.PowerManager
+namespace SpectralDaze.Managers
 {
     /// <summary>
     /// The dash power slot.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SpectralDaze.Player;
 using UnityEngine;
 
-namespace SpectralDaze.Managers.PowerManager
+namespace SpectralDaze.Managers
 {
     /// <summary>
     /// All the powers available to the player

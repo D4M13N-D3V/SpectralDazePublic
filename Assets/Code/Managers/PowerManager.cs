@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SpectralDaze.Managers
 {
 	[RequireComponent(typeof(PlayerController))]
-	public class PowerManagerNew : MonoBehaviour
+	public class PowerManager : MonoBehaviour
 	{
 		[SerializeField]
 		private PlayerPower[] powers;
