@@ -1,10 +1,13 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace SpectralDaze.DialogueSystem
@@ -52,6 +55,7 @@ namespace SpectralDaze.DialogueSystem
             OutputPoint.AttachedNode = InputPoint.OwnerNode;
         }
 
+    #if UNITY_EDITOR
         /// <summary>
         /// Draws this connection.
         /// </summary>
@@ -72,5 +76,7 @@ namespace SpectralDaze.DialogueSystem
                 OnClickRemoveConnection(this);
             }
         }
+
+    #endif
     }
 }

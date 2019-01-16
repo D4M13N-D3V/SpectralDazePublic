@@ -1,15 +1,26 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace SpectralDaze.DialogueSystem
 {
+
+    public class DialogueSave
+    {
+        public List<Node> Nodes = new List<Node>();
+        public List<Connection> Connections = new List<Connection>();
+        public List<Message> Messages = new List<Message>();
+    }
+#if UNITY_EDITOR
     /// <summary>
     /// The custom dialogue editor
     /// </summary>
@@ -19,12 +30,6 @@ namespace SpectralDaze.DialogueSystem
         /// <summary>
         /// A class to be serialized holding all the information that needs to be saved by editor.
         /// </summary>
-        public class DialogueSave
-        {
-            public List<Node> Nodes = new List<Node>();
-            public List<Connection> Connections = new List<Connection>();
-            public List<Message> Messages = new List<Message>();
-        }
 
         /// <summary>
         /// The node count that is upped by one every time one is created.
@@ -530,6 +535,6 @@ namespace SpectralDaze.DialogueSystem
             Connections.Remove(connection);
             Repaint();
         }
-    }   
+    }
+#endif
 }
-    

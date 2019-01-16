@@ -1,4 +1,8 @@
-﻿using System;
+﻿
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -76,6 +80,7 @@ namespace SpectralDaze.DialogueSystem
             OnClickConnectionPoint = onClickConnectionPoint;
             OptionId = optionId;
         }
+        #if UNITY_EDITOR
 
         /// <summary>
         /// Draw the connection point;
@@ -100,5 +105,7 @@ namespace SpectralDaze.DialogueSystem
                     break;
             }
         }
+
+#endif
     }
 }

@@ -92,7 +92,7 @@ namespace SpectralDaze.DialogueSystem
                 Debug.LogError("No Dialogue File Currently Set, Can Not Load");
                 return;
             }
-            var data = JsonConvert.DeserializeObject<DialogueEditor.DialogueSave>(CurrentDialogue.Dialogue.text);
+            var data = JsonConvert.DeserializeObject<DialogueSave>(CurrentDialogue.Dialogue.text);
             var messages = data.Messages;
             foreach (var message in messages)
             {

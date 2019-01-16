@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace SpectralDaze.DialogueSystem
@@ -122,6 +124,7 @@ namespace SpectralDaze.DialogueSystem
             Input = new ConnectionPoint(Id+1000,this,ConnectionType.In, OnClickConnector);
         }
 
+#if UNITY_EDITOR
         /// <summary>
         /// Draws anything that the node needs drawn.
         /// </summary>
@@ -240,5 +243,6 @@ namespace SpectralDaze.DialogueSystem
             genericMenu.AddItem(new GUIContent("Set Node As End"), false, () => { SetEndingNode(this); });
             genericMenu.ShowAsContext();
         }
+        #endif
     }
 }
