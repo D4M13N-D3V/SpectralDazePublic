@@ -1,0 +1,179 @@
+fileFormatVersion: 2
+guid: 57640ace53171b145af9d4f416667238
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Bone_002
+    100004: Ear_right1
+    100006: EarLeft1
+    100008: EarLeft2
+    100010: EarRight2
+    100012: EarRight3
+    100014: EarRleft3
+    100016: EarRoot_L
+    100018: EarRoot_Right
+    100020: //RootNode
+    100022: Head
+    100024: LowerArm_L
+    100026: LowerArm_R
+    100028: LowerLeg_L
+    100030: LowerLeg_R
+    100032: Neck
+    100034: Plane_000
+    100036: Plane_001
+    100038: Plane_002
+    100040: Plane_003
+    100042: Plane_004
+    100044: Root
+    100046: Shoulder_L
+    100048: Shoulder_R
+    100050: TorsoBottom
+    100052: TorsoUpper
+    100054: UpperArm_L
+    100056: UpperArm_R
+    100058: UpperLeg_L
+    100060: UpperLeg_R
+    100062: Waist_L
+    100064: Waist_R
+    400000: Armature
+    400002: Bone_002
+    400004: Ear_right1
+    400006: EarLeft1
+    400008: EarLeft2
+    400010: EarRight2
+    400012: EarRight3
+    400014: EarRleft3
+    400016: EarRoot_L
+    400018: EarRoot_Right
+    400020: //RootNode
+    400022: Head
+    400024: LowerArm_L
+    400026: LowerArm_R
+    400028: LowerLeg_L
+    400030: LowerLeg_R
+    400032: Neck
+    400034: Plane_000
+    400036: Plane_001
+    400038: Plane_002
+    400040: Plane_003
+    400042: Plane_004
+    400044: Root
+    400046: Shoulder_L
+    400048: Shoulder_R
+    400050: TorsoBottom
+    400052: TorsoUpper
+    400054: UpperArm_L
+    400056: UpperArm_R
+    400058: UpperLeg_L
+    400060: UpperLeg_R
+    400062: Waist_L
+    400064: Waist_R
+    2100000: _Texture__Texture_psd
+    4300000: Plane_004
+    4300002: Plane_003
+    4300004: Plane_002
+    4300006: Plane_000
+    4300008: Plane_001
+    7400000: Default Take
+    7400002: Emote_Wave
+    7400004: Fall
+    7400006: fall_Land
+    7400008: fall_Land_Run
+    7400010: Idledance
+    7400012: Jump_Idle
+    7400014: Jump_Start
+    7400016: Run
+    9500000: //RootNode
+    13700000: Plane_000
+    13700002: Plane_001
+    13700004: Plane_002
+    13700006: Plane_003
+    13700008: Plane_004
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
