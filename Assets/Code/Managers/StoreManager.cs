@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using SpectralDaze.Managers;
 using SpectralDaze.AI;
+using SpectralDaze.DialogueSystem;
 namespace SpectralDaze.Store
 {
     public class StoreManager : MonoBehaviour
@@ -19,8 +20,11 @@ namespace SpectralDaze.Store
 
         private GameObject gameCam;
         private GameObject player;
-        public GameObject inputManager;
-        public GameObject shopKeeper;
+        private GameObject inputManager;
+        private GameObject shopKeeper;
+        private DialogueManager dialogueManager;
+
+        public TextAsset WelcomeDialogue;
 
         void Start()
         {
@@ -28,6 +32,7 @@ namespace SpectralDaze.Store
             inputManager = GameObject.FindGameObjectWithTag("InputManager");
             player = GameObject.FindGameObjectWithTag("Player");
             shopKeeper = GameObject.FindGameObjectWithTag("Shopkeeper");
+            dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
 
             gameCam.SetActive(false);
             player.GetComponent<PowerManager>().SetPowersEnabled(false);
@@ -63,6 +68,7 @@ namespace SpectralDaze.Store
             shopKeeper.GetComponent<NavMeshAgent>().isStopped = true;
             shopKeeper.GetComponent<NavMeshAgent>().ResetPath();
             shopKeeper.GetComponent<FollowerScript>().enabled = true;
+            dialogueManager.StartDialogue(WelcomeDialogue);
             inputManager.GetComponent<Managers.InputManager.InputManager>().SetInputEnabled(true);
         }
     }

@@ -107,7 +107,7 @@ namespace SpectralDaze.DialogueSystem
         /// <param name="newDialogue">The new dialogue.</param>
         public void StartDialogue(TextAsset newDialogue)
         {
-            LoadDialogue();
+            CurrentDialogue.Dialogue = newDialogue;
             UnityEngine.Time.timeScale = 0;
             UI.Parent.SetActive(true);
             LoadDialogue();

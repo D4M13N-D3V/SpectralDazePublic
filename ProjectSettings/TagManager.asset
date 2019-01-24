@@ -19,6 +19,7 @@ TagManager:
   - Shopkeeper
   - GameCam
   - InputManager
+  - DialogueManager
   layers:
   - Default
   - TransparentFX

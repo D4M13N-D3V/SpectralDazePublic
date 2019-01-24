@@ -1175,6 +1175,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1149318779}
     m_Modifications:
+    - target: {fileID: 1579348670242484, guid: b64bf6c31361da747848b07b0c13c37d, type: 3}
+      propertyPath: m_TagString
+      value: DialogueManager
+      objectReference: {fileID: 0}
     - target: {fileID: 224501813631614114, guid: b64bf6c31361da747848b07b0c13c37d,
         type: 3}
       propertyPath: m_LocalPosition.x
