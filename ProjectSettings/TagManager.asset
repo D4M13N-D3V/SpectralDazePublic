@@ -16,6 +16,9 @@ TagManager:
   - Movable
   - TutorialText
   - UIRoot
+  - Shopkeeper
+  - GameCam
+  - InputManager
   layers:
   - Default
   - TransparentFX

@@ -82,6 +82,14 @@ namespace SpectralDaze.Managers.InputManager
     /// <seealso cref="UnityEngine.MonoBehaviour" />
     public class InputManager : MonoBehaviour
     {
+        private bool _inputEnabled = true;
+
+        public void SetInputEnabled(bool enabled)
+        {
+            _inputEnabled = enabled;
+        }
+
+
         /// <summary>
         /// The types of controls being used.
         /// </summary>
@@ -282,67 +290,70 @@ namespace SpectralDaze.Managers.InputManager
 
         private void Update()
         {
-            string[] names = Input.GetJoystickNames();
-            for (int x = 0; x < names.Length; x++)
+            if (_inputEnabled)
             {
-                if (names[x].Length == 19)
-                    CurrentControlType.ControllerType = ControllerType.DS4;
-                else if (names[x].Length == 33)
-                    CurrentControlType.ControllerType = ControllerType.XBOX;
-                else
-                    CurrentControlType.ControllerType = ControllerType.Keyboard;
-            }
-            foreach (var control in Controls.ControlList)
-            {
-                if (CurrentControlType.ControllerType == ControllerType.Keyboard && control.IsMouseButton)
+                string[] names = Input.GetJoystickNames();
+                for (int x = 0; x < names.Length; x++)
                 {
-                    control.JustPressed = Input.GetMouseButton((int)control.MouseButton);
-                    control.BeingPressed = Input.GetMouseButtonDown((int)control.MouseButton);
-                    control.JustReleased = Input.GetMouseButtonUp((int)control.MouseButton);
-                }
-                else if (CurrentControlType.ControllerType == ControllerType.Keyboard && !control.IsMouseButton)
-                {
-                    control.JustPressed = Input.GetKeyDown(control.KeyCode);
-                    control.BeingPressed = Input.GetKey(control.KeyCode);
-                    control.JustReleased = Input.GetKeyUp(control.KeyCode);
-                }
-                else if (CurrentControlType.ControllerType == ControllerType.DS4)
-                {
-                    control.JustPressed = Input.GetKeyDown(DS4ButtonReference[control.GamepadCode]);
-                    control.BeingPressed = Input.GetKey(DS4ButtonReference[control.GamepadCode]);
-                    control.JustReleased = Input.GetKeyUp(DS4ButtonReference[control.GamepadCode]);
-                }
-                else if (CurrentControlType.ControllerType == ControllerType.XBOX)
-                {
-                    control.JustPressed = Input.GetKeyDown(XboxButtonReference[control.GamepadCode]);
-                    control.BeingPressed = Input.GetKey(XboxButtonReference[control.GamepadCode]);
-                    control.JustReleased = Input.GetKeyUp(XboxButtonReference[control.GamepadCode]);
-                }
-            }
-            foreach (var control in Controls.AxisControls)
-            {
-                if (CurrentControlType.ControllerType == ControllerType.Keyboard)
-                {
-                    if (control.Inverted)
-                    {
-                        control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]) * -1;
-                        control.RawValue = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]) * -1;
-                    }
+                    if (names[x].Length == 19)
+                        CurrentControlType.ControllerType = ControllerType.DS4;
+                    else if (names[x].Length == 33)
+                        CurrentControlType.ControllerType = ControllerType.XBOX;
                     else
+                        CurrentControlType.ControllerType = ControllerType.Keyboard;
+                }
+                foreach (var control in Controls.ControlList)
+                {
+                    if (CurrentControlType.ControllerType == ControllerType.Keyboard && control.IsMouseButton)
                     {
-                        control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]);
-                        control.RawValue = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]);
+                        control.JustPressed = Input.GetMouseButton((int)control.MouseButton);
+                        control.BeingPressed = Input.GetMouseButtonDown((int)control.MouseButton);
+                        control.JustReleased = Input.GetMouseButtonUp((int)control.MouseButton);
+                    }
+                    else if (CurrentControlType.ControllerType == ControllerType.Keyboard && !control.IsMouseButton)
+                    {
+                        control.JustPressed = Input.GetKeyDown(control.KeyCode);
+                        control.BeingPressed = Input.GetKey(control.KeyCode);
+                        control.JustReleased = Input.GetKeyUp(control.KeyCode);
+                    }
+                    else if (CurrentControlType.ControllerType == ControllerType.DS4)
+                    {
+                        control.JustPressed = Input.GetKeyDown(DS4ButtonReference[control.GamepadCode]);
+                        control.BeingPressed = Input.GetKey(DS4ButtonReference[control.GamepadCode]);
+                        control.JustReleased = Input.GetKeyUp(DS4ButtonReference[control.GamepadCode]);
+                    }
+                    else if (CurrentControlType.ControllerType == ControllerType.XBOX)
+                    {
+                        control.JustPressed = Input.GetKeyDown(XboxButtonReference[control.GamepadCode]);
+                        control.BeingPressed = Input.GetKey(XboxButtonReference[control.GamepadCode]);
+                        control.JustReleased = Input.GetKeyUp(XboxButtonReference[control.GamepadCode]);
                     }
                 }
-                else if (CurrentControlType.ControllerType == ControllerType.DS4)
+                foreach (var control in Controls.AxisControls)
                 {
-                    control.Value = Input.GetAxis(DS4AxisReference[control.GamepadAxis]);
-                    control.RawValue = Input.GetAxisRaw(DS4AxisReference[control.GamepadAxis]);
-                }
-                else if (CurrentControlType.ControllerType == ControllerType.XBOX)
-                {
-                    control.Value = Input.GetAxis(XboxAxisReference[control.GamepadAxis]);
-                    control.RawValue = Input.GetAxisRaw(XboxAxisReference[control.GamepadAxis]);
+                    if (CurrentControlType.ControllerType == ControllerType.Keyboard)
+                    {
+                        if (control.Inverted)
+                        {
+                            control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]) * -1;
+                            control.RawValue = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]) * -1;
+                        }
+                        else
+                        {
+                            control.Value = Input.GetAxis(KeyboardAxisReference[control.KeyboardAxis]);
+                            control.RawValue = Input.GetAxisRaw(KeyboardAxisReference[control.KeyboardAxis]);
+                        }
+                    }
+                    else if (CurrentControlType.ControllerType == ControllerType.DS4)
+                    {
+                        control.Value = Input.GetAxis(DS4AxisReference[control.GamepadAxis]);
+                        control.RawValue = Input.GetAxisRaw(DS4AxisReference[control.GamepadAxis]);
+                    }
+                    else if (CurrentControlType.ControllerType == ControllerType.XBOX)
+                    {
+                        control.Value = Input.GetAxis(XboxAxisReference[control.GamepadAxis]);
+                        control.RawValue = Input.GetAxisRaw(XboxAxisReference[control.GamepadAxis]);
+                    }
                 }
             }
         }

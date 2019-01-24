@@ -15,6 +15,9 @@ namespace SpectralDaze.Managers
 
 		private PlayerController playerController;
 
+        [SerializeField]
+        private bool _powersEnabled = true;
+
 		private void Start()
 		{
 
@@ -32,6 +35,11 @@ namespace SpectralDaze.Managers
 					power.OnUpdate(playerController);
 			}
 		}
+
+        public void SetPowersEnabled(bool enabled)
+        {
+            _powersEnabled = enabled;
+        }
 
 	    public void AddPower(PlayerPower powerToAdd, bool unlockedByDefault)
 	    {

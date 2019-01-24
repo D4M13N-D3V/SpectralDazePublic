@@ -217,6 +217,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2942e069025f11b4c8192b100f07b956, type: 2}
   - {fileID: 11400000, guid: 14e5665cadd11474da9c62883e68c0a9, type: 2}
   - {fileID: 11400000, guid: 0eddbd3eae9dd0748874a796cd89a05f, type: 2}
+  _powersEnabled: 1
 --- !u!1001 &136746531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1394,6 +1395,10 @@ PrefabInstance:
     - target: {fileID: 1277899145717232, guid: 3facee4b2049f6d42990c72bc1ffaf0f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277899145717232, guid: 3facee4b2049f6d42990c72bc1ffaf0f, type: 3}
+      propertyPath: m_TagString
+      value: InputManager
       objectReference: {fileID: 0}
     - target: {fileID: 4839811638593518, guid: 3facee4b2049f6d42990c72bc1ffaf0f, type: 3}
       propertyPath: m_LocalPosition.x
