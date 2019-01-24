@@ -290,8 +290,6 @@ namespace SpectralDaze.Managers.InputManager
 
         private void Update()
         {
-            if (_inputEnabled)
-            {
                 string[] names = Input.GetJoystickNames();
                 for (int x = 0; x < names.Length; x++)
                 {
@@ -355,7 +353,6 @@ namespace SpectralDaze.Managers.InputManager
                         control.RawValue = Input.GetAxisRaw(XboxAxisReference[control.GamepadAxis]);
                     }
                 }
-            }
         }
 
     }

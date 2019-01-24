@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using SpectralDaze.Managers;
 using SpectralDaze.AI;
 using SpectralDaze.DialogueSystem;
+using SpectralDaze.Player;
 namespace SpectralDaze.Store
 {
     public class StoreManager : MonoBehaviour
@@ -18,16 +19,22 @@ namespace SpectralDaze.Store
         [SerializeField]
         private Transform _playerStartingPoint;
 
+        public GameObject StoreExit;
+
         private GameObject gameCam;
         private GameObject player;
         private GameObject inputManager;
         private GameObject shopKeeper;
         private DialogueManager dialogueManager;
 
+        [HideInInspector]
+        public StoreEntrance UsedEntrance;
+
         public TextAsset WelcomeDialogue;
 
         void Start()
         {
+            this.StoreExit.SetActive(false);
             gameCam = GameObject.FindGameObjectWithTag("GameCam");
             inputManager = GameObject.FindGameObjectWithTag("InputManager");
             player = GameObject.FindGameObjectWithTag("Player");
@@ -36,7 +43,12 @@ namespace SpectralDaze.Store
 
             gameCam.SetActive(false);
             player.GetComponent<PowerManager>().SetPowersEnabled(false);
-            inputManager.GetComponent<Managers.InputManager.InputManager>().SetInputEnabled(false);
+            player.GetComponent<Player.PlayerController>().PlayerInfo.CanMove = false;
+    
+            player.transform.LookAt(shopKeeper.transform.position);
+            player.GetComponent<NavMeshAgent>().isStopped = true;
+            player.GetComponent<NavMeshAgent>().ResetPath();
+            player.GetComponent<NavMeshAgent>().velocity = Vector3.zero;
 
             NavMeshHit playerStartingPointNavHit;
             NavMeshHit shopKeeperStartingPointNavHit;
@@ -61,7 +73,7 @@ namespace SpectralDaze.Store
             yield return new WaitForSeconds(1);
             while (player.GetComponent<NavMeshAgent>().isStopped)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.1f);
             }
             player.GetComponent<NavMeshAgent>().isStopped = true;
             player.GetComponent<NavMeshAgent>().ResetPath();
@@ -70,6 +82,23 @@ namespace SpectralDaze.Store
             shopKeeper.GetComponent<FollowerScript>().enabled = true;
             dialogueManager.StartDialogue(WelcomeDialogue);
             inputManager.GetComponent<Managers.InputManager.InputManager>().SetInputEnabled(true);
+            this.StoreExit.SetActive(true);
+        }
+
+        public void ExitShop()
+        {
+            player.GetComponent<NavMeshAgent>().isStopped = true;
+            player.GetComponent<NavMeshAgent>().ResetPath();
+            shopKeeper.GetComponent<NavMeshAgent>().isStopped = true;
+            shopKeeper.GetComponent<NavMeshAgent>().ResetPath();
+            shopKeeper.GetComponent<FollowerScript>().enabled = false;
+            gameCam.SetActive(true);
+            player.GetComponent<PowerManager>().SetPowersEnabled(true);
+            player.GetComponent<Player.PlayerController>().PlayerInfo.CanMove = true;
+            NavMeshHit entranceSample;
+            NavMesh.SamplePosition(UsedEntrance.transform.position+UsedEntrance.transform.forward*2, out entranceSample, 1, NavMesh.AllAreas);
+            player.GetComponent<NavMeshAgent>().Warp(entranceSample.position);
+            UsedEntrance.SendMessage("UnloadShop");
         }
     }
 }
