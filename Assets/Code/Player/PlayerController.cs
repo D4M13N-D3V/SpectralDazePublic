@@ -131,6 +131,7 @@ namespace SpectralDaze.Player
 
         private void Start()
         {
+
             XMovementControl = Resources.Load<AxisControl>("Managers/InputManager/XMovement");
             YMovementControl = Resources.Load<AxisControl>("Managers/InputManager/YMovement");
             Rbody = GetComponent<Rigidbody>();
@@ -138,6 +139,14 @@ namespace SpectralDaze.Player
             Agent = GetComponent<NavMeshAgent>();
             PlayerInfo = Resources.Load<PlayerInfo>("Player/DefaultPlayerInfo");
             InputRotation = Resources.Load<ScriptableObjectQuartenion>("Player/InputRotation");
+
+            var spawnPoint = GameObject.Find("SPAWN_POINT");
+            if (spawnPoint != null)
+            {
+                NavMeshHit spawnPointSample;
+                NavMesh.SamplePosition(spawnPoint.transform.position, out spawnPointSample, 3.0f, NavMesh.AllAreas);
+                Agent.Warp(spawnPointSample.position);
+            }
         }
 
         private void Update()

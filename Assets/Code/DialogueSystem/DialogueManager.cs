@@ -108,7 +108,7 @@ namespace SpectralDaze.DialogueSystem
         public void StartDialogue(TextAsset newDialogue)
         {
             CurrentDialogue.Dialogue = newDialogue;
-            UnityEngine.Time.timeScale = 0;
+            //UnityEngine.Time.timeScale = 0;
             UI.Parent.SetActive(true);
             LoadDialogue();
             UI.MessageText.text = Messages[CurrentMessage].Content;
@@ -122,7 +122,7 @@ namespace SpectralDaze.DialogueSystem
         /// </summary>
         public void StopDialogue()
         {
-            UnityEngine.Time.timeScale = 1;
+            //UnityEngine.Time.timeScale = 1;
             UI.Parent.SetActive(false);
             StartCoroutine(Reset());
         }
